@@ -1,0 +1,259 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
+
+class UserController extends Controller
+{
+    public function __construct()
+    {
+        // $this->middleware('isLogged')->except(['login', 'checkLogin', 'forget', 'forgetPost', 'getPass', 'postGetPass']);
+    }
+    
+    public function login()
+    {
+        return view('pages.login.login');
+    }
+
+    public function checkLogin(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+        if ($user) {
+            if (Hash::check($request->password, $user->password)) {
+                $request->session()->put('loginId', $user->id);
+                return redirect('/logged');
+            } else {
+                return back()->with('fail', 'Sai tài khoản hoặc mật khẩu');
+            }
+        } else {
+            return back()->with('fail', 'Email này chưa được đăng kí trong hệ thống');
+        }
+    }
+
+    public function forget()
+    {
+        return view('pages.forgetpassword.forgetpassword');
+    }
+
+    public function forgetPost(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users'
+        ], [
+            'email.required' => 'Nhập địa chỉ email bạn đã đăng kí để lấy lại mật khẩu',
+            'email.email' => 'Vui lòng nhập 1 địa chỉ email hợp lệ (@gmail.com ..v.v)',
+            'email.exists' => 'Địa chỉ email không tồn tại trong hệ thống',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+        if ($user) {
+            $token = strtoupper(Str::random(20));
+            $user->update(['token' => $token, 'token_created_at' => now()]);
+            Mail::send('pages.email.forget_password', ['user' => $user], function ($email) use ($user) {
+                $email->subject('Giống Lâm Nghiệp - Lấy lại mật khẩu');
+                $email->to($user->email, $user->username);
+            });
+            return back()->with('success', 'Đường dẫn xác thực chỉ hiệu lực trong 3 phút. Kiểm tra email của bạn để lấy lại mật khẩu!');
+        }
+    }
+
+    public function getPass($id, $token)
+    {
+        $user = User::findOrFail($id);
+        if ($user->token === $token) {
+            return view('pages.forgetpassword.getPass', ['id' => $id, 'token' => $token]);
+        }
+        return abort(404);
+    }
+
+    public function postGetPass($id, $token, Request $request)
+    {
+        $request->validate([
+            'password' => 'required',
+            're-password' => 'required',
+        ], [
+            'password.required' => 'Nhập mật khẩu',
+            're-password.required' => 'Nhập lại mật khẩu',
+        ]);
+
+        $pass = $request->input('password');
+        $re_pass = $request->input('re-password');
+        if ($pass != $re_pass) {
+            return back()->with('fail', 'Mật Khẩu và Nhập Lại Mật Khẩu không được khác nhau!');
+        }
+
+        $user = User::findOrFail($id);
+        if (!$user) {
+            return back()->with('fail', 'Không tìm thấy user');
+        } else {
+            if ($user->token === $token) {
+                $expiryTime = now()->subMinutes(3);
+                if ($user->token_created_at < $expiryTime) {
+                    return redirect('/forget-password')->with('fail', 'Token đã hết hạn. Vui lòng yêu cầu đổi mật khẩu lại.');
+                }
+
+                $user->password = Hash::make($request->password);
+                $user->token = null;
+                $user->token_created_at = null;
+                $user->save();
+                return redirect('/login')->with('success', 'Đổi mật khẩu thành công');
+            } else {
+                return abort(404);
+            }
+        }
+    }
+
+    public function logged()
+    {
+        return view('pages.admin.home.index');
+    }
+
+    public function logout()
+    {
+        if (Session::has('loginId')) {
+            Session::pull('loginId');
+            return redirect('/login');
+        }
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $user = User::orderByDesc('id')->get();
+        return view('pages.admin.user.index', ['user' => $user]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('pages.admin.user.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|unique:users',
+            'username' => 'required',
+            'password' => 'required',
+            're-password' => 'required',
+        ], [
+            'email.required' => 'Nhập email để đăng kí',
+            'email.email' => 'Vui lòng nhập đúng định dạng email (gồm @gmail.com .v.v)',
+            'email.unique' => 'Mỗi email chỉ được đăng kí cho 1 user',
+            'username.required' => 'Trường này không thể bỏ trống',
+            'password.required' => 'Trường này không thể bỏ trống',
+            're-password.required' => 'Trường này không thể bỏ trống',
+        ]);
+
+        $pass = $request->input('password');
+        $re_pass = $request->input('re-password');
+        if ($pass != $re_pass) {
+            return back()->with('fail', 'Mật Khẩu và Nhập Lại Mật Khẩu không được khác nhau!');
+        }
+
+        $checkUser = User::where('email', $request->email)->first();
+        if ($checkUser) {
+            return back()->with('fail', 'Tài khoản hoặc email đã đăng ký trước đó');
+        }
+
+        $user = new User();
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->role = $request->role;
+
+        $res = $user->save();
+        if ($res) {
+            return redirect('/user-manager`')->with('success', 'Đăng kí thành công.');
+        } else {
+            return back()->with('fail', 'Đã xảy ra lỗi');
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
+        return view('pages.admin.user.edit', ['user' => $user]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'password' => 'required',
+            're-password' => 'required',
+        ], [
+            'password.required' => 'Nhập mật khẩu',
+            're-password.required' => 'Nhập lại mật khẩu',
+        ]);
+
+        if ($request->input('password') != $request->input('re-password')) {
+            return back()->with('fail', 'Mật khẩu và nhập lại mật khẩu không giống nhau');
+        }
+
+        $user = User::findOrFail($id);
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return back()->with('success', 'Đổi mật khẩu thành công!');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return back()->with('success', 'Xóa thành công');
+    }
+}
