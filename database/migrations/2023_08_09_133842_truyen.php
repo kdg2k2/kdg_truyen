@@ -18,6 +18,7 @@ class Truyen extends Migration
             $table->text('tentruyen');
             $table->text('mota');
             $table->text('path');
+            $table->text('slug');
             $table->timestamps();
         });
     }

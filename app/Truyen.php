@@ -11,6 +11,7 @@ class Truyen extends Model
         'tentruyen',
         'mota',
         'path',
+        'slug',
     ];
 
     public function tap(){
