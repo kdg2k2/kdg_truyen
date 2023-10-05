@@ -18,6 +18,6 @@ class Truyen_theloai extends Model
     }
 
     public function theloai(){
-        return $this->belongsTo(Truyen_theloai::class, 'id_theloai');
+        return $this->belongsTo(Theloai::class, 'id_theloai');
     }
 }

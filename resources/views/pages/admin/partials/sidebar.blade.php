@@ -12,52 +12,45 @@
                     </a>
                 </li>
             </ul>
-            <div class="pcoded-navigation-label">Tables</div>
+            <div class="pcoded-navigation-label">Quản lý truyện</div>
             <ul class="pcoded-item pcoded-left-item">
                 <li class="pcoded-hasmenu">
                     <a href="javascript:void(0)" class="waves-effect waves-dark">
                         <span class="pcoded-micon">
-                            <i class="feather icon-inbox"></i>
+                            <i class="fa fa-book"></i>
                         </span>
-                        <span class="pcoded-mtext">Data Table</span>
+                        <span class="pcoded-mtext">Truyện tranh</span>
                     </a>
                     <ul class="pcoded-submenu">
-                        <li class=" ">
-                            <a href="/the-loai-manager" class="waves-effect waves-dark">
-                                <span class="pcoded-mtext">Advance Initialization</span>
+                        <li class="">
+                            <a href="/admin/tacgia-manager" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">Tác Giả</span>
                             </a>
                         </li>
-                        <li class=" ">
-                            <a href="/dt-styling.html" class="waves-effect waves-dark">
-                                <span class="pcoded-mtext">Styling</span>
+                        <li class="">
+                            <a href="/admin/theloai-manager" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">Thể Loại</span>
                             </a>
                         </li>
-                        <li class=" ">
-                            <a href="/dt-api.html" class="waves-effect waves-dark">
-                                <span class="pcoded-mtext">API</span>
-                            </a>
-                        </li>
-                        <li class=" ">
-                            <a href="/dt-ajax.html" class="waves-effect waves-dark">
-                                <span class="pcoded-mtext">Ajax</span>
-                            </a>
-                        </li>
-                        <li class=" ">
-                            <a href="/dt-server-side.html" class="waves-effect waves-dark">
-                                <span class="pcoded-mtext">Server Side</span>
-                            </a>
-                        </li>
-                        <li class=" ">
-                            <a href="/dt-plugin.html" class="waves-effect waves-dark">
-                                <span class="pcoded-mtext">Plug-In</span>
-                            </a>
-                        </li>
-                        <li class=" ">
-                            <a href="/dt-data-sources.html" class="waves-effect waves-dark">
-                                <span class="pcoded-mtext">Data Sources</span>
+                        <li class="">
+                            <a href="/admin/truyen-manager" class="waves-effect waves-dark">
+                                <span class="pcoded-mtext">Truyện</span>
                             </a>
                         </li>
                     </ul>
+                </li>
+            </ul>
+
+            <div class="pcoded-navigation-label">Quản lý người dùng</div>
+            <ul class="pcoded-item pcoded-left-item" item-border="true" item-border-style="solid"
+                subitem-border="false">
+                <li>
+                    <a href="/admin/user-manager" class="waves-effect waves-dark">
+                        <span class="pcoded-micon">
+                            <i class="fa fa-group"></i>
+                        </span>
+                        <span class="pcoded-mtext">Tài khoản</span>
+                    </a>
                 </li>
             </ul>
         </div>

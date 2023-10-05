@@ -10,6 +10,7 @@ class Tacgia extends Model
     protected $fillable=[
         'tentacgia',
     ];
+    public $timestamps = false;
 
     // public function Truyen(){
     //     return $this->belongsToMany(Truyen::class, 'truyen_tacgia', 'id_tacgia', 'id_truyen');

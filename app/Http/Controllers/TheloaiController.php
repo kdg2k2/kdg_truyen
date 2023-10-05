@@ -50,12 +50,18 @@ class TheloaiController extends Controller
             ]
         );
 
+        $tentheloai = trim($request->tentheloai);
+        $check = Theloai::where('tentheloai', $tentheloai)->count();
+        if ($check > 0) {
+            return back()->with('fail', "Thể loại đã tồn tại");
+        }
+
         $theloai = new Theloai();
         $theloai->tentheloai = $request->tentheloai;
         $theloai->mota = $request->mota;
 
         $theloai->save();
-        return redirect('/the-loai-manager')->with('success', 'Thêm mới thành công');
+        return redirect('/admin/theloai-manager')->with('success', 'Thêm mới thành công');
     }
 
     /**

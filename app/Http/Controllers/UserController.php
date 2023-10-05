@@ -159,21 +159,13 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             'username' => 'required',
             'password' => 'required',
-            're-password' => 'required',
         ], [
             'email.required' => 'Nhập email để đăng kí',
             'email.email' => 'Vui lòng nhập đúng định dạng email (gồm @gmail.com .v.v)',
             'email.unique' => 'Mỗi email chỉ được đăng kí cho 1 user',
             'username.required' => 'Trường này không thể bỏ trống',
             'password.required' => 'Trường này không thể bỏ trống',
-            're-password.required' => 'Trường này không thể bỏ trống',
         ]);
-
-        $pass = $request->input('password');
-        $re_pass = $request->input('re-password');
-        if ($pass != $re_pass) {
-            return back()->with('fail', 'Mật Khẩu và Nhập Lại Mật Khẩu không được khác nhau!');
-        }
 
         $checkUser = User::where('email', $request->email)->first();
         if ($checkUser) {
@@ -188,7 +180,7 @@ class UserController extends Controller
 
         $res = $user->save();
         if ($res) {
-            return redirect('/user-manager`')->with('success', 'Đăng kí thành công.');
+            return redirect('/admin/user-manager')->with('success', 'Đăng kí thành công.');
         } else {
             return back()->with('fail', 'Đã xảy ra lỗi');
         }
@@ -227,21 +219,23 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'password' => 'required',
-            're-password' => 'required',
+            'email' => 'required|email',
+            'username' => 'required',
         ], [
-            'password.required' => 'Nhập mật khẩu',
-            're-password.required' => 'Nhập lại mật khẩu',
+            'email.required' => 'Nhập email để đăng kí',
+            'email.email' => 'Vui lòng nhập đúng định dạng email (gồm @gmail.com .v.v)',
+            'username.required' => 'Trường này không thể bỏ trống',
         ]);
 
-        if ($request->input('password') != $request->input('re-password')) {
-            return back()->with('fail', 'Mật khẩu và nhập lại mật khẩu không giống nhau');
-        }
-
         $user = User::findOrFail($id);
-        $user->password = Hash::make($request->password);
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->role = $request->role;
+        if($request->password){
+            $user->password = Hash::make($request->password);
+        }
         $user->save();
-        return back()->with('success', 'Đổi mật khẩu thành công!');
+        return back()->with('success', 'Cập nhật thành công!');
     }
 
     /**

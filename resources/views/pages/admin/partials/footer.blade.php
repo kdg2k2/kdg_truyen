@@ -7,6 +7,23 @@
 <script src="{{ asset('/adminTemplate/js/waves.min.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('/adminTemplate/js/jquery.slimscroll.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/adminTemplate/js/modernizr.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/adminTemplate/js/css-scrollbars.js') }}"></script>
+<script src="{{ asset('/adminTemplate/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('/adminTemplate/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('/adminTemplate/js/jszip.min.js') }}"></script>
+<script src="{{ asset('/adminTemplate/js/pdfmake.min.js') }}"></script>
+<script src="{{ asset('/adminTemplate/js/vfs_fonts.js') }}"></script>
+<script src="{{ asset('/adminTemplate/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('/adminTemplate/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('/adminTemplate/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('/adminTemplate/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('/adminTemplate/js/responsive.bootstrap4.min.js') }}"></script>
+
+<script src="{{ asset('/adminTemplate/js/pcoded.min.js') }}"></script>
+<script src="{{ asset('/adminTemplate/js/vertical-layout.min.js') }}"></script>
+<script src="{{ asset('/adminTemplate/js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/adminTemplate/js/script.js') }}"></script>
 
 <script src="{{ asset('/adminTemplate/js/jquery.flot.js') }}"></script>
 <script src="{{
@@ -23,13 +40,9 @@
 <script src="{{ asset('/adminTemplate/js/serial.js') }}"></script>
 <script src="{{ asset('/adminTemplate/js/light.js') }}"></script>
 
-<script src="{{ asset('/adminTemplate/js/pcoded.min.js') }}"></script>
-<script src="{{ asset('/adminTemplate/js/vertical-layout.min.js') }}"></script>
-{{--
-<script type="text/javascript" src="{{ asset('/adminTemplate/js/custom-dashboard.min.js') }}"></script>
---}}
 <script type="text/javascript" src="{{ asset('/adminTemplate/js/script.min.js') }}"></script>
 
+<script src="{{ asset('/js/script.js') }}"></script>
 <script>
     $(document).ready(function() {
         var the_a = $('.nav-list li a');

@@ -16,8 +16,9 @@ class Truyen extends Migration
         Schema::create('truyen', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('tentruyen');
-            $table->text('mota');
-            $table->text('path');
+            $table->text('mota')->nullable();
+            $table->text('path')->nullable();
+            $table->bigInteger('view');
             $table->text('slug');
             $table->timestamps();
         });

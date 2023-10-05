@@ -564,6 +564,8 @@
 
     @include('pages.admin.partials.footer')
     <script type="text/javascript" src="{{ asset('/adminTemplate/js/custom-dashboard.min.js') }}"></script>
+
+    
 </body>
 
 </html>

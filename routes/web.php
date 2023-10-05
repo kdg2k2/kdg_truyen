@@ -16,25 +16,48 @@ use Illuminate\Support\Facades\Route;
 // Home
 Route::get('/', 'HomeController@index');
 
-//Truyện
-Route::resource('truyen', 'TruyenController');
-Route::get('/truyen/{slug}/{id}', 'TruyenController@doc_chap_nao');
-// Route::get('/danh-sach', 'TruyenController@danhSach');
-
-//Tap
-Route::resource('tap', 'TapController');
-
-// Thể loại
-Route::resource('the-loai', 'TheloaiController');
-Route::get('/the-loai-manager', 'TheloaiController@index');
-
-// Tác giả
-Route::resource('tac-gia', 'TacgiaController');
-Route::get('/tac-gia-manager', 'TacgiaController@index');
-
-// User
-Route::resource('user', 'UserController');
-Route::get('/user-manager', 'UserController@index');
+Route::group(['prefix' => 'admin'], function (){
+    //Truyện
+    Route::get('/truyen-manager', 'TruyenController@index');
+    Route::get('/truyen/create', 'TruyenController@create');
+    Route::post('/truyen/store', 'TruyenController@store');
+    Route::get('/truyen/show/{id}', 'TruyenController@show');
+    Route::get('/truyen/{id}/edit', 'TruyenController@edit');
+    Route::post('/truyen/{id}/update', 'TruyenController@update');
+    Route::post('/truyen/{id}/delete', 'TruyenController@destroy');
+    
+    //Tap
+    Route::resource('tap', 'TapController');
+    
+    // Thể loại
+    Route::get('/theloai-manager', 'TheloaiController@index');
+    Route::get('/theloai/create', 'TheloaiController@create');
+    Route::post('/theloai/store', 'TheloaiController@store');
+    Route::get('/theloai/show/{id}', 'TheloaiController@show');
+    Route::get('/theloai/{id}/edit', 'TheloaiController@edit');
+    Route::post('/theloai/{id}/update', 'TheloaiController@update');
+    Route::post('/theloai/{id}/delete', 'TheloaiController@destroy');
+    
+    // Tác giả
+    Route::get('/tacgia-manager', 'TacgiaController@index');
+    Route::get('/tacgia/create', 'TacgiaController@create');
+    Route::post('/tacgia/store', 'TacgiaController@store');
+    Route::get('/tacgia/show/{id}', 'TacgiaController@show');
+    Route::get('/tacgia/{id}/edit', 'TacgiaController@edit');
+    Route::post('/tacgia/{id}/update', 'TacgiaController@update');
+    Route::post('/tacgia/{id}/delete', 'TacgiaController@destroy');
+    
+    // User
+    Route::get('/user-manager', 'UserController@index');
+    Route::get('/user/create', 'UserController@create');
+    Route::post('/user/store', 'UserController@store');
+    Route::get('/user/show/{id}', 'UserController@show');
+    Route::get('/user/{id}/edit', 'UserController@edit');
+    Route::post('/user/{id}/update', 'UserController@update');
+    Route::post('/user/{id}/delete', 'UserController@destroy');
+    
+    
+});
 
 Route::get('/login', 'UserController@login');
 Route::post('/user/login', 'UserController@checkLogin');

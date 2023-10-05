@@ -47,11 +47,17 @@ class TacgiaController extends Controller
             'tentacgia.required' => 'Trường này không thể bỏ trống',
         ]);
 
+        $tentacgia = trim($request->tentacgia);
+        $check = Tacgia::where('tentacgia', $tentacgia)->count();
+        if ($check > 0) {
+            return back()->with('fail', "Tác giả đã tồn tại");
+        }
+
         $tacgia = new Tacgia();
         $tacgia->tentacgia = $request->tentacgia;
         $tacgia->save();
 
-        return redirect('/tac-gia-manager')->with('success', 'Thêm mới thành công');
+        return redirect('/admin/tacgia-manager')->with('success', 'Thêm mới thành công');
     }
 
     /**

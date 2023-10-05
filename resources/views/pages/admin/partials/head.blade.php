@@ -14,7 +14,8 @@
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Quicksand:500,700" rel="stylesheet">
 
-{{-- <link rel="stylesheet" type="text/css" href="{{ asset('/adminTemplate/css/bootstrap.min.css') }}"> --}}
+{{--
+<link rel="stylesheet" type="text/css" href="{{ asset('/adminTemplate/css/bootstrap.min.css') }}"> --}}
 <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
 
 <link rel="stylesheet" href="{{ asset('/adminTemplate/css/waves.min.css') }}" type="text/css" media="all">
@@ -23,13 +24,47 @@
 
 <link rel="stylesheet" type="text/css" href="{{ asset('/adminTemplate/css/font-awesome-n.min.css') }}">
 
+
+
+<link rel="stylesheet" type="text/css" href="{{ asset('/adminTemplate/css/themify-icons.css') }}">
+
+<link rel="stylesheet" type="text/css" href="{{ asset('/adminTemplate/css/icofont.css') }}">
+
+<link rel="stylesheet" type="text/css" href="{{ asset('/adminTemplate/css/font-awesome.min.css') }}">
+
+<link rel="stylesheet" type="text/css" href="{{ asset('/adminTemplate/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('/adminTemplate/css/buttons.dataTables.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('/adminTemplate/css/responsive.bootstrap4.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('/adminTemplate/css/responsive.dataTables.css') }}">
+
+<link rel="stylesheet" type="text/css" href="{{ asset('/adminTemplate/css/pages.css') }}">
+
 <link rel="stylesheet" href="{{ asset('/adminTemplate/css/chartist.css') }}" type="text/css" media="all">
 
 <link rel="stylesheet" type="text/css" href="{{ asset('/adminTemplate/css/style.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('/adminTemplate/css/widget.css') }}">
 
-{{-- <style>
-    .active{
+<style>
+    .btn-create {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 15px;
+        margin-right: 25px;
+    }
+
+    .active {
         color: #42a5f5 !important;
     }
-</style> --}}
+</style>
+
+<link rel="stylesheet" href="{{ asset('/css/custom.css') }}">
+
+{{-- Icon --}}
+<link rel="stylesheet" href="{{ asset('/img/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+
+{{-- Jquery --}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+{{-- Select2 --}}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
