@@ -1,20 +1,18 @@
 <?php
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 use Illuminate\Support\Facades\Route;
 
-// Home
+
 Route::get('/', 'HomeController@index');
+
+Route::get('/login', 'UserController@login');
+Route::post('/user/login', 'UserController@checkLogin');
+Route::get('/logged', 'UserController@logged');
+Route::get('/logout', 'UserController@logout');
+
+Route::get('/forget-password', 'UserController@forget');
+Route::post('/forget-password/post', 'UserController@forgetPost');
+Route::get('/forget-mail/{id}/{token}', 'UserController@getPass');
+Route::post('/forget-mail/{id}/{token}', 'UserController@postGetPass');
 
 Route::group(['prefix' => 'admin'], function (){
     //Truyện
@@ -27,7 +25,13 @@ Route::group(['prefix' => 'admin'], function (){
     Route::post('/truyen/{id}/delete', 'TruyenController@destroy');
     
     //Tap
-    Route::resource('tap', 'TapController');
+    Route::get('/tap-manager', 'TapController@index');
+    Route::get('/tap/create', 'TapController@create');
+    Route::post('/tap/store', 'TapController@store');
+    Route::get('/tap/show/{id}', 'TapController@show');
+    Route::get('/tap/{id}/edit', 'TapController@edit');
+    Route::post('/tap/{id}/update', 'TapController@update');
+    Route::post('/tap/{id}/delete', 'TapController@destroy');
     
     // Thể loại
     Route::get('/theloai-manager', 'TheloaiController@index');
@@ -59,12 +63,5 @@ Route::group(['prefix' => 'admin'], function (){
     
 });
 
-Route::get('/login', 'UserController@login');
-Route::post('/user/login', 'UserController@checkLogin');
-Route::get('/logged', 'UserController@logged');
-Route::get('/logout', 'UserController@logout');
-
-Route::get('/forget-password', 'UserController@forget');
-Route::post('/forget-password/post', 'UserController@forgetPost');
-Route::get('/forget-mail/{id}/{token}', 'UserController@getPass');
-Route::post('/forget-mail/{id}/{token}', 'UserController@postGetPass');
+Route::get('/{slug}', 'HomeController@showTruyen');
+Route::get('/{slug}/{id}', 'HomeController@showTap');

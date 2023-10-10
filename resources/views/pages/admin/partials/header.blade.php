@@ -1,7 +1,7 @@
 <nav class="navbar header-navbar pcoded-header">
     <div class="navbar-wrapper">
         <div class="navbar-logo">
-            <a href="index.html">
+            <a href="/">
                 <img class="img-fluid" src="{{ asset('/adminTemplate/images/logo.png') }}" alt="Theme-Logo">
             </a>
             <a class="mobile-menu" id="mobile-collapse" href="#!">

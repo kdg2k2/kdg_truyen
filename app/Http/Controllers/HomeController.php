@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Tap;
+use App\Truyen;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -13,7 +15,39 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('pages.home.index');
+        $truyen_update = Truyen::orderByDesc('updated_at')->get();
+        $truyen_new = Truyen::orderByDesc('created_at')->get();
+        return view('pages.home.index', [
+            'truyen_update' => $truyen_update,
+            'truyen_new' => $truyen_new,
+        ]);
+    }
+
+    public function showTruyen($slug)
+    {
+        $truyen = Truyen::where('slug', $slug)->first();
+        if ($truyen) {
+            return view('pages.truyen.show', [
+                'truyen' => $truyen,
+            ]);
+        } else {
+            abort(405, 'Không tìm thấy truyện');
+        }
+    }
+
+    public function showTap($slug, $id){
+        $tap = Tap::findOrFail($id);
+        $truyen = Truyen::where('slug', $slug)->first();
+        if($truyen && $tap){
+            $truyen->view = $truyen->view + 1;
+            $truyen->save();
+            return view('pages.truyen.chapter', [
+                'tap' => $tap,
+                'truyen' => $truyen,
+            ]);
+        }else{
+            abort(405, 'Không tìm thấy truyện');
+        }
     }
 
     /**

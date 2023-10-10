@@ -12,7 +12,6 @@ class Tap extends Model
         'id_truyen',
         'path',
     ];
-    public $timestamps = false;
 
     public function truyen(){
         return $this->belongsTo(Truyen::class, 'id_truyen');

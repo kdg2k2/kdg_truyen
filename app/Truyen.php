@@ -9,6 +9,8 @@ class Truyen extends Model
     protected $table='truyen';
     protected $fillable=[
         'tentruyen',
+        'tenkhac',
+        'status',
         'mota',
         'path',
         'slug',
@@ -25,14 +27,6 @@ class Truyen extends Model
     public function theodoi(){
         return $this->hasMany(Theodoi::class, 'id_truyen');
     }
-    
-    // public function theloai(){
-    //     return $this->belongsToMany(Theloai::class, 'truyen_theloai', 'id_truyen', 'id_theloai');
-    // }
-
-    // public function tacgia(){
-    //     return $this->belongsToMany(Tacgia::class, 'truyen_tacgia', 'id_truyen', 'id_tacgia');
-    // }
 
     public function truyen_theloai(){
         return $this->hasMany(Truyen_theloai::class, 'id_truyen');

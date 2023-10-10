@@ -11031,8 +11031,8 @@ ul.list-chapters li .chapter-name small.unfinished-status {
 }
 
 .feature-section .series-summary .summary-content {
-    max-height: 100px;
-    overflow: hidden
+    /* max-height: 100px;
+    overflow: hidden */
 }
 
 .feature-section .summary-content {

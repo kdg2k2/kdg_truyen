@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Tap;
+use App\Truyen;
 use Illuminate\Http\Request;
 
 class TapController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('isLogged');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +20,8 @@ class TapController extends Controller
      */
     public function index()
     {
-        //
+        $tap = Tap::orderByDesc('id')->get();
+        return view('pages.admin.tap.index', ['tap' => $tap]);
     }
 
     /**
@@ -23,7 +31,8 @@ class TapController extends Controller
      */
     public function create()
     {
-        //
+        $truyen = Truyen::all();
+        return view('pages.admin.tap.create', ['truyen' => $truyen]);
     }
 
     /**
@@ -34,7 +43,43 @@ class TapController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'tentap' => 'required',
+            'id_truyen' => 'required',
+            'path' => 'required',
+        ], [
+            'tentap.required' => 'Trường này không thể bỏ trống',
+            'id_truyen.required' => 'Trường này không thể bỏ trống',
+            'path.required' => 'Trường này không thể bỏ trống',
+        ]);
+
+        $tentap = trim($request->tentap);
+        $check = Tap::where('tentap', $tentap)->where('id_truyen', $request->id_truyen)->count();
+        if ($check > 0) {
+            return back()->with('fail', "Tập này đã tồn tại");
+        }
+
+        $tap = new Tap();
+        $tap->tentap = $request->tentap;
+        $tap->id_truyen = $request->id_truyen;
+        // $tap->path = $request->path;
+        $imagePaths = [];
+        if (($request->file('path')) != null) {
+            $path = $request->file('path');
+            foreach ($path as $img) {
+                $filename = time() . $img->getClientOriginalName();
+                $img->move('truyen/' . $request->id_truyen . '/' . $request->tentap, $filename);
+                $imgPath = 'truyen/' . $request->id_truyen . '/' . $request->tentap . '/' . $filename;
+
+                $imagePaths[] = $imgPath;
+            }
+            $tap->path = json_encode($imagePaths);
+        } else {
+            $tap->path = null;
+        }
+        $tap->save();
+
+        return redirect('/admin/tap-manager')->with('success', 'Thêm mới thành công');
     }
 
     /**
@@ -56,7 +101,9 @@ class TapController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tap = Tap::findOrFail($id);
+        $truyen = Truyen::all();
+        return view('pages.admin.tap.edit', ['tap' => $tap, 'truyen' => $truyen]);
     }
 
     /**
@@ -68,7 +115,43 @@ class TapController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'tentap' => 'required',
+            'id_truyen' => 'required',
+        ], [
+            'tentap.required' => 'Trường này không thể bỏ trống',
+            'id_truyen.required' => 'Trường này không thể bỏ trống',
+        ]);
+
+        $tap = Tap::findOrFail($id);
+        $tap->tentap = $request->tentap;
+        $tap->id_truyen = $request->id_truyen;
+        // $tap->path = $request->path;
+        $imagePaths = [];
+        if (($request->file('path')) != null) {
+            $path = $request->file('path');
+
+            if ($tap->path != null) {
+                $json_decode_path = json_decode($tap->path);
+                foreach ($json_decode_path as $image) {
+                    if (file_exists(public_path($image))) {
+                        unlink(public_path($image));
+                    }
+                }
+            }
+
+            foreach ($path as $img) {
+                $filename = time() . $img->getClientOriginalName();
+                $img->move('truyen/' . $request->id_truyen . '/' . $request->tentap, $filename);
+                $imgPath = 'truyen/' . $request->id_truyen . '/' . $request->tentap . '/' . $filename;
+
+                $imagePaths[] = $imgPath;
+            }
+            $tap->path = json_encode($imagePaths);
+        }
+        $tap->save();
+
+        return back()->with('success', 'Cập nhật thành công');
     }
 
     /**
@@ -79,6 +162,8 @@ class TapController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tap = Tap::findOrFail($id);
+        $tap->delete();
+        return back()->with('success', 'Xóa thành công');
     }
 }

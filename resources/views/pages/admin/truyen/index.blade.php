@@ -67,9 +67,11 @@
                                                         <tr>
                                                             <th class="col-1">Ảnh Đại Diện</th>
                                                             <th>Tên Truyện</th>
+                                                            <th>Tên Khác</th>
                                                             <th>Tác Giả</th>
                                                             <th>Thể Loại</th>
-                                                            <th>Lượt Xem</th>
+                                                            <th class="col-1">Lượt Xem</th>
+                                                            <th>Trạng thái</th>
                                                             <th>Ngày Đăng</th>
                                                             <th>Ngày Cập Nhật</th>
                                                             <th class="col-1"></th>
@@ -87,6 +89,7 @@
                                                                 @endif
                                                             </td>
                                                             <td>{{ $item->tentruyen }}</td>
+                                                            <td>{{ $item->tenkhac }}</td>
                                                             <td>
                                                                 @foreach ($item->truyen_tacgia as $i)
                                                                 {{ $i->tacgia->tentacgia }} -
@@ -98,10 +101,15 @@
                                                                 @endforeach
                                                             </td>
                                                             <td>{{ $item->view }}</td>
+                                                            <td>@if ($item->status == 1)
+                                                                Hoàn thành
+                                                            @else
+                                                                Đang tiến hành
+                                                            @endif</td>
                                                             <td>{{ $item->created_at }}</td>
                                                             <td>{{ $item->updated_at }}</td>
                                                             <td>
-                                                                <a href="/truyen/show/{{ $item->id }}"
+                                                                <a target="_blank" href="/{{ $item->slug }}"
                                                                     class="btn btn-primary btn-sm">Chi tiết</a>
                                                                 <a href="/admin/truyen/{{ $item->id }}/edit"
                                                                     class="btn btn-warning btn-sm">Sửa</a>

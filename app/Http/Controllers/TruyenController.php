@@ -58,6 +58,8 @@ class TruyenController extends Controller
         $truyen->tentruyen = $request->tentruyen;
         $truyen->slug = $request->slug;
         $truyen->mota = $request->mota;
+        $truyen->status = $request->status;
+        $truyen->tenkhac = $request->tenkhac;
         $truyen->view = 0;
         $truyen->save();
 
@@ -139,6 +141,8 @@ class TruyenController extends Controller
         $truyen = Truyen::findOrFail($id);
         $truyen->tentruyen = $request->tentruyen;
         $truyen->mota = $request->mota;
+        $truyen->status = $request->status;
+        $truyen->tenkhac = $request->tenkhac;
 
         if ($request->file('path')) {
             if ($truyen->path != null) {

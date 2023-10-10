@@ -34237,20 +34237,20 @@
     })), $(window).scroll((function() {
         $(this).scrollTop() < 20 ? ($(".btn-back-to-top").hide(200), $(".btn-back-to-top").removeClass("d-block")) : ($(".btn-back-to-top").show(200), $(".btn-back-to-top").addClass("d-block"))
     })), $(window).width() > 425 && $(".thumb-wrapper").tooltipster({
-        plugins: ["follower"],
-        maxWidth: 500,
-        updateAnimation: "scale",
-        contentAsHTML: !0,
-        content: '<div class="spinner-grow text-danger" role="status"> <span class="sr-only">Loading...</span></div>',
-        functionBefore: function(e, t) {
-            var n = $(t.origin).data("id"),
-                r = $(t.origin);
-            !0 !== r.data("loaded") && axios.get("/action/manga/" + n).then((function(t) {
-                e.content(t.data), r.data("loaded", !0)
-            }), (function(t) {
-                e.content("Lỗi lấy dữ liệu")
-            }))
-        }
+        // plugins: ["follower"],
+        // maxWidth: 500,
+        // updateAnimation: "scale",
+        // contentAsHTML: !0,
+        // content: '<div class="spinner-grow text-danger" role="status"> <span class="sr-only">Loading...</span></div>',
+        // functionBefore: function(e, t) {
+        //     var n = $(t.origin).data("id"),
+        //         r = $(t.origin);
+        //     !0 !== r.data("loaded") && axios.get("/action/manga/" + n).then((function(t) {
+        //         e.content(t.data), r.data("loaded", !0)
+        //     }), (function(t) {
+        //         e.content("Lỗi lấy dữ liệu")
+        //     }))
+        // }
     }), $("#btn-delete-all").click((function() {
         localStorage.removeItem("my_manga_history"), window.location.reload()
     })), $(document).ready((function() {

@@ -72,10 +72,21 @@
                                                         <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">Tên truyện</label>
                                                             <div class="col-sm-10">
-                                                                <input type="text" class="form-control" name="tentruyen"
+                                                                <input type="text" class="form-control" name="tentruyen" required 
                                                                     value="{{ $truyen->tentruyen }}">
                                                             </div>
                                                             <span class="text-danger">@error('tentruyen')
+                                                                {{ $message }}
+                                                                @enderror</span>
+                                                        </div>
+
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-2 col-form-label">Tên khác</label>
+                                                            <div class="col-sm-10">
+                                                                <input type="text" class="form-control"
+                                                                    name="tenkhac" value="{{ $truyen->tenkhac }}">
+                                                            </div>
+                                                            <span class="text-danger">@error('tenkhac')
                                                                 {{ $message }}
                                                                 @enderror</span>
                                                         </div>
@@ -86,10 +97,8 @@
                                                                 <select class="custom-select" id="tacgia"
                                                                     name="tacgia[]" required multiple>
                                                                     @foreach ($tacgia as $item)
-                                                                    <option value="{{ $item->id }}" {{ in_array($item->
-                                                                        id, $arr_tacgia) ? 'selected' : '' }}>{{
-                                                                        $item->tentacgia
-                                                                        }}</option>
+                                                                    <option value="{{ $item->id }}" {{ in_array($item->id, $arr_tacgia) ? 'selected' : '' }}>
+                                                                    {{ $item->tentacgia }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -104,10 +113,8 @@
                                                                 <select class="custom-select" id="theloai"
                                                                     name="theloai[]" required multiple>
                                                                     @foreach ($theloai as $item)
-                                                                    <option value="{{ $item->id }}" {{ in_array($item->
-                                                                        id, $arr_theloai) ? 'selected' : '' }}>{{
-                                                                        $item->tentheloai
-                                                                        }}</option>
+                                                                    <option value="{{ $item->id }}" {{ in_array($item->id, $arr_theloai) ? 'selected' : '' }}>
+                                                                    {{ $item->tentheloai }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -122,6 +129,19 @@
                                                                 <textarea rows="5" cols="5" class="form-control"
                                                                     name="mota">{{ $truyen->mota }}</textarea>
                                                             </div>
+                                                        </div>
+
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-2 col-form-label">Trạng thái</label>
+                                                            <div class="col-sm-10">
+                                                                <select class="custom-select" name="status" required>
+                                                                    <option value="1" @if($truyen->status == 1) selected @endif>Hoàn thành</option>
+                                                                    <option value="0" @if($truyen->status == 0) selected @endif>Đang tiến hành</option>
+                                                                </select>
+                                                            </div>
+                                                            <span class="text-danger">@error('status')
+                                                                {{ $message }}
+                                                                @enderror</span>
                                                         </div>
 
                                                         <div class="form-group row">

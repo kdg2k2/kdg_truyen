@@ -11,7 +11,7 @@
                 </form><button id="mb-search-close-btn" class="btn btn-navbar ml-1"><i
                         class="fas fa-times"></i></button>
             </div>
-        </div><a class="navbar-brand" href=""><img src="/Main_template/favicon.ico" width="30" height="30"
+        </div><a class="navbar-brand" href="/"><img src="/Main_template/favicon.ico" width="30" height="30"
                 class="d-inline-block align-top" alt>
             <p class="ml-1 d-none d-md-inline">TruyentranhLH</p>
         </a>
