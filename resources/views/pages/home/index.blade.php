@@ -19,34 +19,46 @@
                         <div class="row owl-carousel owl-theme owl-loaded owl-drag d-none">
                             <div class="owl-stage-outer">
                                 <div class="owl-stage">
+                                    @foreach ($truyen_view as $item)
                                     <div class="owl-item" style="width: 225px;">
                                         <div class="popular-thumb-item col-12">
-                                            <div class="thumb-wrapper" data-id="4566">
+                                            <div class="thumb-wrapper">
                                                 <a
-                                                    href="/Main_template/truyen-tranh/kage-no-jitsuryokusha-ni-naritakute">
+                                                    href="{{ $item->slug }}">
                                                     <div class="a6-ratio">
                                                         <div class="content img-in-ratio"
-                                                            style="background-image: url('http://cdn4.lhmanga.com/Store/Manga/tao-muon-tro-thanh-chua-te-bong-toi_5dadc045700a7.jpg')">
+                                                            style="background-image: url('{{ $item->path }}')">
                                                         </div>
                                                     </div>
                                                 </a>
                                                 <div class="thumb-detail">
-                                                    <div class="thumb_attr chapter-title text-truncate"
-                                                        title="Chuong 56"><a
-                                                            href="/Main_template/truyen-tranh/kage-no-jitsuryokusha-ni-naritakute/chuong-56-418"
-                                                            title="Chuong 56">Chuong 56</a></div>
+                                                    @php
+                                                        $tap = App\Tap::where('id_truyen', $item->id)->max('id');
+                                                        if ($tap) {
+                                                            $tentap = App\Tap::find($tap);
+                                                        }
+                                                    @endphp
+                                                    @if ($tap)
+                                                    <div class="thumb_attr chapter-title text-truncate" title="{{ $tentap->tentap }}">
+                                                        <a href="{{ $item->slug }}/{{ $tentap->id }}"
+                                                            title="{{ $tentap->tentap }}">{{ $tentap->tentap }}</a>
+                                                    </div>
+                                                    @endif
                                                 </div>
-                                                <div class="manga-badge"><span class="badge badge-info"><time
-                                                            class="timeago" title="2023-09-04 00:08:14"
-                                                            datetime="2023-09-04 00:08:14"> ... </time></span><span
-                                                        class="badge badge-danger ml-1 pulse-animation">Hot</span></div>
+                                                <div class="manga-badge">
+                                                    <span class="badge badge-info">
+                                                        <time class="timeago" title="{{ $item->updated_at }}" datetime="{{ $item->updated }}"><time class="timeago" datetime="{{ $item->updated_at }}">{{ $item->updated_at }}</time></time>
+                                                    </span>
+                                                    @if ($item->view > 5)
+                                                        <span class="badge badge-danger ml-1 pulse-animation">Hot</span>
+                                                    @endif
+                                                </div>
                                             </div>
-                                            <div class="thumb_attr series-title"><a
-                                                    href="/Main_template/truyen-tranh/kage-no-jitsuryokusha-ni-naritakute"
-                                                    title="Kage no Jitsuryokusha ni Naritakute!">Kage no Jitsuryokusha
-                                                    ni Naritakute!</a></div>
+                                            <div class="thumb_attr series-title">
+                                                <a href="{{ $item->slug }}" title="{{$item->tentruyen}}">{{$item->tentruyen}}</a></div>
                                         </div>
                                     </div>
+                                    @endforeach
                                 </div>
                             </div>
                             <div class="owl-nav disabled"><button type="button" role="presentation"
@@ -62,13 +74,13 @@
                                 <h3 class="card-title"><i class="fas fa-sparkles"></i> Truyện mới cập nhật </h3>
                             </div>
                             <div class="card-body bg-dark">
-                                <div class="text-center"><a href="/the-loai/manga?sort=update"
+                                {{-- <div class="text-center"><a href="/the-loai/manga?sort=update"
                                         class="btn btn-nation btn-default bg-lhmanga text-white mr-1">Truyện Nhật</a><a
                                         href="/the-loai/manhua?sort=update"
                                         class="btn btn-nation btn-default bg-lhmanga text-white mr-1">Truyện Trung</a>
                                     <a href="/the-loai/manhwa?sort=update"
                                         class="btn btn-nation btn-default bg-lhmanga text-white mr-1">Truyện Hàn</a>
-                                </div>
+                                </div> --}}
                                 <div class="row">
                                     @foreach ($truyen_update as $item)
                                         <div class="thumb-item-flow col-6 col-md-3">
@@ -87,14 +99,16 @@
                                                             $tap = App\Tap::where('id_truyen', $item->id)->max('id');
                                                             $tentap = App\Tap::find($tap);
                                                         @endphp
-                                                        @if ($tentap)
+                                                        @if ($tap)
                                                             <a href="{{ $item->slug }}/{{ $tentap->id }}">
-                                                            {{ $tentap->tentap }}
+                                                                {{ $tentap->tentap }}
                                                             </a>
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="manga-badge"><span class="badge badge-info"><time class="timeago" datetime="{{ $item->updated_at }}">{{ $item->updated_at }}</time></span></div>
+                                                @if ($tap)
+                                                <div class="manga-badge"><span class="badge badge-info"><time class="timeago" datetime="{{ $tentap->updated_at }}">{{ $tentap->updated_at }}</time></span></div>
+                                                @endif
                                             </div>
                                             <div class="thumb_attr series-title"><a
                                                     href="{{ $item->slug }}">{{ $item->tentruyen }}</a></div>
@@ -147,11 +161,20 @@
                                                             $tap = App\Tap::where('id_truyen', $item->id)->max('id');
                                                             $tentap = App\Tap::find($tap);
                                                         @endphp
-                                                        <a href="{{ $item->slug }}/{{ $tentap->id }}">@if ($tentap)
-                                                            {{ $tentap->tentap }}
-                                                        @endif</a></div>
+                                                        @if ($tap)
+                                                            <a href="{{ $item->slug }}/{{ $tentap->id }}">
+                                                                {{ $tentap->tentap }}
+                                                            </a>
+                                                        @endif    
+                                                    </div>
                                                 </div>
-                                                <div class="manga-badge"><span class="badge badge-info"><time class="timeago" datetime="{{ $item->created_at }}">{{ $item->created_at }}</time></span></div>
+                                                @if ($tap)
+                                                <div class="manga-badge"><span class="badge badge-info"><time class="timeago" datetime="{{ $tentap->created_at }}">{{ $tentap->created_at }}</time></span>
+                                                    @if (now()->diffInHours($item->created_at) <= 42)
+                                                        <span class="badge badge-success ml-1 pulse-animation">New</span>
+                                                    @endif
+                                                </div>
+                                                @endif
                                             </div>
                                             <div class="thumb_attr series-title"><a
                                                     href="{{ $item->slug }}">{{ $item->tentruyen }}</a></div>

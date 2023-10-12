@@ -16,7 +16,7 @@ class Truyen extends Migration
         Schema::create('truyen', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('tentruyen');
-            $table->text('tenkhac');
+            $table->text('tenkhac')->nullable();
             $table->boolean('status');
             $table->longText('mota')->nullable();
             $table->text('path')->nullable();

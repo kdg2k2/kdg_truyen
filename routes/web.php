@@ -63,5 +63,8 @@ Route::group(['prefix' => 'admin'], function (){
     
 });
 
+Route::get('/danh-sach', 'HomeController@get_danhsach');
+
 Route::get('/{slug}', 'HomeController@showTruyen');
 Route::get('/{slug}/{id}', 'HomeController@showTap');
+

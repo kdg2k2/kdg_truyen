@@ -31,12 +31,14 @@
                                                         @php
                                                             $arr_tap = App\Tap::where('id_truyen', $truyen->id)->pluck('id')->toArray();
                                                         @endphp
-                                                        <a href="/{{ $truyen->slug }}/{{ min($arr_tap) }}"><button
+                                                        @if ($arr_tap)
+                                                            <a href="/{{ $truyen->slug }}/{{ min($arr_tap) }}"><button
                                                                 class="btn btn-default btn-xs-block bg-lhmanga mb-1 mb-md-0 text-white">
                                                                 Chương đầu </button></a>
-                                                        <a href="/{{ $truyen->slug }}/{{ max($arr_tap) }}"><button
+                                                            <a href="/{{ $truyen->slug }}/{{ max($arr_tap) }}"><button
                                                                 class="btn btn-default btn-xs-block bg-lhmanga text-white">
                                                                 Chương cuối </button></a>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-md-8">
@@ -190,7 +192,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-4 float-md-right">
-                        <div class="card card-dark">
+                        {{-- <div class="card card-dark">
                             <div class="card-body bg-dark series-users p-0 m-0">
                                 <div class="series-owner group-mem"><img width="50px" height="50px"
                                         src="/Main_template/storage/images/raw/bc86a987-8a48-4a2a-bde0-07a06968678c.jpg">
@@ -204,60 +206,37 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="card card-dark card-hidden-mb">
                             <div class="card-header">
-                                <h3 class="card-title"> Truyện cùng nhóm dịch </h3>
+                                <h3 class="card-title">Truyện cùng tác giả</h3>
                                 <div class="card-tools d-block d-md-none"><button type="button" class="btn btn-tool"
                                         data-card-widget="collapse"><i class="fas fa-plus"></i></button></div>
                             </div>
                             <div class="card-body bg-dark">
                                 <ul class="others-list">
-                                    <li>
-                                        <div class="others-img no-padding">
-                                            <div class="a6-ratio">
-                                                <div class="content img-in-ratio"
-                                                    style="background-image: url('https://cdn4.lhmanga.com/Store/Manga/Bocchi_na_Bokura_no_Renai_Jijou_649c10d92c68f.jpg')">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="others-info">
-                                            <h5 class="others-name"><a
-                                                    href="/Main_template/truyen-tranh/bocchi-na-bokura-no-renai-jijou">Bocchi
-                                                    na Bokura no Renai Jijou</a></h5><small class="series-summary">Khi
-                                                nghỉ hè kết thúc, học sinh cao trung Ichijou...</small>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="others-img no-padding">
-                                            <div class="a6-ratio">
-                                                <div class="content img-in-ratio"
-                                                    style="background-image: url('https://1.bp.blogspot.com/-qObHvhAdla4/Vkw0QJ5TBvI/AAAAAAAJsAU/EksFbOm-l1U/s0/bt1528-1.jpg')">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="others-info">
-                                            <h5 class="others-name"><a href="/Main_template/truyen-tranh/rwby">RWBY</a>
-                                            </h5>
-                                            <small class="series-summary">Một thế giới với đầy những con quái vật
-                                                đang...</small>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="others-img no-padding">
-                                            <div class="a6-ratio">
-                                                <div class="content img-in-ratio"
-                                                    style="background-image: url('https://1.bp.blogspot.com/-DVUwQnGRdfY/Vnf5E09bVDI/AAAAAAAKz20/KTSUVrolVSE/s0/bt0156-maxresdefault.jpg')">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="others-info">
-                                            <h5 class="others-name"><a
-                                                    href="/Main_template/truyen-tranh/undeaded">UndeadEd</a>
-                                            </h5><small class="series-summary">Sau khi được tuyên bố đã chết lâm sàng,
-                                                nhân...</small>
-                                        </div>
-                                    </li>
+                                    @foreach ($truyen_same_tacgia as $item)
+                                        @if ($loop->index < 4)
+                                            @php
+                                                $truyen = App\Truyen::find($item);
+                                            @endphp
+                                            @if ($truyen)
+                                                <li>
+                                                    <div class="others-img no-padding">
+                                                        <div class="a6-ratio">
+                                                            <div class="content img-in-ratio"
+                                                                style="background-image: url('{{ $truyen->path }}')">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="others-info">
+                                                        <h5 class="others-name"><a
+                                                                href="/{{ $truyen->slug }}">{{ $truyen->tentruyen }}</a></h5><small class="series-summary" style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">{{ $truyen->mota }}</small>
+                                                    </div>
+                                                </li>
+                                            @endif
+                                        @endif
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
