@@ -48,7 +48,6 @@
                             <div class="main-body">
                                 <div class="page-wrapper">
                                     <div class="page-body">
-
                                         <div class="card">
                                             <div class="btn-create">
                                                 <a class="btn btn-sm btn-success" href="/admin/tap/create"><i
@@ -148,6 +147,10 @@
                 deleteForm.action = "/admin/tap/" + id + "/delete";
                 deleteForm.submit();
             }
+
+            $('#id_truyen').on('change', function () {
+                $('#filter_form').submit();
+            })
         });
     </script>
 </body>

@@ -39,45 +39,92 @@
                             </div>
                             <div class="card-body bg-dark">
                                 <div class="row">
-                                    @foreach ($truyen as $item)
-                                    <div class="thumb-item-flow col-6 col-md-3">
-                                        <div class="thumb-wrapper" data-id="8648" data-is-loaded="0">
-                                            <a href="{{ $item->slug }}">
-                                                <div class="a6-ratio">
-                                                    <div class="content img-in-ratio lazyloaded" data-bg=""
-                                                        style=" background-image: url('{{ $item->path }}'); "></div>
+                                    @if (isset($truyen))
+                                        @foreach ($truyen as $item)
+                                        <div class="thumb-item-flow col-6 col-md-3">
+                                            <div class="thumb-wrapper" data-id="8648" data-is-loaded="0">
+                                                <a href="{{ $item->slug }}">
+                                                    <div class="a6-ratio">
+                                                        <div class="content img-in-ratio lazyloaded" data-bg=""
+                                                            style=" background-image: url('{{ asset($item->path) }}'); "></div>
+                                                    </div>
+                                                </a>
+                                                @php
+                                                $tap = App\Tap::where('id_truyen', $item->id)->max('id');
+                                                $tentap = App\Tap::find($tap);
+                                                @endphp
+                                                <div class="thumb-detail">
+                                                    @if ($tap)
+                                                    <div class="thumb_attr chapter-title text-truncate"
+                                                        title="{{ $tentap->tentap }}">
+                                                        <a href="{{ $item->slug }}/{{ $tentap->id }}"
+                                                            title="{{ $tentap->tentap }}">{{ $tentap->tentap }}</a>
+                                                    </div>
+                                                    @endif
                                                 </div>
-                                            </a>
+                                                <div class="manga-badge">
+                                                    @if ($tap)
+                                                    <span class="badge badge-info"><time class="timeago"
+                                                            title="{{ $tentap->updated_at }}"
+                                                            datetime="{{ $tentap->updated_at }}">
+                                                            ...
+                                                        </time>
+                                                    </span>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="thumb_attr series-title">
+                                                <a href="{{ $item->slug }}" title="{{ $item->tentruyen }}">{{
+                                                    $item->tentruyen }}</a>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    @endif
+
+                                    @if (isset($arr_truyen))
+                                        @foreach ($arr_truyen as $truyen)
                                             @php
-                                            $tap = App\Tap::where('id_truyen', $item->id)->max('id');
-                                            $tentap = App\Tap::find($tap);
+                                                $item = App\Truyen::findOrFail($truyen);
                                             @endphp
-                                            <div class="thumb-detail">
-                                                @if ($tap)
-                                                <div class="thumb_attr chapter-title text-truncate"
-                                                    title="{{ $tentap->tentap }}">
-                                                    <a href="{{ $item->slug }}/{{ $tentap->id }}"
-                                                        title="{{ $tentap->tentap }}">{{ $tentap->tentap }}</a>
+                                            <div class="thumb-item-flow col-6 col-md-3">
+                                                <div class="thumb-wrapper" data-id="8648" data-is-loaded="0">
+                                                    <a href="{{ $item->slug }}">
+                                                        <div class="a6-ratio">
+                                                            <div class="content img-in-ratio lazyloaded" data-bg=""
+                                                                style=" background-image: url('{{ asset($item->path) }}'); "></div>
+                                                        </div>
+                                                    </a>
+                                                    @php
+                                                    $tap = App\Tap::where('id_truyen', $item->id)->max('id');
+                                                    $tentap = App\Tap::find($tap);
+                                                    @endphp
+                                                    <div class="thumb-detail">
+                                                        @if ($tap)
+                                                        <div class="thumb_attr chapter-title text-truncate"
+                                                            title="{{ $tentap->tentap }}">
+                                                            <a href="{{ $item->slug }}/{{ $tentap->id }}"
+                                                                title="{{ $tentap->tentap }}">{{ $tentap->tentap }}</a>
+                                                        </div>
+                                                        @endif
+                                                    </div>
+                                                    <div class="manga-badge">
+                                                        @if ($tap)
+                                                        <span class="badge badge-info"><time class="timeago"
+                                                                title="{{ $tentap->updated_at }}"
+                                                                datetime="{{ $tentap->updated_at }}">
+                                                                ...
+                                                            </time>
+                                                        </span>
+                                                        @endif
+                                                    </div>
                                                 </div>
-                                                @endif
+                                                <div class="thumb_attr series-title">
+                                                    <a href="{{ $item->slug }}" title="{{ $item->tentruyen }}">{{
+                                                        $item->tentruyen }}</a>
+                                                </div>
                                             </div>
-                                            <div class="manga-badge">
-                                                @if ($tap)
-                                                <span class="badge badge-info"><time class="timeago"
-                                                        title="{{ $tentap->updated_at }}"
-                                                        datetime="{{ $tentap->updated_at }}">
-                                                        ...
-                                                    </time>
-                                                </span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="thumb_attr series-title">
-                                            <a href="{{ $item->slug }}" title="{{ $item->tentruyen }}">{{
-                                                $item->tentruyen }}</a>
-                                        </div>
-                                    </div>
-                                    @endforeach
+                                        @endforeach
+                                    @endif
                                 </div>
                                 <div class="pagination_wrap">
                                     <a href="https://truyentranhlh.net/danh-sach?sort=update&amp;page=1"
@@ -123,183 +170,16 @@
                             </div>
                             <div class="card-body bg-dark">
                                 <ul class="filter-type unstyled clear row">
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/action">Action</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/adult">Adult</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/adventure">Adventure</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/anime">Anime</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/chuyen-sinh">Chuyển Sinh</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/co-dai">Cổ Đại</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/comedy">Comedy</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/comic">Comic</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/demons">Demons</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/detective">Detective</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/doujinshi">Doujinshi</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/drama">Drama</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/dam-my">Đam Mỹ</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/ecchi">Ecchi</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/fantasy">Fantasy</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/gender-bender">Gender Bender</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/harem">Harem</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/historical">Historical</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/horror">Horror</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/huyen-huyen">Huyền Huyễn</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/isekai">Isekai</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/josei">Josei</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/mafia">Mafia</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/magic">Magic</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/manhua">Manhua</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/manhwa">Manhwa</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/martial-arts">Martial Arts</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/mature">Mature</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/military">Military</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/mystery">Mystery</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/ngon-tinh">Ngôn Tình</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/one-shot">One shot</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/psychological">Psychological</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/romance">Romance</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/school-life">School Life</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/sci-fi">Sci-fi</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/seinen">Seinen</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/shoujo">Shoujo</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/shoujo-ai">Shoujo Ai</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/shounen">Shounen</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/shounen-ai">Shounen Ai</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/slice-of-life">Slice of life</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/smut">Smut</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/sports">Sports</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/supernatural">Supernatural</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/tragedy">Tragedy</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/trong-sinh">Trọng Sinh</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/truyen-mau">Truyện M�&nbsp;u</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/webtoon">Webtoon</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/xuyen-khong">Xuyên Không</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/yaoi">Yaoi</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/yuri">Yuri</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/mecha">Mecha</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/cooking">Cooking</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/trung-sinh">Trùng Sinh</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/gourmet">Gourmet</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/dark-fantasy">Dark Fantasy</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/manga">Manga</a>
-                                    </li>
-                                    <li class="filter-type_item col-4 text-nowrap">
-                                        <a href="https://truyentranhlh.net/the-loai/isekai-1">Isekai</a>
-                                    </li>
+                                    @php
+                                        $theloai = App\Theloai::all();
+                                    @endphp
+                                    @if ($theloai)
+                                        @foreach ($theloai as $item)
+                                            <li class="filter-type_item col-4 text-nowrap">
+                                                <a href="/the-loai/{{ $item->id }}" title="{{ $item->mota }}">{{ $item->tentheloai }}</a>
+                                            </li>
+                                        @endforeach
+                                    @endif
                                 </ul>
                             </div>
                         </div>
@@ -314,9 +194,42 @@
         document.addEventListener('DOMContentLoaded', function () {
             var hoanthanh = document.getElementById('hoanthanh');
             var dangtienhanh = document.getElementById('dangtienhanh');
-
             const urlParams = new URLSearchParams(window.location.search);
             const sortParam = urlParams.get('sort');
+            const hoanthanhParam = urlParams.get('hoanthanh');
+            const dangtienhanhParam = urlParams.get('dangtienhanh');
+
+            //set checked theo url
+            if (hoanthanhParam) {
+                hoanthanh.checked = true;
+            }
+            if (dangtienhanhParam) {
+                dangtienhanh.checked = true;
+            }
+
+            //không cho check cả 2 checkbox
+            hoanthanh.addEventListener('change', function () {
+                if (this.checked) {
+                    dangtienhanh.checked = false;
+                }
+            });
+            dangtienhanh.addEventListener('change', function () {
+                if (this.checked) {
+                    hoanthanh.checked = false;
+                }
+            });
+
+            //submit button
+            $('#btn-submit-filter').on('click', function () {
+                var url = new URLSearchParams();
+                if (hoanthanh.checked) {
+                    url.set('hoanthanh', 1);
+                }
+                if (dangtienhanh.checked) {
+                    url.set('dangtienhanh', 1);
+                }
+                window.location.href = '?' + url.toString();
+            })
 
             //set active cho select
             $('option').each(function () {
@@ -327,8 +240,7 @@
 
             //select change
             $('#list-sort').on('change', function () {
-                var url = '/danh-sach?sort='+ $(this).val();
-                window.location.href = url;
+                window.location.href = '?sort=' + $(this).val();
             });
         });
     </script>

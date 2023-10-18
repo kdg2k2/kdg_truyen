@@ -64,6 +64,7 @@ Route::group(['prefix' => 'admin'], function (){
 });
 
 Route::get('/danh-sach', 'HomeController@get_danhsach');
+Route::get('/the-loai/{id}', 'HomeController@get_theloai');
 
 Route::get('/{slug}', 'HomeController@showTruyen');
 Route::get('/{slug}/{id}', 'HomeController@showTap');

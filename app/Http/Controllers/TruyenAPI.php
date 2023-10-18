@@ -2,64 +2,102 @@
 
 namespace App\Http\Controllers;
 
+use App\Tacgia;
+use App\Tap;
+use App\Theloai;
 use App\Truyen;
+use App\Truyen_tacgia;
+use App\Truyen_theloai;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TruyenAPI extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function list()
     {
-        $truyen = Truyen::all();
+        $truyen = Truyen::orderByDesc('id')->get();
         return response()->json($truyen);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function home()
     {
-        echo 'home store api';
+        $truyen_new = Truyen::orderByDesc('created_at')->get();
+        $count = Truyen::count();
+        if ($count >= 10) {
+            $truyen_view = Truyen::orderByDesc('view')->take(10)->get();
+            $truyen_update = Truyen::select('truyen.*')
+                ->join('tap', 'truyen.id', '=', 'tap.id_truyen')
+                ->select('truyen.*', DB::raw('(SELECT MAX(updated_at) FROM tap WHERE tap.id_truyen = truyen.id) as latest_tap_updated_at'))
+                ->orderByDesc('latest_tap_updated_at')
+                ->distinct()
+                ->take(11)
+                ->get();
+        } else {
+            $truyen_view = Truyen::orderByDesc('view')->get();
+            $truyen_update = Truyen::select('truyen.*')
+                ->join('tap', 'truyen.id', '=', 'tap.id_truyen')
+                ->select('truyen.*', DB::raw('(SELECT MAX(updated_at) FROM tap WHERE tap.id_truyen = truyen.id) as latest_tap_updated_at'))
+                ->orderByDesc('latest_tap_updated_at')
+                ->distinct()
+                ->get();
+        }
+        return response()->json($truyen_update);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function detail($slug)
     {
-        echo 'home show api', $id;
+        $truyen = Truyen::where('slug', $slug)->first();
+        $arr_tap = Tap::where('id_truyen', $truyen->id)->get();
+        $max_tap = max($arr_tap->pluck('id')->toArray());
+
+        $arr_tacgia = [];
+        $arr_tg = Truyen_tacgia::where('id_truyen', $truyen->id)->get();
+        foreach ($arr_tg as $item) {
+            $tg = [];
+            $tg['id'] = $item->id_tacgia;
+            $tg['tentacgia'] = Tacgia::findOrFail($item->id_tacgia)->tentacgia;
+            array_push($arr_tacgia, $tg);
+        }
+
+        $arr_theloai = [];
+        $arr_tl = Truyen_theloai::where('id_truyen', $truyen->id)->get();
+        foreach ($arr_tl as $item) {
+            $tl = [];
+            $tl['id'] = $item->id_theloai;
+            $tl['tentheloai'] = Theloai::findOrFail($item->id_theloai)->tentheloai;
+            array_push($arr_theloai, $tl);
+        }
+
+        return response()->json([
+            'truyen' => $truyen,
+            'max_tap' => $max_tap,
+            'arr_tap' => $arr_tap,
+            'arr_tacgia' => $arr_tacgia,
+            'arr_theloai' => $arr_theloai,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function reading($slug, $id)
     {
-        //
-    }
+        $tap = Tap::findOrFail($id);
+        $arr_path = [];
+        foreach (json_decode($tap->path) as $item) {
+            array_push($arr_path, $item);
+        }
+        $truyen = Truyen::where('slug', $slug)->first();
+        $truyen->view = $truyen->view + 1;
+        $truyen->save();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $arr_tap = Tap::where('id_truyen', $truyen->id)->pluck('id')->toArray();
+        $tap_trc = isset($arr_tap[array_search($tap->id, $arr_tap) - 1]) ? $arr_tap[array_search($tap->id, $arr_tap) - 1] : null;
+        $tap_sau = isset($arr_tap[array_search($tap->id, $arr_tap) + 1]) ? $arr_tap[array_search($tap->id, $arr_tap) + 1] : null;
+
+        return response()->json([
+            'tentap' => $tap->tentap,
+            'tap_trc' => $tap_trc,
+            'tap_sau' => $tap_sau,
+            'truyen' => $truyen,
+            'arr_path' => $arr_path,
+        ]);
     }
 }

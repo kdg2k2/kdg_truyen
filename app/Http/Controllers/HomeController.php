@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Tap;
 use App\Truyen;
 use App\Truyen_tacgia;
+use App\Truyen_theloai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -76,6 +77,12 @@ class HomeController extends Controller
         }
     }
 
+    public function get_theloai($id){
+        $arr_truyen = Truyen_theloai::where('id_theloai', $id)->pluck('id_truyen')->toArray();
+        return view('pages.danhsach.index', [
+            'arr_truyen' => $arr_truyen,
+        ]);
+    }
 
     public function get_danhsach(Request $request)
     {

@@ -50,6 +50,7 @@
         justify-content: flex-end;
         margin-top: 15px;
         margin-right: 25px;
+        margin-left: 25px;
     }
 
     .active {
