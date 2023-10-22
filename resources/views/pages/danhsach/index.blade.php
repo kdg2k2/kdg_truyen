@@ -40,103 +40,65 @@
                             <div class="card-body bg-dark">
                                 <div class="row">
                                     @if (isset($truyen))
-                                        @foreach ($truyen as $item)
-                                        <div class="thumb-item-flow col-6 col-md-3">
-                                            <div class="thumb-wrapper" data-id="8648" data-is-loaded="0">
-                                                <a href="{{ $item->slug }}">
-                                                    <div class="a6-ratio">
-                                                        <div class="content img-in-ratio lazyloaded" data-bg=""
-                                                            style=" background-image: url('{{ asset($item->path) }}'); "></div>
+                                    @foreach ($truyen as $item)
+                                    <div class="thumb-item-flow col-6 col-md-3">
+                                        <div class="thumb-wrapper" data-id="8648" data-is-loaded="0">
+                                            <a href="{{ $item->slug }}">
+                                                <div class="a6-ratio">
+                                                    <div class="content img-in-ratio lazyloaded" data-bg=""
+                                                        style=" background-image: url('{{ asset($item->path) }}'); ">
                                                     </div>
-                                                </a>
-                                                @php
-                                                $tap = App\Tap::where('id_truyen', $item->id)->max('id');
-                                                $tentap = App\Tap::find($tap);
-                                                @endphp
-                                                <div class="thumb-detail">
-                                                    @if ($tap)
-                                                    <div class="thumb_attr chapter-title text-truncate"
-                                                        title="{{ $tentap->tentap }}">
-                                                        <a href="{{ $item->slug }}/{{ $tentap->id }}"
-                                                            title="{{ $tentap->tentap }}">{{ $tentap->tentap }}</a>
-                                                    </div>
-                                                    @endif
                                                 </div>
-                                                <div class="manga-badge">
-                                                    @if ($tap)
-                                                    <span class="badge badge-info"><time class="timeago"
-                                                            title="{{ $tentap->updated_at }}"
-                                                            datetime="{{ $tentap->updated_at }}">
-                                                            ...
-                                                        </time>
-                                                    </span>
-                                                    @endif
+                                            </a>
+                                            @php
+                                            $tap = App\Tap::where('id_truyen', $item->id)->max('id');
+                                            $tentap = App\Tap::find($tap);
+                                            @endphp
+                                            <div class="thumb-detail">
+                                                @if ($tap)
+                                                <div class="thumb_attr chapter-title text-truncate"
+                                                    title="{{ $tentap->tentap }}">
+                                                    <a href="{{ $item->slug }}/{{ $tentap->id }}"
+                                                        title="{{ $tentap->tentap }}">{{ $tentap->tentap }}</a>
                                                 </div>
+                                                @endif
                                             </div>
-                                            <div class="thumb_attr series-title">
-                                                <a href="{{ $item->slug }}" title="{{ $item->tentruyen }}">{{
-                                                    $item->tentruyen }}</a>
+                                            <div class="manga-badge">
+                                                @if ($tap)
+                                                <span class="badge badge-info"><time class="timeago"
+                                                        title="{{ $tentap->updated_at }}"
+                                                        datetime="{{ $tentap->updated_at }}">
+                                                        ...
+                                                    </time>
+                                                </span>
+                                                @endif
                                             </div>
                                         </div>
-                                        @endforeach
-                                    @endif
-
-                                    @if (isset($arr_truyen))
-                                        @foreach ($arr_truyen as $truyen)
-                                            @php
-                                                $item = App\Truyen::findOrFail($truyen);
-                                            @endphp
-                                            <div class="thumb-item-flow col-6 col-md-3">
-                                                <div class="thumb-wrapper" data-id="8648" data-is-loaded="0">
-                                                    <a href="{{ $item->slug }}">
-                                                        <div class="a6-ratio">
-                                                            <div class="content img-in-ratio lazyloaded" data-bg=""
-                                                                style=" background-image: url('{{ asset($item->path) }}'); "></div>
-                                                        </div>
-                                                    </a>
-                                                    @php
-                                                    $tap = App\Tap::where('id_truyen', $item->id)->max('id');
-                                                    $tentap = App\Tap::find($tap);
-                                                    @endphp
-                                                    <div class="thumb-detail">
-                                                        @if ($tap)
-                                                        <div class="thumb_attr chapter-title text-truncate"
-                                                            title="{{ $tentap->tentap }}">
-                                                            <a href="{{ $item->slug }}/{{ $tentap->id }}"
-                                                                title="{{ $tentap->tentap }}">{{ $tentap->tentap }}</a>
-                                                        </div>
-                                                        @endif
-                                                    </div>
-                                                    <div class="manga-badge">
-                                                        @if ($tap)
-                                                        <span class="badge badge-info"><time class="timeago"
-                                                                title="{{ $tentap->updated_at }}"
-                                                                datetime="{{ $tentap->updated_at }}">
-                                                                ...
-                                                            </time>
-                                                        </span>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="thumb_attr series-title">
-                                                    <a href="{{ $item->slug }}" title="{{ $item->tentruyen }}">{{
-                                                        $item->tentruyen }}</a>
-                                                </div>
-                                            </div>
-                                        @endforeach
+                                        <div class="thumb_attr series-title">
+                                            <a href="{{ $item->slug }}" title="{{ $item->tentruyen }}">{{
+                                                $item->tentruyen }}</a>
+                                        </div>
+                                    </div>
+                                    @endforeach
                                     @endif
                                 </div>
+
                                 <div class="pagination_wrap">
-                                    <a href="https://truyentranhlh.net/danh-sach?sort=update&amp;page=1"
-                                        class="paging_item paging_prevnext prev disabled">Đầu</a><a
-                                        href="https://truyentranhlh.net/danh-sach?sort=update&amp;page=1"
-                                        class="paging_item page_num current">1</a><a
-                                        href="https://truyentranhlh.net/danh-sach?sort=update&amp;page=2"
-                                        class="paging_item page_num">2</a><a
-                                        href="https://truyentranhlh.net/danh-sach?sort=update&amp;page=3"
-                                        class="paging_item page_num">3</a><a class="paging_item">...</a><a
-                                        href="https://truyentranhlh.net/danh-sach?sort=update&amp;page=319"
-                                        class="paging_item paging_prevnext next">Cuối</a>
+                                    @php
+                                    $current_page = $truyen->currentPage();
+                                    $last_page = $truyen->lastPage();
+                                    @endphp
+                                    <a href="{{ $truyen->appends(request()->query())->url(1) }}" class="paging_item paging_prevnext prev {{ $current_page == 1 ? 'disabled' : '' }}">Đầu</a>
+                                    @for($i = 1; $i <= $last_page; $i++)
+                                        @if($i == $current_page)
+                                            <a class="paging_item page_num current">{{ $i }}</a>
+                                        @elseif(abs($current_page - $i) < 3 || $i == 1 || $i == $last_page)
+                                            <a href="{{ $truyen->appends(request()->query())->url($i) }}" class="paging_item page_num">{{ $i }}</a>
+                                        @elseif($i == $current_page - 3 || $i == $current_page + 3)
+                                            <a class="paging_item">...</a>
+                                        @endif
+                                    @endfor
+                                    <a href="{{ $truyen->appends(request()->query())->url($last_page) }}" class="paging_item paging_prevnext prev {{ $current_page == $last_page ? 'disabled' : '' }}">Cuối</a>
                                 </div>
                             </div>
                         </div>
@@ -171,14 +133,15 @@
                             <div class="card-body bg-dark">
                                 <ul class="filter-type unstyled clear row">
                                     @php
-                                        $theloai = App\Theloai::all();
+                                    $theloai = App\Theloai::all();
                                     @endphp
                                     @if ($theloai)
-                                        @foreach ($theloai as $item)
-                                            <li class="filter-type_item col-4 text-nowrap">
-                                                <a href="/the-loai/{{ $item->id }}" title="{{ $item->mota }}">{{ $item->tentheloai }}</a>
-                                            </li>
-                                        @endforeach
+                                    @foreach ($theloai as $item)
+                                    <li class="filter-type_item col-4 text-nowrap">
+                                        <a href="/the-loai/{{ $item->id }}" title="{{ $item->mota }}">{{
+                                            $item->tentheloai }}</a>
+                                    </li>
+                                    @endforeach
                                     @endif
                                 </ul>
                             </div>

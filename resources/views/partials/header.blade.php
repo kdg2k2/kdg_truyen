@@ -26,7 +26,7 @@
                             @endphp
                             @if ($theloai)
                                 @foreach ($theloai as $item)
-                                    <div class="col-4 col-md-2"><a class="dropdown-item genres-item" title="{{ $item->mota }}" href="/the-loai/action">{{ $item->tentheloai }}</a></div>
+                                    <div class="col-4 col-md-2"><a class="dropdown-item genres-item" title="{{ $item->mota }}" href="/the-loai/{{ $item->id }}">{{ $item->tentheloai }}</a></div>
                                 @endforeach
                             @endif
                         </div>

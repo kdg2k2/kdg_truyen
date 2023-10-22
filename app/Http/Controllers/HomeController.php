@@ -7,10 +7,18 @@ use App\Truyen;
 use App\Truyen_tacgia;
 use App\Truyen_theloai;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
+
+    public function search(Request $request)
+    {
+        $key = $request->q;
+        $truyen = Truyen::where('tentruyen', 'like', '%' . $key . '%')->Orwhere('tenkhac', 'like', '%' . $key . '%')->get();
+        return response()->json($truyen);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -77,10 +85,129 @@ class HomeController extends Controller
         }
     }
 
-    public function get_theloai($id){
-        $arr_truyen = Truyen_theloai::where('id_theloai', $id)->pluck('id_truyen')->toArray();
+    public function get_theloai(Request $request, $id)
+    {
+        if ($request->sort) {
+            $sort = $request->sort;
+            if ($sort == 'update') {
+                // $arr_truyen = Truyen::select('truyen.*')
+                //     ->join('tap', 'truyen.id', '=', 'tap.id_truyen')
+                //     ->select('truyen.*', DB::raw('(SELECT MAX(updated_at) FROM tap WHERE tap.id_truyen = truyen.id) as latest_tap_updated_at'))
+                //     ->orderByDesc('latest_tap_updated_at')
+                //     ->distinct()
+                //     ->paginate(24);
+
+                $arr = Truyen_theloai::where('id_theloai', $id)->pluck('id_truyen')->toArray();
+                $arr_truyen = [];
+                foreach ($arr as $item) {
+                    $find = Truyen::findOrFail($item);
+                    array_push($arr_truyen, $find);
+                }
+
+                // Sắp xếp mảng theo thời gian cập nhật tập truyện giảm dần
+                usort($arr_truyen, function ($a, $b) {
+                    $latestTapA = $a->tap()->max('updated_at');
+                    $latestTapB = $b->tap()->max('updated_at');
+                    return strtotime($latestTapB) - strtotime($latestTapA);
+                });
+            } else if ($sort == 'za') {
+                $arr = Truyen_theloai::where('id_theloai', $id)->pluck('id_truyen')->toArray();
+                $arr_truyen = [];
+                foreach ($arr as $item) {
+                    $find = Truyen::findOrFail($item);
+                    array_push($arr_truyen, $find);
+                }
+
+                // Sắp xếp mảng theo trường 'tentruyen' từ Z đến A
+                usort($arr_truyen, function ($a, $b) {
+                    return -strcmp($a->tentruyen, $b->tentruyen);
+                });
+            } else if ($sort == 'az') {
+                $arr = Truyen_theloai::where('id_theloai', $id)->pluck('id_truyen')->toArray();
+                $arr_truyen = [];
+                foreach ($arr as $item) {
+                    $find = Truyen::findOrFail($item);
+                    array_push($arr_truyen, $find);
+                }
+
+                // Sắp xếp mảng theo trường 'tentruyen' từ A đến Z
+                usort($arr_truyen, function ($a, $b) {
+                    return strcmp($a->tentruyen, $b->tentruyen);
+                });
+            } else if ($sort == 'new') {
+                $arr = Truyen_theloai::where('id_theloai', $id)->pluck('id_truyen')->toArray();
+                $arr_truyen = [];
+                foreach ($arr as $item) {
+                    $find = Truyen::findOrFail($item);
+                    array_push($arr_truyen, $find);
+                }
+
+                usort($arr_truyen, function ($a, $b) {
+                    $latestA = $a->tap()->max('created_at');
+                    $latestB = $b->tap()->max('created_at');
+                    return -strtotime($latestB) - strtotime($latestA);
+                });
+            } else if ($sort == 'top') {
+                $arr = Truyen_theloai::where('id_theloai', $id)->pluck('id_truyen')->toArray();
+                $arr_truyen = [];
+                foreach ($arr as $item) {
+                    $find = Truyen::findOrFail($item);
+                    array_push($arr_truyen, $find);
+                }
+
+                usort($arr_truyen, function ($a, $b) {
+                    return $b->view - $a->view;
+                });
+            }
+            // orderByDesc('tentruyen')->
+            // orderBy('tentruyen')->
+            // orderByDesc('created_at')->
+            // orderByDesc('view')->
+        } else if ($request->hoanthanh) {
+            $arr = Truyen_theloai::where('id_theloai', $id)->pluck('id_truyen')->toArray();
+            $arr_truyen = [];
+            foreach ($arr as $item) {
+                $find = Truyen::findOrFail($item);
+                if ($find->status == 1) {
+                    array_push($arr_truyen, $find);
+                }
+            }
+        } else if ($request->dangtienhanh) {
+            $arr = Truyen_theloai::where('id_theloai', $id)->pluck('id_truyen')->toArray();
+            $arr_truyen = [];
+            foreach ($arr as $item) {
+                $find = Truyen::findOrFail($item);
+                if ($find->status == 0) {
+                    array_push($arr_truyen, $find);
+                }
+            }
+        } else {
+            $arr = Truyen_theloai::where('id_theloai', $id)->pluck('id_truyen')->toArray();
+            $arr_truyen = [];
+            foreach ($arr as $item) {
+                $find = Truyen::findOrFail($item);
+                array_push($arr_truyen, $find);
+            }
+        }
+
+        $truyenCollection = collect($arr_truyen);
+
+        // Số trang hiển thị trên mỗi trang
+        $perPage = 1;
+        // Trang hiện tại (lấy từ query parameter hoặc giá trị mặc định)
+        $page = request()->get('page', 1);
+        // Tạo một LengthAwarePaginator từ Collection
+        $truyen = new LengthAwarePaginator(
+            $truyenCollection->forPage($page, $perPage), // Dữ liệu trên trang hiện tại
+            $truyenCollection->count(), // Tổng số items
+            $perPage, // Số lượng items trên mỗi trang
+            $page, // Trang hiện tại
+            ['path' => LengthAwarePaginator::resolveCurrentPath()] // Cấu hình cho URL pagination
+        );
+
+        // dd($truyen);
         return view('pages.danhsach.index', [
-            'arr_truyen' => $arr_truyen,
+            'truyen' => $truyen,
         ]);
     }
 
@@ -88,28 +215,28 @@ class HomeController extends Controller
     {
         if ($request->sort) {
             $sort = $request->sort;
-            if($sort == 'update'){
+            if ($sort == 'update') {
                 $truyen = Truyen::select('truyen.*')
-                ->join('tap', 'truyen.id', '=', 'tap.id_truyen')
-                ->select('truyen.*', DB::raw('(SELECT MAX(updated_at) FROM tap WHERE tap.id_truyen = truyen.id) as latest_tap_updated_at'))
-                ->orderByDesc('latest_tap_updated_at')
-                ->distinct()
-                ->paginate(24);
-            }else if($sort == 'za'){
-                $truyen = Truyen::orderByDesc('tentruyen')->get();
-            }else if($sort == 'az'){
-                $truyen = Truyen::orderBy('tentruyen')->get();
-            }else if($sort == 'new'){
-                $truyen = Truyen::orderByDesc('created_at')->get();
-            }else if($sort == 'top'){
-                $truyen = Truyen::orderByDesc('view')->get();
+                    ->join('tap', 'truyen.id', '=', 'tap.id_truyen')
+                    ->select('truyen.*', DB::raw('(SELECT MAX(updated_at) FROM tap WHERE tap.id_truyen = truyen.id) as latest_tap_updated_at'))
+                    ->orderByDesc('latest_tap_updated_at')
+                    ->distinct()
+                    ->paginate(1);
+            } else if ($sort == 'za') {
+                $truyen = Truyen::orderByDesc('tentruyen')->paginate(1);
+            } else if ($sort == 'az') {
+                $truyen = Truyen::orderBy('tentruyen')->paginate(1);
+            } else if ($sort == 'new') {
+                $truyen = Truyen::orderByDesc('created_at')->paginate(1);
+            } else if ($sort == 'top') {
+                $truyen = Truyen::orderByDesc('view')->paginate(1);
             }
-        }else if($request->hoanthanh){
-            $truyen = Truyen::where('status', 1)->get();
-        }else if($request->dangtienhanh){
-            $truyen = Truyen::where('status', 0)->get();
-        }else{
-            $truyen = Truyen::all();
+        } else if ($request->hoanthanh) {
+            $truyen = Truyen::where('status', 1)->paginate(1);
+        } else if ($request->dangtienhanh) {
+            $truyen = Truyen::where('status', 0)->paginate(1);
+        } else {
+            $truyen = Truyen::paginate(1);
         }
 
         return view('pages.danhsach.index', [

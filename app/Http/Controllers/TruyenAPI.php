@@ -13,15 +13,32 @@ use Illuminate\Support\Facades\DB;
 
 class TruyenAPI extends Controller
 {
+    public function category()
+    {
+        $theloai = Theloai::all();
+        return response()->json($theloai);
+    }
+
     public function list()
     {
-        $truyen = Truyen::orderByDesc('id')->get();
+        $truyen = Truyen::orderBy('id')->get();
         return response()->json($truyen);
+    }
+
+    public function listFilter($id)
+    {
+        $truyen = Truyen_theloai::where('id_theloai', $id)->pluck('id_truyen')->toArray();
+        $arr_truyen = [];
+        foreach ($truyen as $item) {
+            $findTruyen = Truyen::findOrFail($item);
+            array_push($arr_truyen, $findTruyen);
+        }
+        return response()->json($arr_truyen);
     }
 
     public function home()
     {
-        $truyen_new = Truyen::orderByDesc('created_at')->get();
+        // $truyen_new = Truyen::orderByDesc('created_at')->get();
         $count = Truyen::count();
         if ($count >= 10) {
             $truyen_view = Truyen::orderByDesc('view')->take(10)->get();
@@ -30,7 +47,7 @@ class TruyenAPI extends Controller
                 ->select('truyen.*', DB::raw('(SELECT MAX(updated_at) FROM tap WHERE tap.id_truyen = truyen.id) as latest_tap_updated_at'))
                 ->orderByDesc('latest_tap_updated_at')
                 ->distinct()
-                ->take(11)
+                ->take(12)
                 ->get();
         } else {
             $truyen_view = Truyen::orderByDesc('view')->get();
@@ -41,7 +58,10 @@ class TruyenAPI extends Controller
                 ->distinct()
                 ->get();
         }
-        return response()->json($truyen_update);
+        return response()->json([
+            'truyen_view' => $truyen_view,
+            'truyen_update' => $truyen_update,
+        ]);
     }
 
     public function detail($slug)
@@ -94,6 +114,7 @@ class TruyenAPI extends Controller
 
         return response()->json([
             'tentap' => $tap->tentap,
+            'id_tap' => $tap->id,
             'tap_trc' => $tap_trc,
             'tap_sau' => $tap_sau,
             'truyen' => $truyen,

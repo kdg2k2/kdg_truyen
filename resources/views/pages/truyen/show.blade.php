@@ -52,7 +52,7 @@
                                                                 loại:</span>
                                                             <span class="info-value">
                                                                 @foreach ($truyen->truyen_theloai as $item)
-                                                                <a href="#">
+                                                                <a href="/the-loai/{{ $item->theloai->id }}">
                                                                     <span class="badge badge-info bg-lhmanga mx-1"
                                                                         data-toggle="tooltip" data-placement="top"
                                                                         title>{{$item->theloai->tentheloai}}

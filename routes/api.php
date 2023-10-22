@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 // Route::apiResource('home', 'TruyenAPI');
 Route::get('/home', 'TruyenAPI@home');
 Route::get('/list', 'TruyenAPI@list');
+Route::get('/list/{id}', 'TruyenAPI@listFilter');
+Route::get('/category', 'TruyenAPI@category');
 Route::get('/{slug}', 'TruyenAPI@detail');
 Route::get('/{slug}/{id}', 'TruyenAPI@reading');
 // Route::get('/api/home/{id}', 'TruyenAPI@show');

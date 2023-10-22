@@ -47,7 +47,7 @@
                                                 </div>
                                                 <div class="manga-badge">
                                                     <span class="badge badge-info">
-                                                        <time class="timeago" title="{{ $item->updated_at }}" datetime="{{ $item->updated }}"><time class="timeago" datetime="{{ $item->updated_at }}">{{ $item->updated_at }}</time></time>
+                                                        <time class="timeago" title="{{ $tentap->updated_at }}" datetime="{{ $tentap->updated }}"><time class="timeago" datetime="{{ $tentap->updated_at }}">{{ $tentap->updated_at }}</time></time>
                                                     </span>
                                                     @if ($item->view > 5)
                                                         <span class="badge badge-danger ml-1 pulse-animation">Hot</span>
