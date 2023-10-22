@@ -17,9 +17,11 @@ class Lichsu extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('id_tap');
             $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_truyen');
 
             $table->foreign('id_tap')->references('id')->on('tap')->onDelete('cascade');
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_truyen')->references('id')->on('truyen')->onDelete('cascade');
         });
     }
 

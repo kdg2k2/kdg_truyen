@@ -2,16 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Lichsu;
+use App\Report;
 use App\Tap;
 use App\Truyen;
 use App\Truyen_tacgia;
 use App\Truyen_theloai;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
+    public function error_report(Request $request){
+        $data = new Report();
+        $data->url = $request->chapter_err;
+        $data->des = $request->description;
+        $data->save();
+    }
+    public function history()
+    {
+        $lichsu = Lichsu::where('id_user', Session::get('loginId'))->get();
+        return view('pages.history.history', ['lichsu' => $lichsu]);
+    }
 
     public function search(Request $request)
     {
@@ -74,6 +89,21 @@ class HomeController extends Controller
         $tap = Tap::findOrFail($id);
         $truyen = Truyen::where('slug', $slug)->first();
         if ($truyen && $tap) {
+            if (Session::has('loginId')) {
+                $check = Lichsu::where('id_user', Session::get('loginId'))->where('id_truyen', $truyen->id)->first();
+                if ($check == null) {
+                    $lichsu = new Lichsu();
+                    $lichsu->id_user = Session::get('loginId');
+                    $lichsu->id_tap = $id;
+                    $lichsu->id_truyen = $truyen->id;
+                    $lichsu->save();
+                }else{
+                    $lichsu = Lichsu::findOrFail($check->id);
+                    $lichsu->id_tap = $id;
+                    $lichsu->save();
+                }
+            }
+
             $truyen->view = $truyen->view + 1;
             $truyen->save();
             return view('pages.truyen.chapter', [
@@ -159,10 +189,6 @@ class HomeController extends Controller
                     return $b->view - $a->view;
                 });
             }
-            // orderByDesc('tentruyen')->
-            // orderBy('tentruyen')->
-            // orderByDesc('created_at')->
-            // orderByDesc('view')->
         } else if ($request->hoanthanh) {
             $arr = Truyen_theloai::where('id_theloai', $id)->pluck('id_truyen')->toArray();
             $arr_truyen = [];

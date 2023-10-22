@@ -228,14 +228,14 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="card card-dark">
+                        {{-- <div class="card card-dark">
                             <div class="card-header">
                                 <h3 class="card-title"><i class="fad fa-history"></i> Lịch sử đọc truyện </h3>
                             </div>
                             <div class="card-body bg-dark p-0 m-0">
                                 <ul id="manga-history" class="others-list mx-2"></ul>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="card card-dark">
                             <div class="card-header">
                                 <h3 class="card-title"><i class="fad fa-comments-alt"></i> Bình luận mới nhất </h3>

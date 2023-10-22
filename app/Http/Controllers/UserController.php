@@ -11,14 +11,43 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        // $this->middleware('isLogged')->except(['login', 'checkLogin', 'forget', 'forgetPost', 'getPass', 'postGetPass']);
-    }
-    
     public function login()
     {
         return view('pages.login.login');
+    }
+
+    public function register()
+    {
+        return view('pages.register.register');
+    }
+
+    public function post_register(Request $request){
+        $request->validate([
+            'email' => 'required|email|unique:users',
+            'username' => 'required',
+            'password' => 'required',
+            're_password' => 'required',
+        ], [
+            'email.required' => 'Nhập email để đăng kí',
+            'email.email' => 'Vui lòng nhập đúng định dạng email (gồm @gmail.com .v.v)',
+            'email.unique' => 'Email đã đc đăng ký trước đó',
+            'username.required' => 'Trường này không thể bỏ trống',
+            'password.required' => 'Trường này không thể bỏ trống',
+            're_password.required' => 'Trường này không thể bỏ trống',
+        ]);
+
+        if ($request->password != $request->re_password) {
+            return back()->with('fail', 'Mật khẩu và nhập lại mật khẩu chưa chính xác');
+        }
+
+        $user = new User();
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->role = 'user';
+
+        $user->save();
+        return back()->with('success', 'Đăng kí thành công');
     }
 
     public function checkLogin(Request $request)
@@ -32,7 +61,11 @@ class UserController extends Controller
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 $request->session()->put('loginId', $user->id);
-                return redirect('/logged');
+                if($user->role == 'admin'){
+                    return redirect('/logged');
+                }else{
+                    return redirect('/');
+                }
             } else {
                 return back()->with('fail', 'Sai tài khoản hoặc mật khẩu');
             }
@@ -123,7 +156,7 @@ class UserController extends Controller
     {
         if (Session::has('loginId')) {
             Session::pull('loginId');
-            return redirect('/login');
+            return back();
         }
     }
     /**
@@ -178,12 +211,8 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->role = $request->role;
 
-        $res = $user->save();
-        if ($res) {
-            return redirect('/admin/user-manager')->with('success', 'Đăng kí thành công.');
-        } else {
-            return back()->with('fail', 'Đã xảy ra lỗi');
-        }
+        $user->save();
+        return redirect('/admin/user-manager')->with('success', 'Đăng kí thành công.');
     }
 
     /**

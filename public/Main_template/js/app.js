@@ -36968,10 +36968,10 @@
     n.r(t);
     var r = {
             name: "ErrorReport",
-            props: {
-                manga_id: Number,
-                chapter_id: Number
-            },
+            // props: {
+            //     manga_id: Number,
+            //     chapter_id: Number
+            // },
             data: function() {
                 return {
                     is_loading: !1,
@@ -36989,8 +36989,9 @@
                     this.is_loading = !0;
                     var t = this;
                     axios.post("/action/error_report", {
-                        manga_id: t.manga_id,
-                        chapter_id: t.chapter_id,
+                        // manga_id: t.manga_id,
+                        // chapter_id: t.chapter_id,
+                        chapter_err: window.location.href,
                         description: e
                     }).then((function(e) {
                         t.is_reported = !0, alertify.alert("Cảm ơn bạn đã báo lỗi!")

@@ -63,6 +63,15 @@
                         <span class="pcoded-mtext">Tài khoản</span>
                     </a>
                 </li>
+
+                <li class="{{ Str::contains(Request::url(), '/admin/report') ? 'active' : '' }}">
+                    <a href="/admin/report-manager" class="waves-effect waves-dark {{ Str::contains(Request::url(), '/admin/report') ? 'active' : '' }}">
+                        <span class="pcoded-micon">
+                            <i class="fa fa-flag"></i>
+                        </span>
+                        <span class="pcoded-mtext">Báo cáo lỗi</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

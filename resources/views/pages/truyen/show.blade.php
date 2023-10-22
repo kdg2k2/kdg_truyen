@@ -3,6 +3,12 @@
 
 <head>
     @include('partials/head')
+
+    <style>
+        .alertify-notifier.ajs-bottom {
+            bottom: 50px !important;
+        }
+    </style>
 </head>
 
 <body class>
@@ -27,15 +33,16 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="d-flex flex-md-row flex-column justify-content-between my-2">
+                                                    <div
+                                                        class="d-flex flex-md-row flex-column justify-content-between my-2">
                                                         @php
-                                                            $arr_tap = App\Tap::where('id_truyen', $truyen->id)->pluck('id')->toArray();
+                                                        $arr_tap = App\Tap::where('id_truyen', $truyen->id)->pluck('id')->toArray();
                                                         @endphp
                                                         @if ($arr_tap)
-                                                            <a href="/{{ $truyen->slug }}/{{ min($arr_tap) }}"><button
+                                                        <a href="/{{ $truyen->slug }}/{{ min($arr_tap) }}"><button
                                                                 class="btn btn-default btn-xs-block bg-lhmanga mb-1 mb-md-0 text-white">
                                                                 Chương đầu </button></a>
-                                                            <a href="/{{ $truyen->slug }}/{{ max($arr_tap) }}"><button
+                                                        <a href="/{{ $truyen->slug }}/{{ max($arr_tap) }}"><button
                                                                 class="btn btn-default btn-xs-block bg-lhmanga text-white">
                                                                 Chương cuối </button></a>
                                                         @endif
@@ -43,11 +50,12 @@
                                                 </div>
                                                 <div class="col-12 col-md-8">
                                                     <div class="series-name-group"><span class="series-name"><a
-                                                                href="/Main_template/truyen-tranh/100-nin-no-eiyuu-o-sodateta-saikyou-yogensha-wa-boukensha-ni-natte-mo-sekaijuu-no-deshi-kara-shitawarete-masu-lhmanga">
+                                                                href="/{{ $truyen->slug }}">
                                                                 {{$truyen->tentruyen}}</a></span></div>
                                                     <div class="series-information">
                                                         <div class="info-item"><span class="info-name">Tên
-                                                                khác:</span><span class="info-value ">{{ $truyen->tenkhac }}</span></div>
+                                                                khác:</span><span class="info-value ">{{
+                                                                $truyen->tenkhac }}</span></div>
                                                         <div class="info-item"><span class="info-name">Thể
                                                                 loại:</span>
                                                             <span class="info-value">
@@ -64,8 +72,7 @@
                                                         <div class="info-item"><span class="info-name">Tác giả:</span>
                                                             <span class="info-value ">
                                                                 @foreach ($truyen->truyen_tacgia as $item)
-                                                                <a
-                                                                    href="#">{{$item->tacgia->tentacgia}}</a>
+                                                                <a href="#">{{$item->tacgia->tentacgia}}</a>
                                                                 @endforeach
                                                             </span>
                                                         </div>
@@ -73,11 +80,11 @@
                                                             <span class="info-name">Tình trạng:</span>
                                                             <span class="info-value">
                                                                 <a href="#!">
-                                                                @if ($truyen->status == 1)
+                                                                    @if ($truyen->status == 1)
                                                                     Hoàn thành
-                                                                @else
+                                                                    @else
                                                                     Đang tiến hành
-                                                                @endif</a>
+                                                                    @endif</a>
                                                             </span>
                                                         </div>
                                                     </div>
@@ -160,7 +167,8 @@
                                                             <div class="statistic-name">Lần cuối</div>
                                                             <div class="statistic-value"><time class="timeago"
                                                                     title="{{ $truyen->updated_at }}"
-                                                                    datetime="{{ $truyen->updated_at }}">{{ $truyen->updated_at }}
+                                                                    datetime="{{ $truyen->updated_at }}">{{
+                                                                    $truyen->updated_at }}
                                                                 </time></div>
                                                         </div>
                                                         <div class="col-4 statistic-item">
@@ -216,27 +224,25 @@
                             <div class="card-body bg-dark">
                                 <ul class="others-list">
                                     @foreach ($truyen_same_tacgia as $item)
-                                        @if ($loop->index < 4)
-                                            @php
-                                                $truyen = App\Truyen::find($item);
-                                            @endphp
-                                            @if ($truyen)
-                                                <li>
-                                                    <div class="others-img no-padding">
-                                                        <div class="a6-ratio">
-                                                            <div class="content img-in-ratio"
-                                                                style="background-image: url('{{ $truyen->path }}')">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="others-info">
-                                                        <h5 class="others-name"><a
-                                                                href="/{{ $truyen->slug }}">{{ $truyen->tentruyen }}</a></h5><small class="series-summary" style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">{{ $truyen->mota }}</small>
-                                                    </div>
-                                                </li>
-                                            @endif
+                                    @if ($loop->index < 4) @php $truyen=App\Truyen::find($item); @endphp @if ($truyen)
+                                        <li>
+                                        <div class="others-img no-padding">
+                                            <div class="a6-ratio">
+                                                <div class="content img-in-ratio"
+                                                    style="background-image: url('{{ $truyen->path }}')">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="others-info">
+                                            <h5 class="others-name"><a href="/{{ $truyen->slug }}">{{ $truyen->tentruyen
+                                                    }}</a></h5><small class="series-summary"
+                                                style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">{{
+                                                $truyen->mota }}</small>
+                                        </div>
+                                        </li>
                                         @endif
-                                    @endforeach
+                                        @endif
+                                        @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -274,13 +280,12 @@
                             <div class="card-body bg-dark">
                                 <ul class="list-chapters at-series">
                                     @foreach ($truyen->tap as $item)
-                                    <a href="/{{ $truyen->slug }}/{{ $item->id }}"
-                                    title="{{ $item->tentap }}">
-                                    <li>
-                                        <div class="chapter-name text-truncate"> {{ $item->tentap }} </div>
-                                        <div class="chapter-time">{{ $item->updated_at }}</div>
-                                    </li>
-                                </a>
+                                    <a href="/{{ $truyen->slug }}/{{ $item->id }}" title="{{ $item->tentap }}">
+                                        <li>
+                                            <div class="chapter-name text-truncate"> {{ $item->tentap }} </div>
+                                            <div class="chapter-time">{{ $item->updated_at }}</div>
+                                        </li>
+                                    </a>
                                     @endforeach
                                 </ul>
                             </div>

@@ -22,7 +22,7 @@
                         </div>
                         <ul class="show-notification profile-notification dropdown-menu" data-dropdown-in="fadeIn"
                             data-dropdown-out="fadeOut">
-                            <li>
+                            {{-- <li>
                                 <a href="#">
                                     <i class="feather icon-settings"></i> Settings
                                 </a>
@@ -41,9 +41,9 @@
                                 <a href="#">
                                     <i class="feather icon-lock"></i> Lock Screen
                                 </a>
-                            </li>
+                            </li> --}}
                             <li>
-                                <a href="#">
+                                <a href="/logout">
                                     <i class="feather icon-log-out"></i> Logout
                                 </a>
                             </li>

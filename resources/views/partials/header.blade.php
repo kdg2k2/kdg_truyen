@@ -22,25 +22,30 @@
                     <div class="dropdown-menu manga-mega-menu genres-menu w-100" style="overflow: auto;">
                         <div class="row no-gutters">
                             @php
-                                $theloai = App\Theloai::all();
+                            $theloai = App\Theloai::all();
                             @endphp
                             @if ($theloai)
-                                @foreach ($theloai as $item)
-                                    <div class="col-4 col-md-2"><a class="dropdown-item genres-item" title="{{ $item->mota }}" href="/the-loai/{{ $item->id }}">{{ $item->tentheloai }}</a></div>
-                                @endforeach
+                            @foreach ($theloai as $item)
+                            <div class="col-4 col-md-2"><a class="dropdown-item genres-item" title="{{ $item->mota }}"
+                                    href="/the-loai/{{ $item->id }}">{{ $item->tentheloai }}</a></div>
+                            @endforeach
                             @endif
                         </div>
                     </div>
                 </li>
-                <li class="nav-item d-inline d-lg-none"><a class="nav-link" data-toggle="dropdown" href="#"
-                        aria-expanded="false"><i class="far fa-stream"></i></a>
-                    <div class="dropdown-menu w-100"><a class="dropdown-item" href="/bxh"><i
-                                class="far fa-crown"></i><span class="ml-1">BXH</span></a><a class="dropdown-item"
-                            href="/history"><i class="fas fa-history"></i><span class="ml-1">Lịch sử đọc
-                                truyện</span></a></div>
+                <li class="nav-item d-inline d-lg-none">
+                    <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false"><i
+                            class="far fa-stream"></i></a>
+                    <div class="dropdown-menu w-100">
+                        {{-- <a class="dropdown-item" href="/bxh"><i class="far fa-crown"></i><span
+                                class="ml-1">BXH</span></a> --}}
+                        <a class="dropdown-item" href="/history"><i class="fas fa-history"></i><span class="ml-1">Lịch
+                                sử đọc
+                                truyện</span></a>
+                    </div>
                 </li>
-                <li class="nav-item mr-2 d-none d-lg-inline"><a class="nav-link" href="/bxh"><i
-                            class="far fa-crown"></i><span class="ml-1">BXH</span></a></li>
+                {{-- <li class="nav-item mr-2 d-none d-lg-inline"><a class="nav-link" href="/bxh"><i
+                            class="far fa-crown"></i><span class="ml-1">BXH</span></a></li> --}}
                 <li class="nav-item mr-2 d-none d-lg-inline"><a class="nav-link" href="/history"><i
                             class="fas fa-history"></i><span class="ml-1">Lịch sử</span></a></li>
             </ul>
@@ -59,11 +64,32 @@
                                     class="fas fa-search"></i></button></div>
                     </div>
                 </form>
+                @if (Session::has('loginId'))
+                <li class="nav-item dropdown ml-3"><a data-toggle="dropdown" href="#" aria-expanded="false" class="nav-link"
+                        style="padding: 0px; margin-top: 4px;">
+                        <div class="d-flex">
+                            <div class="d-none d-lg-inline" style="margin-top: 2px;">{{ App\User::findOrFail(Session::get('loginId'))->username }}</div>
+                            <div class="image"><img alt="User Image" height="35" width="35"
+                                    src="{{ asset('/img/user.png') }}"
+                                    class="rounded-circle" style="margin-top: -2px; margin-left: 10px;"></div>
+                        </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg manga-mega-menu dropdown-menu-right">
+                        @if (App\User::findOrFail(Session::get('loginId'))->role == 'admin')
+                        <a href="/logged" class="dropdown-item"><i class="far fa-user"></i> Trang quản trị </a>
+                        @endif
+                        <a href="/me" class="dropdown-item"><i class="far fa-id-card"></i> Trang cá nhân </a>
+                        <div class="dropdown-divider"></div><a href="/me/library" class="dropdown-item"><i
+                                class="far fa-books"></i> Tủ sách </a>
+                        <div class="dropdown-divider"></div><a href="/logout"
+                            class="dropdown-item dropdown-footer logout-btn" style="cursor: pointer;"><i
+                                class="far fa-sign-out"></i> Đăng xuất </a>
+                    </div>
+                </li>
+                @else
                 <li class="nav-item mr-2"><a class="nav-link" href="/login"><i class="far fa-sign-in"></i><span
                             class="d-none d-lg-inline ml-1">Login</span></a></li>
-                <li class="nav-item d-none d-md-inline"><a class="nav-link" href="/register"><i
-                            class="far fa-user"></i><span class="d-none d-lg-inline ml-1">Register</span></a>
-                </li>
+                @endif
             </ul>
         </div>
     </div>

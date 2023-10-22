@@ -11,7 +11,10 @@ class Lichsu extends Model
     protected $fillable = [
         'id_tap', 
         'id_user', 
+        'id_truyen', 
     ];
+
+    public $timestamps = false;
 
     public function tap(){
         return $this->belongsTo(Tap::class, 'id_tap');
@@ -19,5 +22,9 @@ class Lichsu extends Model
 
     public function user(){
         return $this->belongsTo(User::class, 'id_user');
+    }
+
+    public function truyen(){
+        return $this->belongsTo(Truyen::class, 'id_truyen');
     }
 }

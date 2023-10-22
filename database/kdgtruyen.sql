@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2023 at 09:20 AM
+-- Generation Time: Oct 22, 2023 at 04:10 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -45,8 +45,18 @@ CREATE TABLE `binhluan` (
 CREATE TABLE `lichsu` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `id_tap` bigint(20) UNSIGNED NOT NULL,
-  `id_user` bigint(20) UNSIGNED NOT NULL
+  `id_user` bigint(20) UNSIGNED NOT NULL,
+  `id_truyen` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `lichsu`
+--
+
+INSERT INTO `lichsu` (`id`, `id_tap`, `id_user`, `id_truyen`) VALUES
+(2, 16, 1, 4),
+(3, 23, 1, 5),
+(4, 29, 1, 6);
 
 -- --------------------------------------------------------
 
@@ -80,6 +90,26 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `report`
+--
+
+CREATE TABLE `report` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `url` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `des` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `report`
+--
+
+INSERT INTO `report` (`id`, `url`, `des`, `status`) VALUES
+(1, 'http://127.0.0.1:8001/gaygocap99/29', 'test', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tacgia`
 --
 
@@ -93,7 +123,10 @@ CREATE TABLE `tacgia` (
 --
 
 INSERT INTO `tacgia` (`id`, `tentacgia`) VALUES
-(1, 'Đang cập nhật');
+(1, 'Đang cập nhật'),
+(2, 'Murata Yuusuke'),
+(3, 'Kanzaki kurone'),
+(4, 'Eiichiro Oda');
 
 -- --------------------------------------------------------
 
@@ -144,7 +177,8 @@ INSERT INTO `tap` (`id`, `tentap`, `id_truyen`, `path`, `created_at`, `updated_a
 (26, 'Chap 3', 7, '[\"truyen\\/7\\/Chap 3\\/1697094398000.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398001.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398002.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398003.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398004.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398005.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398006.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398007.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398008.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398009.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398010.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398011.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398012.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398013.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398014.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398015.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398016.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398017.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398018.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398019.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398020.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398021.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398022.jpg\",\"truyen\\/7\\/Chap 3\\/1697094398023.jpg\"]', '2023-10-12 07:06:38', '2023-10-12 07:06:38'),
 (27, 'Chap 4', 7, '[\"truyen\\/7\\/Chap 4\\/1697094428000.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428001.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428002.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428003.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428004.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428005.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428006.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428007.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428008.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428009.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428010.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428011.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428012.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428013.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428014.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428015.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428016.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428017.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428018.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428019.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428020.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428021.jpg\",\"truyen\\/7\\/Chap 4\\/1697094428022.jpg\"]', '2023-10-12 07:07:08', '2023-10-12 07:07:08'),
 (28, 'Chap 5', 7, '[\"truyen\\/7\\/Chap 5\\/1697094452000.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452001.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452002.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452003.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452004.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452005.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452006.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452007.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452008.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452009.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452010.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452011.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452012.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452013.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452014.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452015.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452016.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452017.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452018.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452019.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452020.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452021.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452022.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452023.jpg\",\"truyen\\/7\\/Chap 5\\/1697094452024.jpg\"]', '2023-10-12 07:07:32', '2023-10-12 07:07:32'),
-(29, 'Chap 1', 6, '[\"truyen\\/6\\/Chap 1\\/1697094479000.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479001.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479002.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479003.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479004.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479005.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479006.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479007.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479008.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479009.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479010.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479011.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479012.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479013.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479014.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479015.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479016.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479017.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479018.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479019.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479020.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479021.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479022.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479023.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479024.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479025.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479026.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479027.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479028.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479029.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479030.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479031.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479032.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479033.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479034.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479035.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479036.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479037.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479038.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479039.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479040.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479041.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479042.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479043.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479044.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479045.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479046.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479047.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479048.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479049.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479050.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479051.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479052.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480053.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480054.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480055.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480056.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480057.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480058.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480059.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480060.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480061.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480062.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480063.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480064.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480065.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480066.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480067.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480068.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480069.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480070.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480071.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480072.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480073.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480074.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480075.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480076.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480077.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480078.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480079.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480080.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480081.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480082.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480083.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480084.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480085.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480086.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480087.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480088.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480089.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480090.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480091.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480092.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480093.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480094.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480095.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480096.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480097.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480098.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480099.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480100.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480101.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480102.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480103.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480104.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480105.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480106.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480107.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480108.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480109.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480110.jpg\"]', '2023-10-12 07:08:00', '2023-10-12 07:08:00');
+(29, 'Chap 1', 6, '[\"truyen\\/6\\/Chap 1\\/1697094479000.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479001.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479002.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479003.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479004.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479005.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479006.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479007.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479008.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479009.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479010.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479011.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479012.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479013.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479014.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479015.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479016.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479017.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479018.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479019.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479020.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479021.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479022.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479023.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479024.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479025.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479026.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479027.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479028.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479029.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479030.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479031.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479032.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479033.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479034.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479035.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479036.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479037.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479038.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479039.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479040.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479041.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479042.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479043.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479044.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479045.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479046.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479047.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479048.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479049.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479050.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479051.jpg\",\"truyen\\/6\\/Chap 1\\/1697094479052.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480053.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480054.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480055.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480056.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480057.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480058.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480059.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480060.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480061.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480062.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480063.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480064.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480065.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480066.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480067.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480068.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480069.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480070.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480071.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480072.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480073.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480074.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480075.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480076.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480077.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480078.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480079.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480080.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480081.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480082.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480083.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480084.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480085.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480086.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480087.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480088.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480089.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480090.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480091.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480092.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480093.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480094.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480095.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480096.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480097.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480098.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480099.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480100.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480101.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480102.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480103.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480104.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480105.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480106.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480107.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480108.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480109.jpg\",\"truyen\\/6\\/Chap 1\\/1697094480110.jpg\"]', '2023-10-12 07:08:00', '2023-10-12 07:08:00'),
+(30, 'Chap 6', 7, '[\"truyen\\/7\\/Chap 6\\/1697645348000.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348001.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348002.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348003.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348004.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348005.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348006.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348007.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348008.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348009.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348010.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348011.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348012.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348013.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348014.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348015.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348016.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348017.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348018.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348019.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348020.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348021.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348022.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348023.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348024.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348025.jpg\",\"truyen\\/7\\/Chap 6\\/1697645348026.jpg\"]', '2023-10-18 16:09:08', '2023-10-18 16:09:08');
 
 -- --------------------------------------------------------
 
@@ -254,14 +288,14 @@ CREATE TABLE `truyen` (
 --
 
 INSERT INTO `truyen` (`id`, `tentruyen`, `tenkhac`, `status`, `mota`, `path`, `view`, `slug`, `created_at`, `updated_at`) VALUES
-(1, 'One Piece', 'Đảo Hải Tặc', 0, 'Truyện One Piece: Monkey D. Luffy, 1 cậu bé rất thích hải tặc có ước mơ tìm được kho báu One Piece và trở thành Vua hải tặc - Pirate King. Lúc nhỏ, Luffy tình cờ ăn phải trái quỉ (Devil Fruit) Gomu Gomu, nó cho cơ thể cậu khả năng co dãn đàn hồi như cao su nhưng đổi lại cậu sẽ không bao giờ biết bơi. Sau đó Luffy lại được...', 'truyen/1/1697086119_avt_one-piece-dao-hai-tac_5d8dd3faaf1cc.jpg', 0, 'onepiece', '2023-10-12 04:48:39', '2023-10-12 04:48:39'),
-(2, 'How To Fight', 'Cách Chiến Thắng Trận Đấu , Viral Hit, Học cách chiến đấu', 0, 'Yoo Hobin luôn bị bắt nạt bởi vì nó là một thằng loser chính hiệu. Tuy nhiên một sự kiện bất ngờ đã đảo lộn cuộc sống của cậu ta. Một cái video tình cờ tải lên mạng làm cậu ta trở nên nổi tiếng, quá tuyệt vời! Càng ngày càng có nhiều người theo dõi và cậu ta còn kiếm ra tiền từ cái vid tình cờ đó nữa! Tuy nhiên, vì chỉ là tình cờ nên cậu ta không thể nào kiếm ra một cái video nào khác như thế nữa. Phát cuồng vì vòng xoáy tiền tài và danh vọng có thể đem lại cho mình, cậu ta lên kế hoạch tạo ra những video thật độc đáo để kiếm thêm người theo dõi. Nhưng để làm ra chúng, thì đầu tiên cậu ta phải biết chiến đấu', 'truyen/2/1697086224_avt_how-to-fight_64ac2b187843c.jpg', 0, 'howtofight', '2023-10-12 04:50:24', '2023-10-12 04:50:24'),
-(3, 'Kengan Ashura', NULL, 0, 'Từ thời Edo đã tồn tại các đầu trường, mà tại đó các thương gia thuê đấu sĩ đấu tay không với nhau, bên nào thắng sẽ có tất cả. Tokita Ouma, biệt danh là Ashura tham gia đấu trường và đánh thắng tất cả các đấu thủ của mình. Khả năng đặc biết đè bẹp mọi đối thủ của cậu ta đã được các ông chủ tập đoàn lớn để ý, trong đó có chủ tịch tập đoàn Nogi, Nogi Hideki', 'truyen/3/1697086353_avt_Kengan_Ashura_volume_1.jpg', 0, 'kenganashura', '2023-10-12 04:52:33', '2023-10-12 04:52:33'),
-(4, 'Nhiệm Vụ Diệu Kỳ', NULL, 0, 'Kim So Huyn, một nam sinh trung học yếu đuối đến mức không thể mở miệng phản đối bất kì yêu cầu nào của người khác. Mội ngày đi học đều là cực hình khi Kim So Huyn đã và đang là nạn nhân của bạo lực học đường. Với việc truyện tranh phát triển, cậu mơ ước rằng bản thân sẽ có một hệ thống để biến mình thành một nhân vật bá đạo giống như các nhân vật trong truyện tranh, và hệ thống xuất hiện thật.... Liệu hệ thống nhiệm vụ này có thể biến Kim So Huyn thành một nam sinh bá đạo không? Cùng đón xem tại Vlogtruyen nhé!!\r\nMột tác phẩm đến từ tác giả của Học Cách Chiến Đấu và Hoán Đổi Diệu Kỳ!', 'truyen/4/1697086423_avt_nhiem-vu-dieu-ky_6510250575df6.jpg', 3, 'nhiemvudieuky', '2023-10-12 04:53:43', '2023-10-12 06:59:25'),
-(5, 'Võ Luyện Đỉnh Phong', NULL, 0, 'Võ đạo đỉnh phong, là cô độc, là tịch mịch, là dài đằng đẵng cầu tác, là cao xử bất thắng hàn Phát triển trong nghịch cảnh, cầu sinh nơi tuyệt địa, bất khuất không buông tha, mới có thể có thể phá võ chi cực đạo. Dương Khai - đệ tử thí luyện kiêm sai vặt quét rác của Lăng Tiêu Các, ngẫu nhiên lấy được một bản vô tự hắc thư, từ đó về sau bước lên võ đạo dằng dặc', 'truyen/5/1697086481_avt_VÕ_LUYỆN_ĐỈNH_PHONG_5cd5a1f8c1496.jpg', 0, 'voluyendinhphong', '2023-10-12 04:54:41', '2023-10-12 04:54:41'),
-(6, 'Gậy Gỗ Cấp 99+', NULL, 0, 'Đây là phiên bản gậy gỗ Saitama - Gõ phát chết luôn!!!!!!!!!\r\n\r\nThanh niên main trong game thực tế ảo bị gái lừa giết chết rồi vô tình được cho 1 chiếc gậy gỗ tân thủ. Bug game khiến cho main cường hóa cây gậy này lên cấp 99+ tối đa. Đây là phiên bản gậy gỗ Saitama - Gõ phát chết luôn!!!!!!!!!', 'truyen/6/1697086558_avt_99-wooden-stick.jpg', 0, 'gaygocap99', '2023-10-12 04:55:58', '2023-10-12 04:55:58'),
-(7, 'One-Punch Man', 'ONEPUNCH-MAN , Cú Đấm Hủy Diệt , Đấm Phát Chết Luôn, Onepunch Man', 0, 'Onepunch-Man là một Manga thể loại siêu anh hùng với đặc trưng phồng tôm đấm phát chết luôn… Lol!!! Nhân vật chính trong Onepunch-man là Saitama, một con người mà nhìn đâu cũng thấy “tầm thường”, từ khuôn mặt vô hồn, cái đầu trọc lóc, cho tới thể hình long tong. Tuy nhiên, con người nhìn thì tầm thường này lại chuyên giải quyết những vấn đề hết sức bất thường. Anh thực chất chính là một siêu anh hùng luôn tìm kiếm cho mình một đối thủ mạnh. Vấn đề là, cứ mỗi lần bắt gặp một đối thủ tiềm năng, thì đối thủ nào cũng như đối thủ nào, chỉ ăn một đấm của anh là… chết luôn. Liệu rằng Onepunch-Man Saitaman có thể tìm được cho mình một kẻ ác dữ dằn đủ sức đấu với anh? Hãy theo bước Saitama trên con đường một đấm tìm đối cực kỳ hài hước của anh!!', 'truyen/7/1697086668_avt_60eb2f6f80b89_60eb2f71d9655.jpg', 0, 'onepunchman', '2023-10-12 04:57:48', '2023-10-12 04:57:48'),
-(8, 'Kage no Jitsuryokusha ni Naritakute!', '陰の実力者になりたくて！,The Eminence in Shadow,To Be a Power in the Shadows! , Tao muốn trở thành chúa tể bóng tối!!', 0, 'Truyện Kage no Jitsuryokusha ni Naritakute!: Được chuyển thể từ Light Novel cùng tên.Tôi không phải nhân vật chính, cũng chẳng phải trùm cuối... Tôi là một cậu trai ước mơ làm chúa tể bóng tối, chèo lái câu chuyện trong bóng tối, bí mật phô bày năng lực, tên là Shido. Vừa mới hớn hở vì được chuyển sinh đến thế giới khác và quyết định mình sẽ là chúa...', 'truyen/8/1697086800_avt_tao-muon-tro-thanh-chua-te-bong-toi_5dadc045700a7.jpg', 0, 'kagenojitsuryokushaninaritakute', '2023-10-12 05:00:00', '2023-10-12 05:00:00');
+(1, 'One Piece', 'Đảo Hải Tặc', 0, 'Truyện One Piece: Monkey D. Luffy, 1 cậu bé rất thích hải tặc có ước mơ tìm được kho báu One Piece và trở thành Vua hải tặc - Pirate King. Lúc nhỏ, Luffy tình cờ ăn phải trái quỉ (Devil Fruit) Gomu Gomu, nó cho cơ thể cậu khả năng co dãn đàn hồi như cao su nhưng đổi lại cậu sẽ không bao giờ biết bơi. Sau đó Luffy lại được...', 'truyen/1/1697086119_avt_one-piece-dao-hai-tac_5d8dd3faaf1cc.jpg', 52, 'onepiece', '2023-10-12 04:48:39', '2023-10-19 16:48:09'),
+(2, 'How To Fight', 'Cách Chiến Thắng Trận Đấu , Viral Hit, Học cách chiến đấu', 0, 'Yoo Hobin luôn bị bắt nạt bởi vì nó là một thằng loser chính hiệu. Tuy nhiên một sự kiện bất ngờ đã đảo lộn cuộc sống của cậu ta. Một cái video tình cờ tải lên mạng làm cậu ta trở nên nổi tiếng, quá tuyệt vời! Càng ngày càng có nhiều người theo dõi và cậu ta còn kiếm ra tiền từ cái vid tình cờ đó nữa! Tuy nhiên, vì chỉ là tình cờ nên cậu ta không thể nào kiếm ra một cái video nào khác như thế nữa. Phát cuồng vì vòng xoáy tiền tài và danh vọng có thể đem lại cho mình, cậu ta lên kế hoạch tạo ra những video thật độc đáo để kiếm thêm người theo dõi. Nhưng để làm ra chúng, thì đầu tiên cậu ta phải biết chiến đấu', 'truyen/2/1697086224_avt_how-to-fight_64ac2b187843c.jpg', 51, 'howtofight', '2023-10-12 04:50:24', '2023-10-19 16:47:00'),
+(3, 'Kengan Ashura', NULL, 0, 'Từ thời Edo đã tồn tại các đầu trường, mà tại đó các thương gia thuê đấu sĩ đấu tay không với nhau, bên nào thắng sẽ có tất cả. Tokita Ouma, biệt danh là Ashura tham gia đấu trường và đánh thắng tất cả các đấu thủ của mình. Khả năng đặc biết đè bẹp mọi đối thủ của cậu ta đã được các ông chủ tập đoàn lớn để ý, trong đó có chủ tịch tập đoàn Nogi, Nogi Hideki', 'truyen/3/1697086353_avt_Kengan_Ashura_volume_1.jpg', 47, 'kenganashura', '2023-10-12 04:52:33', '2023-10-19 16:38:49'),
+(4, 'Nhiệm Vụ Diệu Kỳ', NULL, 0, 'Kim So Huyn, một nam sinh trung học yếu đuối đến mức không thể mở miệng phản đối bất kì yêu cầu nào của người khác. Mội ngày đi học đều là cực hình khi Kim So Huyn đã và đang là nạn nhân của bạo lực học đường. Với việc truyện tranh phát triển, cậu mơ ước rằng bản thân sẽ có một hệ thống để biến mình thành một nhân vật bá đạo giống như các nhân vật trong truyện tranh, và hệ thống xuất hiện thật.... Liệu hệ thống nhiệm vụ này có thể biến Kim So Huyn thành một nam sinh bá đạo không? Cùng đón xem tại Vlogtruyen nhé!!\r\nMột tác phẩm đến từ tác giả của Học Cách Chiến Đấu và Hoán Đổi Diệu Kỳ!', 'truyen/4/1697086423_avt_nhiem-vu-dieu-ky_6510250575df6.jpg', 31, 'nhiemvudieuky', '2023-10-12 04:53:43', '2023-10-22 14:07:35'),
+(5, 'Võ Luyện Đỉnh Phong', NULL, 0, 'Võ đạo đỉnh phong, là cô độc, là tịch mịch, là dài đằng đẵng cầu tác, là cao xử bất thắng hàn Phát triển trong nghịch cảnh, cầu sinh nơi tuyệt địa, bất khuất không buông tha, mới có thể có thể phá võ chi cực đạo. Dương Khai - đệ tử thí luyện kiêm sai vặt quét rác của Lăng Tiêu Các, ngẫu nhiên lấy được một bản vô tự hắc thư, từ đó về sau bước lên võ đạo dằng dặc', 'truyen/5/1697086481_avt_VÕ_LUYỆN_ĐỈNH_PHONG_5cd5a1f8c1496.jpg', 33, 'voluyendinhphong', '2023-10-12 04:54:41', '2023-10-22 13:32:34'),
+(6, 'Gậy Gỗ Cấp 99+', NULL, 0, 'Đây là phiên bản gậy gỗ Saitama - Gõ phát chết luôn!!!!!!!!!\r\n\r\nThanh niên main trong game thực tế ảo bị gái lừa giết chết rồi vô tình được cho 1 chiếc gậy gỗ tân thủ. Bug game khiến cho main cường hóa cây gậy này lên cấp 99+ tối đa. Đây là phiên bản gậy gỗ Saitama - Gõ phát chết luôn!!!!!!!!!', 'truyen/6/1697086558_avt_99-wooden-stick.jpg', 102, 'gaygocap99', '2023-10-12 04:55:58', '2023-10-22 13:39:06'),
+(7, 'One-Punch Man', 'ONEPUNCH-MAN , Cú Đấm Hủy Diệt , Đấm Phát Chết Luôn, Onepunch Man', 0, 'Onepunch-Man là một Manga thể loại siêu anh hùng với đặc trưng phồng tôm đấm phát chết luôn… Lol!!! Nhân vật chính trong Onepunch-man là Saitama, một con người mà nhìn đâu cũng thấy “tầm thường”, từ khuôn mặt vô hồn, cái đầu trọc lóc, cho tới thể hình long tong. Tuy nhiên, con người nhìn thì tầm thường này lại chuyên giải quyết những vấn đề hết sức bất thường. Anh thực chất chính là một siêu anh hùng luôn tìm kiếm cho mình một đối thủ mạnh. Vấn đề là, cứ mỗi lần bắt gặp một đối thủ tiềm năng, thì đối thủ nào cũng như đối thủ nào, chỉ ăn một đấm của anh là… chết luôn. Liệu rằng Onepunch-Man Saitaman có thể tìm được cho mình một kẻ ác dữ dằn đủ sức đấu với anh? Hãy theo bước Saitama trên con đường một đấm tìm đối cực kỳ hài hước của anh!!', 'truyen/7/1697086668_avt_60eb2f6f80b89_60eb2f71d9655.jpg', 71, 'onepunchman', '2023-10-12 04:57:48', '2023-10-19 16:15:16'),
+(8, 'Kage no Jitsuryokusha ni Naritakute!', '陰の実力者になりたくて！,The Eminence in Shadow,To Be a Power in the Shadows! , Tao muốn trở thành chúa tể bóng tối!!', 0, 'Truyện Kage no Jitsuryokusha ni Naritakute!: Được chuyển thể từ Light Novel cùng tên.Tôi không phải nhân vật chính, cũng chẳng phải trùm cuối... Tôi là một cậu trai ước mơ làm chúa tể bóng tối, chèo lái câu chuyện trong bóng tối, bí mật phô bày năng lực, tên là Shido. Vừa mới hớn hở vì được chuyển sinh đến thế giới khác và quyết định mình sẽ là chúa...', 'truyen/8/1697086800_avt_tao-muon-tro-thanh-chua-te-bong-toi_5dadc045700a7.jpg', 46, 'kagenojitsuryokushaninaritakute', '2023-10-12 05:00:00', '2023-10-22 08:38:03');
 
 -- --------------------------------------------------------
 
@@ -280,14 +314,15 @@ CREATE TABLE `truyen_tacgia` (
 --
 
 INSERT INTO `truyen_tacgia` (`id`, `id_truyen`, `id_tacgia`) VALUES
-(1, 1, 1),
 (2, 2, 1),
 (3, 3, 1),
 (4, 4, 1),
 (5, 5, 1),
 (6, 6, 1),
-(7, 7, 1),
-(8, 8, 1);
+(8, 8, 1),
+(9, 1, 4),
+(10, 7, 2),
+(11, 7, 3);
 
 -- --------------------------------------------------------
 
@@ -306,11 +341,6 @@ CREATE TABLE `truyen_theloai` (
 --
 
 INSERT INTO `truyen_theloai` (`id`, `id_truyen`, `id_theloai`) VALUES
-(1, 1, 1),
-(2, 1, 3),
-(3, 1, 7),
-(4, 1, 40),
-(5, 1, 58),
 (6, 2, 1),
 (7, 2, 8),
 (8, 2, 26),
@@ -336,17 +366,22 @@ INSERT INTO `truyen_theloai` (`id`, `id_truyen`, `id_theloai`) VALUES
 (28, 6, 15),
 (29, 6, 24),
 (30, 6, 26),
-(31, 7, 1),
-(32, 7, 3),
-(33, 7, 7),
-(34, 7, 40),
-(35, 7, 45),
-(36, 7, 58),
 (37, 8, 1),
 (38, 8, 7),
 (39, 8, 15),
 (40, 8, 17),
-(41, 8, 59);
+(41, 8, 59),
+(42, 1, 1),
+(43, 1, 3),
+(44, 1, 7),
+(45, 1, 40),
+(46, 1, 58),
+(47, 7, 1),
+(48, 7, 3),
+(49, 7, 7),
+(50, 7, 40),
+(51, 7, 45),
+(52, 7, 58);
 
 -- --------------------------------------------------------
 
@@ -363,6 +398,14 @@ CREATE TABLE `users` (
   `token_created_at` timestamp NULL DEFAULT NULL,
   `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `token`, `token_created_at`, `role`) VALUES
+(1, 'admin', 'kdg2k2@gmail.com', '$2y$10$KrgB6pl9CrLqoJ4XDfsQbOexrtkztkHpDvZlPXqgl3A6dnatg8U3O', NULL, NULL, 'admin'),
+(2, 'user', 'user@gmail.com', '$2y$10$tLFJEtCDbiFUOB/MCLY8IedmM6wscsKnHtw4jkCMyf7E8T6RK5dau', NULL, NULL, 'user');
 
 --
 -- Indexes for dumped tables
@@ -382,12 +425,19 @@ ALTER TABLE `binhluan`
 ALTER TABLE `lichsu`
   ADD PRIMARY KEY (`id`),
   ADD KEY `lichsu_id_tap_foreign` (`id_tap`),
-  ADD KEY `lichsu_id_user_foreign` (`id_user`);
+  ADD KEY `lichsu_id_user_foreign` (`id_user`),
+  ADD KEY `lichsu_id_truyen_foreign` (`id_truyen`);
 
 --
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `report`
+--
+ALTER TABLE `report`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -460,7 +510,7 @@ ALTER TABLE `binhluan`
 -- AUTO_INCREMENT for table `lichsu`
 --
 ALTER TABLE `lichsu`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -469,16 +519,22 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
+-- AUTO_INCREMENT for table `report`
+--
+ALTER TABLE `report`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `tacgia`
 --
 ALTER TABLE `tacgia`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tap`
 --
 ALTER TABLE `tap`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `theloai`
@@ -502,19 +558,19 @@ ALTER TABLE `truyen`
 -- AUTO_INCREMENT for table `truyen_tacgia`
 --
 ALTER TABLE `truyen_tacgia`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `truyen_theloai`
 --
 ALTER TABLE `truyen_theloai`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -532,6 +588,7 @@ ALTER TABLE `binhluan`
 --
 ALTER TABLE `lichsu`
   ADD CONSTRAINT `lichsu_id_tap_foreign` FOREIGN KEY (`id_tap`) REFERENCES `tap` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `lichsu_id_truyen_foreign` FOREIGN KEY (`id_truyen`) REFERENCES `truyen` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `lichsu_id_user_foreign` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --

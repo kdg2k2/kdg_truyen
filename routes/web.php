@@ -1,12 +1,14 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/', 'HomeController@index');
 
+Route::get('/register', 'UserController@register');
+Route::post('/post_register', 'UserController@post_register');
+
 Route::get('/login', 'UserController@login');
-Route::post('/user/login', 'UserController@checkLogin');
-Route::get('/logged', 'UserController@logged');
+Route::post('/logging', 'UserController@checkLogin');
+Route::get('/logged', 'UserController@logged')->middleware('isAdmin');
 Route::get('/logout', 'UserController@logout');
 
 Route::get('/forget-password', 'UserController@forget');
@@ -14,7 +16,7 @@ Route::post('/forget-password/post', 'UserController@forgetPost');
 Route::get('/forget-mail/{id}/{token}', 'UserController@getPass');
 Route::post('/forget-mail/{id}/{token}', 'UserController@postGetPass');
 
-Route::group(['prefix' => 'admin'], function (){
+Route::group(['prefix' => 'admin', 'middleware' => 'isAdmin'], function (){
     //Truyện
     Route::get('/truyen-manager', 'TruyenController@index');
     Route::get('/truyen/create', 'TruyenController@create');
@@ -59,10 +61,14 @@ Route::group(['prefix' => 'admin'], function (){
     Route::get('/user/{id}/edit', 'UserController@edit');
     Route::post('/user/{id}/update', 'UserController@update');
     Route::post('/user/{id}/delete', 'UserController@destroy');
-    
-    
+
+    //Report
+    Route::get('/report-manager', 'ReportController@index');
+    Route::post('/report/{id}/update', 'ReportController@update');
 });
 
+Route::post('/action/error_report' ,'HomeController@error_report');
+Route::get('/history', 'HomeController@history')->middleware('isLogged');
 Route::get('/search', 'HomeController@search');
 Route::get('/danh-sach', 'HomeController@get_danhsach');
 Route::get('/the-loai/{id}', 'HomeController@get_theloai');

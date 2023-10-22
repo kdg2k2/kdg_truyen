@@ -49,7 +49,7 @@
                         <li class="completed"><a href="/"><i class="fad fa-home"></i><span
                                     class="d-none d-md-inline-block">Trang chủ</span></a>
                         </li>
-                        <li class="d-none d-md-block"><a href="/Main_template/danh-sach">Danh sách truyện</a>
+                        <li class="d-none d-md-block"><a href="/danh-sach">Danh sách truyện</a>
                         </li>
                         <li class="d-none d-md-block"><a href="/{{ $truyen->slug }}">
                                 {{ $truyen->tentruyen }}</a>

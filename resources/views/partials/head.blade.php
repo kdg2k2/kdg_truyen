@@ -23,7 +23,7 @@
 <meta name="csrf-token" content="WoZOIG1Eb1sXr7AMvLTGMo8AO9TbH6EKZVpUDmWI">
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-42595306-7"
     type="8f607098fd4ff38b6cf39054-text/javascript"></script>
-<script type="8f607098fd4ff38b6cf39054-text/javascript">
+{{-- <script type="8f607098fd4ff38b6cf39054-text/javascript">
     window.dataLayer = window.dataLayer || [];
 
         function gtag() {
@@ -31,7 +31,7 @@
         }
         gtag('js', new Date());
         gtag('config', 'UA-42595306-7');
-</script>
+</script> --}}
 <meta property="og:title" content>
 <meta property="og:description" content>
 <meta property="og:image" content>
