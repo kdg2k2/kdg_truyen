@@ -1,4 +1,4 @@
-<link rel="dns-prefetch" href="//www.googletagmanager.com">
+{{-- <link rel="dns-prefetch" href="//www.googletagmanager.com">
 <link rel="dns-prefetch" href="//fonts.googleapis.com">
 <link rel="dns-prefetch" href="//www.tiktok.com">
 <link rel="dns-prefetch" href="//cdn4.lhmanga.com">
@@ -9,11 +9,11 @@
 <link rel="dns-prefetch" href="//cdn1.lhmanga.com">
 <link rel="dns-prefetch" href="//media.hamtruyen.vn">
 <link rel="dns-prefetch" href="//discord.gg">
-<link rel="dns-prefetch" href="//www.facebook.com">
+<link rel="dns-prefetch" href="//www.facebook.com"> --}}
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title> Trang chủ - TruyentranhLH</title>
+<title> KdgTruyen</title>
 <link rel="stylesheet" href="{{ asset('/Main_template/vendor/fontawesome/css/all.min.css') }}">
 <link rel="stylesheet" href="{{ asset('/Main_template/vendor/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
 <link rel="stylesheet" href="{{ asset('/Main_template/css/app.css') }}">

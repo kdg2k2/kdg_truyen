@@ -33,10 +33,11 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div
+                                                    {{-- <div
                                                         class="d-flex flex-md-row flex-column justify-content-between my-2">
                                                         @php
-                                                        $arr_tap = App\Tap::where('id_truyen', $truyen->id)->pluck('id')->toArray();
+                                                        $arr_tap = App\Tap::where('id_truyen',
+                                                        $truyen->id)->pluck('id')->toArray();
                                                         @endphp
                                                         @if ($arr_tap)
                                                         <a href="/{{ $truyen->slug }}/{{ min($arr_tap) }}"><button
@@ -46,7 +47,7 @@
                                                                 class="btn btn-default btn-xs-block bg-lhmanga text-white">
                                                                 Chương cuối </button></a>
                                                         @endif
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                                 <div class="col-12 col-md-8">
                                                     <div class="series-name-group"><span class="series-name"><a
@@ -89,71 +90,34 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-12 bottom-features">
-                                                        <div class="side-features">
+                                                        {{-- <div class="side-features">
                                                             <div class="row">
-                                                                <div class="w-20 feature-item"><a id="like"
-                                                                        class="side-feature-button button-like like"><span
-                                                                            class="d-block feature-value"><i
-                                                                                class="far fa-thumbs-up"></i></span><span
-                                                                            class="block feature-name">140</span></a>
-                                                                </div>
-                                                                <div class="w-20 feature-item"><a id="dislike"
-                                                                        class="side-feature-button button-like"><span
-                                                                            class="d-block feature-value"><i
-                                                                                class="far fa-thumbs-down"></i></span><span
-                                                                            class="block feature-name">0</span></a>
-                                                                </div>
-                                                                <div class="w-20 feature-item"><a id="collect"
-                                                                        class="side-feature-button button-follow follow"><span
-                                                                            class="d-block feature-value"><i
-                                                                                class="far fa-heart"></i></span><span
-                                                                            class="block feature-name">802</span></a>
-                                                                </div>
                                                                 <div class="w-20 feature-item">
-                                                                    <div class="series-rating rated"><label
-                                                                            for="open-rating"
-                                                                            class="side-feature-button button-rate"><span
-                                                                                class="d-block feature-value"><i
-                                                                                    class="far fa-star"></i></span><span
-                                                                                class="d-block feature-name"><span
-                                                                                    class="d-none d-md-block">Đánh
-                                                                                    giá</span><span
-                                                                                    class="d-block d-md-none">5/5</span></span></label>
-                                                                        <input type="checkbox" id="open-rating">
-                                                                        <div class="series-evaluation clear"><span
-                                                                                class="star-evaluate-item star-5"
-                                                                                data-value="5"><i
-                                                                                    class="fas fa-star"></i></span><span
-                                                                                class="star-evaluate-item star-4"
-                                                                                data-value="4"><i
-                                                                                    class="fas fa-star"></i></span>
-                                                                            <span class="star-evaluate-item star-3"
-                                                                                data-value="3"><i
-                                                                                    class="fas fa-star"></i></span><span
-                                                                                class="star-evaluate-item star-2"
-                                                                                data-value="2"><i
-                                                                                    class="fas fa-star"></i></span><span
-                                                                                class="star-evaluate-item star-1"
-                                                                                data-value="1"><i
-                                                                                    class="fas fa-star"></i></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="w-20 feature-item"><label for="open-sharing"
-                                                                        class="side-feature-button"><span
-                                                                            class="d-block feature-value"><i
-                                                                                class="fas fa-share-alt"></i></span><span
-                                                                            class="d-block feature-name"><span
-                                                                                class="d-none d-md-block">Chia
-                                                                                sẻ</span><span
-                                                                                class="d-block d-md-none">Share</span></span></label>
-                                                                    <input type="checkbox" id="open-sharing">
-                                                                    <div class="sharing-box"><a class="sharing-item"
-                                                                            href><i class="fab fa-facebook-f"></i></a><a
-                                                                            class="sharing-item" href><i
-                                                                                class="fab fa-twitter"></i></a></div>
+                                                                    <a id="collect" class="side-feature-button button-follow follow">
+                                                                        <span class="d-block feature-value">
+                                                                            <i class="far fa-heart"></i>
+                                                                        </span>
+                                                                        <span class="block feature-name">802</span>
+                                                                    </a>
                                                                 </div>
                                                             </div>
+                                                        </div> --}}
+                                                        <div class="d-flex flex-md-row flex-column justify-content-around my-2">
+                                                            @php
+                                                            $arr_tap = App\Tap::where('id_truyen',
+                                                            $truyen->id)->pluck('id')->toArray();
+                                                            @endphp
+                                                            @if ($arr_tap)
+                                                            <a href="/{{ $truyen->slug }}/{{ min($arr_tap) }}"><button
+                                                                    class="btn btn-default btn-xs-block bg-lhmanga mb-1 mb-md-0 text-white">
+                                                                    Chương đầu </button></a>
+                                                            <a href="/{{ $truyen->slug }}/{{ max($arr_tap) }}"><button
+                                                                    class="btn btn-default btn-xs-block bg-lhmanga text-white">
+                                                                    Chương cuối </button></a>
+                                                            @endif
+                                                            <a href="#!"><button id="theodoi"
+                                                                class="btn btn-default btn-xs-block bg-lhmanga text-white">
+                                                                Theo dõi </button></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -164,20 +128,24 @@
                                                 <div class="col-12">
                                                     <div class="row statistic-list">
                                                         <div class="col-4 statistic-item block-wide at-mobile">
+                                                            @php
+                                                            $updated_at = App\Tap::where('id_truyen',
+                                                            $truyen->id)->max('updated_at');
+                                                            @endphp
                                                             <div class="statistic-name">Lần cuối</div>
                                                             <div class="statistic-value"><time class="timeago"
-                                                                    title="{{ $truyen->updated_at }}"
-                                                                    datetime="{{ $truyen->updated_at }}">{{
-                                                                    $truyen->updated_at }}
+                                                                    title="{{ $updated_at }}"
+                                                                    datetime="{{ $updated_at }}">{{
+                                                                    $updated_at }}
                                                                 </time></div>
                                                         </div>
                                                         <div class="col-4 statistic-item">
-                                                            <div class="statistic-name">27 đánh giá </div>
-                                                            <div class="statistic-value">5 <small>/5</small></div>
+                                                            <div class="statistic-name">Số chương</div>
+                                                            <div class="statistic-value">{{ count($arr_tap) }}</div>
                                                         </div>
                                                         <div class="col-4 statistic-item">
                                                             <div class="statistic-name">Lượt xem</div>
-                                                            <div class="statistic-value">206242</div>
+                                                            <div class="statistic-value">{{ $truyen->view }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -224,21 +192,22 @@
                             <div class="card-body bg-dark">
                                 <ul class="others-list">
                                     @foreach ($truyen_same_tacgia as $item)
-                                    @if ($loop->index < 4) @php $truyen=App\Truyen::find($item); @endphp @if ($truyen)
+                                    @if ($loop->index < 4) @php $t=App\Truyen::find($item); @endphp @if ($t && $t->id !=
+                                        $truyen->id)
                                         <li>
-                                        <div class="others-img no-padding">
-                                            <div class="a6-ratio">
-                                                <div class="content img-in-ratio"
-                                                    style="background-image: url('{{ $truyen->path }}')">
+                                            <div class="others-img no-padding">
+                                                <div class="a6-ratio">
+                                                    <div class="content img-in-ratio"
+                                                        style="background-image: url('{{ $t->path }}')">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="others-info">
-                                            <h5 class="others-name"><a href="/{{ $truyen->slug }}">{{ $truyen->tentruyen
-                                                    }}</a></h5><small class="series-summary"
-                                                style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">{{
-                                                $truyen->mota }}</small>
-                                        </div>
+                                            <div class="others-info">
+                                                <h5 class="others-name"><a href="/{{ $t->slug }}">{{ $t->tentruyen
+                                                        }}</a></h5><small class="series-summary"
+                                                    style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">{{
+                                                    $t->mota }}</small>
+                                            </div>
                                         </li>
                                         @endif
                                         @endif
