@@ -6,8 +6,18 @@
 4. mở xampp khởi động apache + mysql
 5. mở cmd và cd vào folder project rồi chạy tuần tự từng lệnh
     php artisan config:cache
+
+
     php artisan cache:clear 
+
+
     php artisan route:clear 
+
+
     php artisan view:clear
+
+
     php artisan migration
+
+    
 6. khởi chạy server với: php artisan serve
