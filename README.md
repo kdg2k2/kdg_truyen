@@ -3,7 +3,7 @@
 1. cài đặt xampp
 2. cài đặt composer
 3. clone project: https://github.com/kdg2k2/kdg_truyen
-4. mở xampp khởi động apache + mysql
+4. mở xampp khởi động apache + mysql (tạo 1 db tên: kdg_truyen)
 5. mở cmd và cd vào folder project rồi chạy tuần tự từng lệnh:
 
 
