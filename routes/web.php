@@ -73,6 +73,10 @@ Route::get('/search', 'HomeController@search');
 Route::get('/danh-sach', 'HomeController@get_danhsach');
 Route::get('/the-loai/{id}', 'HomeController@get_theloai');
 
+//action
+Route::post('/post_theodoi/{id_user}/{id_truyen}', 'HomeController@post_theodoi');
+
+//detail - reading
 Route::get('/{slug}', 'HomeController@showTruyen');
 Route::get('/{slug}/{id}', 'HomeController@showTap');
 

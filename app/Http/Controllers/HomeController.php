@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Lichsu;
 use App\Report;
 use App\Tap;
+use App\Theodoi;
 use App\Truyen;
 use App\Truyen_tacgia;
 use App\Truyen_theloai;
@@ -16,12 +17,30 @@ use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
+    public function post_theodoi($id_user, $id_truyen){
+        $c = Theodoi::where('id_user', $id_user)->where('id_truyen', $id_truyen)->first();
+        if($c){
+            $c->delete();
+            $count = count(Theodoi::where('id_truyen', $id_truyen)->get());
+            $status = 'delete';
+        }else{
+            $t = new Theodoi();
+            $t->id_user = $id_user;
+            $t->id_truyen = $id_truyen;
+            $t->save();
+            $count = count(Theodoi::where('id_truyen', $id_truyen)->get());
+            $status = 'insert';
+        }
+        return response()->json(['status' => $status, 'count' => $count]);
+    }
+
     public function error_report(Request $request){
         $data = new Report();
         $data->url = $request->chapter_err;
         $data->des = $request->description;
         $data->save();
     }
+
     public function history()
     {
         $lichsu = Lichsu::where('id_user', Session::get('loginId'))->get();
@@ -49,7 +68,7 @@ class HomeController extends Controller
             $truyen_update = Truyen::select('truyen.*')
                 ->join('tap', 'truyen.id', '=', 'tap.id_truyen')
                 ->select('truyen.*', DB::raw('(SELECT MAX(updated_at) FROM tap WHERE tap.id_truyen = truyen.id) as latest_tap_updated_at'))
-                ->orderByDesc('latest_tap_updated_at')
+                ->orderBy('latest_tap_updated_at')
                 ->distinct()
                 ->take(11)
                 ->get();
@@ -74,8 +93,11 @@ class HomeController extends Controller
     {
         $truyen = Truyen::where('slug', $slug)->first();
         if ($truyen) {
+            $loginId = Session::get('loginId');
             $truyen_same_tacgia = Truyen_tacgia::where('id_truyen', $truyen->id)->pluck('id_truyen')->toArray();
+
             return view('pages.truyen.show', [
+                'loginId' => $loginId,
                 'truyen' => $truyen,
                 'truyen_same_tacgia' => $truyen_same_tacgia,
             ]);

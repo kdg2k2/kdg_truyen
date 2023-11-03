@@ -33,7 +33,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    {{-- <div
+                                                    <div
                                                         class="d-flex flex-md-row flex-column justify-content-between my-2">
                                                         @php
                                                         $arr_tap = App\Tap::where('id_truyen',
@@ -47,7 +47,7 @@
                                                                 class="btn btn-default btn-xs-block bg-lhmanga text-white">
                                                                 Chương cuối </button></a>
                                                         @endif
-                                                    </div> --}}
+                                                    </div>
                                                 </div>
                                                 <div class="col-12 col-md-8">
                                                     <div class="series-name-group"><span class="series-name"><a
@@ -90,34 +90,87 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-12 bottom-features">
-                                                        {{-- <div class="side-features">
+                                                        <div class="side-features">
                                                             <div class="row">
+                                                                <div class="w-20 feature-item"><a id="like"
+                                                                        class="side-feature-button button-like like"><span
+                                                                            class="d-block feature-value"><i
+                                                                                class="far fa-thumbs-up"></i></span><span
+                                                                            class="block feature-name">140</span></a>
+                                                                </div>
+                                                                <div class="w-20 feature-item"><a id="dislike"
+                                                                        class="side-feature-button button-like"><span
+                                                                            class="d-block feature-value"><i
+                                                                                class="far fa-thumbs-down"></i></span><span
+                                                                            class="block feature-name">0</span></a>
+                                                                </div>
                                                                 <div class="w-20 feature-item">
-                                                                    <a id="collect" class="side-feature-button button-follow follow">
+                                                                    <a id="collect"
+                                                                        class="side-feature-button button-follow follow">
                                                                         <span class="d-block feature-value">
-                                                                            <i class="far fa-heart"></i>
+                                                                            @php
+                                                                                if(Session::has('loginId')){
+                                                                                    $c = App\Theodoi::where('id_truyen', $truyen->id)->where('id_user', Session::get('loginId'))->first();
+                                                                                }
+                                                                            @endphp
+                                                                            <i class="
+                                                                            @if(isset($c)){
+                                                                                fas
+                                                                            }@else{
+                                                                                far
+                                                                            }@endif
+                                                                            fa-heart"></i>
                                                                         </span>
-                                                                        <span class="block feature-name">802</span>
+                                                                        <span class="block feature-name">{{
+                                                                            count(App\Theodoi::where('id_truyen',
+                                                                            $truyen->id)->get()) }}</span>
                                                                     </a>
                                                                 </div>
+                                                                <div class="w-20 feature-item">
+                                                                    <div class="series-rating rated"><label
+                                                                            for="open-rating"
+                                                                            class="side-feature-button button-rate"><span
+                                                                                class="d-block feature-value"><i
+                                                                                    class="far fa-star"></i></span><span
+                                                                                class="d-block feature-name"><span
+                                                                                    class="d-none d-md-block">Đánh
+                                                                                    giá</span><span
+                                                                                    class="d-block d-md-none">5/5</span></span></label>
+                                                                        <input type="checkbox" id="open-rating">
+                                                                        <div class="series-evaluation clear"><span
+                                                                                class="star-evaluate-item star-5"
+                                                                                data-value="5"><i
+                                                                                    class="fas fa-star"></i></span><span
+                                                                                class="star-evaluate-item star-4"
+                                                                                data-value="4"><i
+                                                                                    class="fas fa-star"></i></span>
+                                                                            <span class="star-evaluate-item star-3"
+                                                                                data-value="3"><i
+                                                                                    class="fas fa-star"></i></span><span
+                                                                                class="star-evaluate-item star-2"
+                                                                                data-value="2"><i
+                                                                                    class="fas fa-star"></i></span><span
+                                                                                class="star-evaluate-item star-1"
+                                                                                data-value="1"><i
+                                                                                    class="fas fa-star"></i></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="w-20 feature-item"><label for="open-sharing"
+                                                                        class="side-feature-button"><span
+                                                                            class="d-block feature-value"><i
+                                                                                class="fas fa-share-alt"></i></span><span
+                                                                            class="d-block feature-name"><span
+                                                                                class="d-none d-md-block">Chia
+                                                                                sẻ</span><span
+                                                                                class="d-block d-md-none">Share</span></span></label>
+                                                                    <input type="checkbox" id="open-sharing">
+                                                                    <div class="sharing-box"><a class="sharing-item"
+                                                                            href><i class="fab fa-facebook-f"></i></a><a
+                                                                            class="sharing-item" href><i
+                                                                                class="fab fa-twitter"></i></a></div>
+                                                                </div>
                                                             </div>
-                                                        </div> --}}
-                                                        <div class="d-flex flex-md-row flex-column justify-content-around my-2">
-                                                            @php
-                                                            $arr_tap = App\Tap::where('id_truyen',
-                                                            $truyen->id)->pluck('id')->toArray();
-                                                            @endphp
-                                                            @if ($arr_tap)
-                                                            <a href="/{{ $truyen->slug }}/{{ min($arr_tap) }}"><button
-                                                                    class="btn btn-default btn-xs-block bg-lhmanga mb-1 mb-md-0 text-white">
-                                                                    Chương đầu </button></a>
-                                                            <a href="/{{ $truyen->slug }}/{{ max($arr_tap) }}"><button
-                                                                    class="btn btn-default btn-xs-block bg-lhmanga text-white">
-                                                                    Chương cuối </button></a>
-                                                            @endif
-                                                            <a href="#!"><button id="theodoi"
-                                                                class="btn btn-default btn-xs-block bg-lhmanga text-white">
-                                                                Theo dõi </button></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -270,6 +323,34 @@
         </main>
     </div>
     @include('partials/footer')
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            var loginId = "{{ $loginId }}";
+            var id_truyen = "{{ $truyen->id }}";
+
+            $('#collect').click(function () {
+                if (loginId != "") {
+                    console.log('/post_theodoi/' + loginId + '/' + id_truyen);
+                    $.ajax({
+                        method: 'post',
+                        url: '/post_theodoi/' + loginId + '/' + id_truyen,
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        }
+                    }).done(function (t) {
+                        var e = $("#collect");
+                        "insert" == t.status ? alertify.alert("Bạn đã theo dõi truyện.") : alertify.alert("Bạn đã ngừng theo dõi truyện.")
+                        e.find("i").toggleClass("far fas")
+                        e.find(".feature-name").text(t.count)
+                    })
+                } else {
+                    alertify.alert("Bạn phải đăng nhập để theo dõi truyện!");
+                }
+            });
+        })
+    </script>
 </body>
 
 </html>

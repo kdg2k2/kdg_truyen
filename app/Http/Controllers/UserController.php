@@ -13,6 +13,9 @@ class UserController extends Controller
 {
     public function login()
     {
+        $previousUrl = url()->previous();
+        session(['redirect_url' => $previousUrl]);
+
         return view('pages.login.login');
     }
 
@@ -21,7 +24,8 @@ class UserController extends Controller
         return view('pages.register.register');
     }
 
-    public function post_register(Request $request){
+    public function post_register(Request $request)
+    {
         $request->validate([
             'email' => 'required|email|unique:users',
             'username' => 'required',
@@ -61,9 +65,14 @@ class UserController extends Controller
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 $request->session()->put('loginId', $user->id);
-                if($user->role == 'admin'){
+                if ($user->role == 'admin') {
                     return redirect('/logged');
-                }else{
+                } else {
+                    if (session()->has('redirect_url')) {
+                        $redirectUrl = session('redirect_url');
+                        session()->forget('redirect_url');
+                        return redirect($redirectUrl);
+                    }
                     return redirect('/');
                 }
             } else {
@@ -260,7 +269,7 @@ class UserController extends Controller
         $user->username = $request->username;
         $user->email = $request->email;
         $user->role = $request->role;
-        if($request->password){
+        if ($request->password) {
             $user->password = Hash::make($request->password);
         }
         $user->save();

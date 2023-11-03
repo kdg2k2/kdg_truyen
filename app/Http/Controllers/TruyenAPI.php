@@ -45,7 +45,7 @@ class TruyenAPI extends Controller
             $truyen_update = Truyen::select('truyen.*')
                 ->join('tap', 'truyen.id', '=', 'tap.id_truyen')
                 ->select('truyen.*', DB::raw('(SELECT MAX(updated_at) FROM tap WHERE tap.id_truyen = truyen.id) as latest_tap_updated_at'))
-                ->orderByDesc('latest_tap_updated_at')
+                ->orderBy('latest_tap_updated_at')
                 ->distinct()
                 ->take(12)
                 ->get();

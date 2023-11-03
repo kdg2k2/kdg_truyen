@@ -10,6 +10,7 @@
 <link rel="dns-prefetch" href="//media.hamtruyen.vn">
 <link rel="dns-prefetch" href="//discord.gg">
 <link rel="dns-prefetch" href="//www.facebook.com"> --}}
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,3 +42,5 @@
 <link rel="stylesheet" href="{{ asset('/Main_template/vendor/owl-carousel2/assets/owl.theme.default.min.css') }}">
 <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    

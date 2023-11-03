@@ -39,7 +39,7 @@
     }
 
     body {
-		font-family: 'Roboto', sans-serif;
+		font-family: 'Roboto', sans-serif !important;
 	}
 
 </style>
@@ -52,7 +52,7 @@
                 <a href="/" class="text-info back-btn">< Về Trang Chủ</a>
 				<form class="login100-form validate-form" method="post" action="/logging">
                     @csrf
-					<span class="login100-form-title p-b-26">
+					<span class="login100-form-title p-b-26" style="font-family: Roboto">
 						Đăng Nhập
 					</span>
 					<span class="login100-form-title p-b-48">
