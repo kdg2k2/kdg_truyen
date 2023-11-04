@@ -17,6 +17,7 @@ class Binhluan extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('id_truyen');
             $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->text('noidung');
 
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');

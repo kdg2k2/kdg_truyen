@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Binhluan;
 use App\Dislike;
 use App\Lichsu;
 use App\Like;
@@ -19,6 +20,24 @@ use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
+    public function delete_comment($id){
+        Binhluan::findOrFail($id)->delete();
+        return response()->json('ok');
+    }
+
+    public function post_comment($id_user, $id_truyen, $txt){
+        $b = new Binhluan();
+        $b->id_user = $id_user;
+        $b->id_truyen = $id_truyen;
+        $b->noidung = $txt;
+        $b->save();
+        $b->username = User::findOrFail($id_user)->username;
+        $b->created_at = Date('Y-m-d H:i:s');
+        $b->id = Binhluan::max('id');
+        $status = 'insert';
+        return response()->json(['status' => $status, 'binhluan' => $b]);
+    }
+
     public function post_dislike($id_user, $id_truyen){
         $c = Dislike::where('id_user', $id_user)->where('id_truyen', $id_truyen)->first();
         if($c){
