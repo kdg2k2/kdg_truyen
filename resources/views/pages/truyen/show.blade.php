@@ -109,16 +109,18 @@
                                                                         class="side-feature-button button-follow follow">
                                                                         <span class="d-block feature-value">
                                                                             @php
-                                                                                if(Session::has('loginId')){
-                                                                                    $c = App\Theodoi::where('id_truyen', $truyen->id)->where('id_user', Session::get('loginId'))->first();
-                                                                                }
+                                                                            if(Session::has('loginId')){
+                                                                            $c = App\Theodoi::where('id_truyen',
+                                                                            $truyen->id)->where('id_user',
+                                                                            Session::get('loginId'))->first();
+                                                                            }
                                                                             @endphp
                                                                             <i class="
-                                                                            @if(isset($c)){
+                                                                            @if(isset($c))
                                                                                 fas
-                                                                            }@else{
+                                                                            @else
                                                                                 far
-                                                                            }@endif
+                                                                            @endif
                                                                             fa-heart"></i>
                                                                         </span>
                                                                         <span class="block feature-name">{{
@@ -156,19 +158,27 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="w-20 feature-item"><label for="open-sharing"
-                                                                        class="side-feature-button"><span
-                                                                            class="d-block feature-value"><i
-                                                                                class="fas fa-share-alt"></i></span><span
-                                                                            class="d-block feature-name"><span
-                                                                                class="d-none d-md-block">Chia
-                                                                                sẻ</span><span
-                                                                                class="d-block d-md-none">Share</span></span></label>
+                                                                <div class="w-20 feature-item">
+                                                                    <label for="open-sharing"
+                                                                        class="side-feature-button">
+                                                                        <span class="d-block feature-value">
+                                                                            <i class="fas fa-share-alt"></i>
+                                                                        </span>
+                                                                        <span class="d-block feature-name">
+                                                                            <span class="d-none d-md-block">Chia
+                                                                                sẻ</span>
+                                                                            <span class="d-block d-md-none">Share</span>
+                                                                        </span>
+                                                                    </label>
                                                                     <input type="checkbox" id="open-sharing">
-                                                                    <div class="sharing-box"><a class="sharing-item"
-                                                                            href><i class="fab fa-facebook-f"></i></a><a
-                                                                            class="sharing-item" href><i
-                                                                                class="fab fa-twitter"></i></a></div>
+                                                                    <div class="sharing-box">
+                                                                        <a class="sharing-item" id="fb_share" href>
+                                                                            <i class="fab fa-facebook-f"></i>
+                                                                        </a>
+                                                                        <a class="sharing-item" id="tw_share" href>
+                                                                            <i class="fab fa-twitter"></i>
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -329,6 +339,7 @@
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
             var loginId = "{{ $loginId }}";
             var id_truyen = "{{ $truyen->id }}";
+            var current_url = window.location.href;
 
             $('#collect').click(function () {
                 if (loginId != "") {
@@ -346,9 +357,37 @@
                         e.find(".feature-name").text(t.count)
                     })
                 } else {
-                    alertify.alert("Bạn phải đăng nhập để theo dõi truyện!");
+                    alertify.alert("Bạn phải đăng nhập để thao tác!");
                 }
             });
+
+            // $('#like').click(function () {
+            //     if (loginId != "") {
+            //         console.log('/post_like/' + loginId + '/' + id_truyen);
+            //         $.ajax({
+            //             method: 'post',
+            //             url: '/post_like/' + loginId + '/' + id_truyen,
+            //             headers: {
+            //                 'X-CSRF-TOKEN': csrfToken
+            //             }
+            //         }).done(function (t) {
+            //             var e = $("#like");
+            //             "insert" == t.status ? alertify.alert("Bạn đã like truyện.") : alertify.alert("Bạn đã huỷ like truyện.")
+            //             e.find("i").toggleClass("far fas")
+            //             e.find(".feature-name").text(t.like_count)
+            //         })
+            //     } else {
+            //         alertify.alert("Bạn phải đăng nhập để thao tác!");
+            //     }
+            // });
+
+            $('#fb_share').click(function(){
+                window.open('https://www.facebook.com/sharer/sharer.php?u='+current_url, 'facebook-share-dialog', "width=626, height=436");
+            })
+
+            $('#tw_share').click(function(){
+                window.open("https://twitter.com/intent/tweet?url=" + current_url, 'facebook-share-dialog', "width=626, height=436");
+            })
         })
     </script>
 </body>
