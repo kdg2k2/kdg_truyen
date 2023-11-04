@@ -92,19 +92,55 @@
                                                     <div class="col-12 bottom-features">
                                                         <div class="side-features">
                                                             <div class="row">
-                                                                <div class="w-20 feature-item"><a id="like"
-                                                                        class="side-feature-button button-like like"><span
-                                                                            class="d-block feature-value"><i
-                                                                                class="far fa-thumbs-up"></i></span><span
-                                                                            class="block feature-name">140</span></a>
+                                                                <div class="w-25 feature-item">
+                                                                    <a id="like"
+                                                                        class="side-feature-button button-like like">
+                                                                        <span class="d-block feature-value">
+                                                                            @php
+                                                                            if(Session::has('loginId')){
+                                                                            $like = App\Like::where('id_truyen',
+                                                                            $truyen->id)->where('id_user',
+                                                                            Session::get('loginId'))->first();
+                                                                            }
+                                                                            @endphp
+                                                                            <i class="
+                                                                            @if(isset($like))
+                                                                                fas
+                                                                            @else
+                                                                                far
+                                                                            @endif
+                                                                            fa-thumbs-up"></i>
+                                                                        </span>
+                                                                        <span class="block feature-name">{{
+                                                                            count(App\Like::where('id_truyen',
+                                                                            $truyen->id)->get()) }}</span>
+                                                                    </a>
                                                                 </div>
-                                                                <div class="w-20 feature-item"><a id="dislike"
-                                                                        class="side-feature-button button-like"><span
-                                                                            class="d-block feature-value"><i
-                                                                                class="far fa-thumbs-down"></i></span><span
-                                                                            class="block feature-name">0</span></a>
+                                                                <div class="w-25 feature-item">
+                                                                    <a id="dislike"
+                                                                        class="side-feature-button button-like">
+                                                                        <span class="d-block feature-value">
+                                                                            @php
+                                                                            if(Session::has('loginId')){
+                                                                            $dis = App\Dislike::where('id_truyen',
+                                                                            $truyen->id)->where('id_user',
+                                                                            Session::get('loginId'))->first();
+                                                                            }
+                                                                            @endphp
+                                                                            <i class="
+                                                                            @if(isset($dis))
+                                                                                fas
+                                                                            @else
+                                                                                far
+                                                                            @endif
+                                                                            fa-thumbs-down"></i>
+                                                                        </span>
+                                                                        <span class="block feature-name">{{
+                                                                            count(App\Dislike::where('id_truyen',
+                                                                            $truyen->id)->get()) }}</span>
+                                                                    </a>
                                                                 </div>
-                                                                <div class="w-20 feature-item">
+                                                                <div class="w-25 feature-item">
                                                                     <a id="collect"
                                                                         class="side-feature-button button-follow follow">
                                                                         <span class="d-block feature-value">
@@ -128,37 +164,7 @@
                                                                             $truyen->id)->get()) }}</span>
                                                                     </a>
                                                                 </div>
-                                                                <div class="w-20 feature-item">
-                                                                    <div class="series-rating rated"><label
-                                                                            for="open-rating"
-                                                                            class="side-feature-button button-rate"><span
-                                                                                class="d-block feature-value"><i
-                                                                                    class="far fa-star"></i></span><span
-                                                                                class="d-block feature-name"><span
-                                                                                    class="d-none d-md-block">Đánh
-                                                                                    giá</span><span
-                                                                                    class="d-block d-md-none">5/5</span></span></label>
-                                                                        <input type="checkbox" id="open-rating">
-                                                                        <div class="series-evaluation clear"><span
-                                                                                class="star-evaluate-item star-5"
-                                                                                data-value="5"><i
-                                                                                    class="fas fa-star"></i></span><span
-                                                                                class="star-evaluate-item star-4"
-                                                                                data-value="4"><i
-                                                                                    class="fas fa-star"></i></span>
-                                                                            <span class="star-evaluate-item star-3"
-                                                                                data-value="3"><i
-                                                                                    class="fas fa-star"></i></span><span
-                                                                                class="star-evaluate-item star-2"
-                                                                                data-value="2"><i
-                                                                                    class="fas fa-star"></i></span><span
-                                                                                class="star-evaluate-item star-1"
-                                                                                data-value="1"><i
-                                                                                    class="fas fa-star"></i></span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="w-20 feature-item">
+                                                                <div class="w-25 feature-item">
                                                                     <label for="open-sharing"
                                                                         class="side-feature-button">
                                                                         <span class="d-block feature-value">
@@ -343,7 +349,6 @@
 
             $('#collect').click(function () {
                 if (loginId != "") {
-                    console.log('/post_theodoi/' + loginId + '/' + id_truyen);
                     $.ajax({
                         method: 'post',
                         url: '/post_theodoi/' + loginId + '/' + id_truyen,
@@ -361,25 +366,60 @@
                 }
             });
 
-            // $('#like').click(function () {
-            //     if (loginId != "") {
-            //         console.log('/post_like/' + loginId + '/' + id_truyen);
-            //         $.ajax({
-            //             method: 'post',
-            //             url: '/post_like/' + loginId + '/' + id_truyen,
-            //             headers: {
-            //                 'X-CSRF-TOKEN': csrfToken
-            //             }
-            //         }).done(function (t) {
-            //             var e = $("#like");
-            //             "insert" == t.status ? alertify.alert("Bạn đã like truyện.") : alertify.alert("Bạn đã huỷ like truyện.")
-            //             e.find("i").toggleClass("far fas")
-            //             e.find(".feature-name").text(t.like_count)
-            //         })
-            //     } else {
-            //         alertify.alert("Bạn phải đăng nhập để thao tác!");
-            //     }
-            // });
+            function checkLike() {
+                var likeIcon = $('#like').find('i');
+                var dislikeIcon = $('#dislike').find('i');
+
+                if (likeIcon.hasClass('fas')) {
+                    $('#dislike').attr('disabled', true);
+                } else if (dislikeIcon.hasClass('fas')) {
+                    $('#like').attr('disabled', true);
+                } else {
+                    $('#like').attr('disabled', false);
+                    $('#dislike').attr('disabled', false);
+                }
+            }
+            checkLike();
+
+            $('#like').click(function () {
+                if (loginId != "") {
+                    $.ajax({
+                        method: 'post',
+                        url: '/post_like/' + loginId + '/' + id_truyen,
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        }
+                    }).done(function (t) {
+                        var e = $("#like");
+                        "insert" == t.status ? alertify.alert("Bạn đã like truyện.") : alertify.alert("Bạn đã huỷ like truyện.")
+                        e.find("i").toggleClass("far fas")
+                        e.find(".feature-name").text(t.count)
+                        checkLike();
+                    })
+                } else {
+                    alertify.alert("Bạn phải đăng nhập để thao tác!");
+                }
+            });
+
+            $('#dislike').click(function () {
+                if (loginId != "") {
+                    $.ajax({
+                        method: 'post',
+                        url: '/post_dislike/' + loginId + '/' + id_truyen,
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        }
+                    }).done(function (t) {
+                        var e = $("#dislike");
+                        "insert" == t.status ? alertify.alert("Bạn đã dislike truyện.") : alertify.alert("Bạn đã huỷ dislike truyện.")
+                        e.find("i").toggleClass("far fas")
+                        e.find(".feature-name").text(t.count)
+                        checkLike();
+                    })
+                } else {
+                    alertify.alert("Bạn phải đăng nhập để thao tác!");
+                }
+            });
 
             $('#fb_share').click(function(){
                 window.open('https://www.facebook.com/sharer/sharer.php?u='+current_url, 'facebook-share-dialog', "width=626, height=436");

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Dislike;
 use App\Lichsu;
+use App\Like;
 use App\Report;
 use App\Tap;
 use App\Theodoi;
@@ -17,6 +19,40 @@ use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
+    public function post_dislike($id_user, $id_truyen){
+        $c = Dislike::where('id_user', $id_user)->where('id_truyen', $id_truyen)->first();
+        if($c){
+            $c->delete();
+            $count = count(Dislike::where('id_truyen', $id_truyen)->get());
+            $status = 'delete';
+        }else{
+            $dislike = new Dislike();
+            $dislike->id_user = $id_user;
+            $dislike->id_truyen = $id_truyen;
+            $dislike->save();
+            $count = count(Dislike::where('id_truyen', $id_truyen)->get());
+            $status = 'insert';
+        }
+        return response()->json(['status' => $status, 'count' => $count]);
+    }
+    
+    public function post_like($id_user, $id_truyen){
+        $c = Like::where('id_user', $id_user)->where('id_truyen', $id_truyen)->first();
+        if($c){
+            $c->delete();
+            $count = count(Like::where('id_truyen', $id_truyen)->get());
+            $status = 'delete';
+        }else{
+            $like = new Like();
+            $like->id_user = $id_user;
+            $like->id_truyen = $id_truyen;
+            $like->save();
+            $count = count(Like::where('id_truyen', $id_truyen)->get());
+            $status = 'insert';
+        }
+        return response()->json(['status' => $status, 'count' => $count]);
+    }
+
     public function post_theodoi($id_user, $id_truyen){
         $c = Theodoi::where('id_user', $id_user)->where('id_truyen', $id_truyen)->first();
         if($c){
