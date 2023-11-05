@@ -20,6 +20,19 @@ use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
+    public function get_theodoi($id){
+        $t = Theodoi::where('id_user', $id)->orderByDesc('id')->get();
+        return view('pages.theodoi.theodoi', [
+            'theodoi' => $t,
+            'loginId'=> Session::get('loginId'),
+        ]);
+    }
+
+    public function delete_lichsu($id){
+        Lichsu::findOrFail($id)->delete();
+        return response()->json('ok');
+    }
+
     public function delete_comment($id){
         Binhluan::findOrFail($id)->delete();
         return response()->json('ok');

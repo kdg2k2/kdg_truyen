@@ -55,23 +55,53 @@
                 </div>
                 <li class="nav-item dropdown d-lg-none d-inline-block"><a id="mb-search-icon" class="nav-link"><i
                             class="fad fa-search"></i></a></li>
-                <form class="form-inline ml-3 d-none d-md-inline align-self-center position-relative" method="GET"
-                    action="/tim-kiem">
+                <div class="form-inline ml-3 d-none d-md-inline align-self-center position-relative">
                     <div class="input-group input-group-sm"><input id="web-search" name="q"
                             class="form-control form-control-navbar" type="search" autocomplete="off"
                             placeholder="Tìm kiếm" aria-label="Search">
                         <div class="input-group-append"><button class="btn btn-navbar" type="submit"><i
                                     class="fas fa-search"></i></button></div>
                     </div>
-                </form>
+                </div>
                 @if (Session::has('loginId'))
-                <li class="nav-item dropdown ml-3"><a data-toggle="dropdown" href="#" aria-expanded="false" class="nav-link"
-                        style="padding: 0px; margin-top: 4px;">
+                <li data-v-387fbf3e="" class="nav-item dropdown"><a data-v-387fbf3e="" data-toggle="dropdown" href="#"
+                        aria-expanded="false" class="nav-link position-relative"><i data-v-387fbf3e=""
+                            class="fad fa-globe-asia"></i>
+                        <!---->
+                    </a>
+                    <div data-v-387fbf3e="" class="dropdown-menu manga-mega-menu dropdown-menu-right notification-menu">
+                        <span data-v-387fbf3e="" class="dropdown-header d-flex flex-row justify-content-between"><span
+                                data-v-387fbf3e="">Thông báo chưa đọc</span> <span data-v-387fbf3e=""
+                                class="mark_read_all">
+                                <!---->
+                                Đánh dấu đã đọc tất cả
+                            </span></span>
+                        <div data-v-387fbf3e="" class="dropdown-divider"></div>
+                        <ul data-v-387fbf3e="" class="notification-list">
+                            <li data-v-387fbf3e="" class="notification-item d-flex flex-row">
+                                <div data-v-387fbf3e="" class="notification-img flex-grow-0"
+                                    style="background: url(&quot;http://cdn4.lhmanga.com/Store/Manga/VÕ_LUYỆN_ĐỈNH_PHONG_5cd5a1f8c1496.jpg&quot;) center center no-repeat;">
+                                </div>
+                                <div data-v-387fbf3e="" class="notification-right d-flex flex-grow-1 flex-column ml-1">
+                                    <p data-v-387fbf3e="" class="title">Truyện Võ Luyện Đỉnh Phong vừa có chương mới
+                                        "Chapter 3601"</p> <time data-v-387fbf3e="" datetime="2023-11-03 20:12:23"
+                                        class="timeago" title="2023-11-03 20:12:23">1 ngày</time>
+                                </div>
+                            </li>
+                            <!---->
+                        </ul>
+                        <div data-v-387fbf3e="" class="dropdown-divider"></div> <a data-v-387fbf3e=""
+                            href="/me/notification" class="dropdown-item dropdown-footer">Xem tất cả</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown"><a data-toggle="dropdown" href="#" aria-expanded="false"
+                        class="nav-link" style="padding: 0px; margin-top: 4px;">
                         <div class="d-flex">
-                            <div class="d-none d-lg-inline" style="margin-top: 2px;">{{ App\User::findOrFail(Session::get('loginId'))->username }}</div>
+                            <div class="d-none d-lg-inline" style="margin-top: 2px;">{{
+                                App\User::findOrFail(Session::get('loginId'))->username }}</div>
                             <div class="image"><img alt="User Image" height="35" width="35"
-                                    src="{{ asset('/img/user.png') }}"
-                                    class="rounded-circle" style="margin-top: -2px; margin-left: 10px;"></div>
+                                    src="{{ asset('/img/user.png') }}" class="rounded-circle"
+                                    style="margin-top: -2px; margin-left: 10px;"></div>
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg manga-mega-menu dropdown-menu-right">
@@ -79,7 +109,7 @@
                         <a href="/logged" class="dropdown-item"><i class="far fa-user"></i> Trang quản trị </a>
                         @endif
                         <a href="/me" class="dropdown-item"><i class="far fa-id-card"></i> Trang cá nhân </a>
-                        <div class="dropdown-divider"></div><a href="/me/library" class="dropdown-item"><i
+                        <div class="dropdown-divider"></div><a href="/theodoi/{{ Session::get('loginId') }}" class="dropdown-item"><i
                                 class="far fa-books"></i> Tủ sách </a>
                         <div class="dropdown-divider"></div><a href="/logout"
                             class="dropdown-item dropdown-footer logout-btn" style="cursor: pointer;"><i

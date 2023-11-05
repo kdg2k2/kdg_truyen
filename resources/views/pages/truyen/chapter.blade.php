@@ -240,16 +240,18 @@
                 id_cmt = button.data('id');
             })
             $('#btn-delete-item').click(function(){
-                $('#delete-item-model').modal('hide');
-                $.ajax({
-                    method: 'post',
-                    url: '/delete_comment/' + id_cmt,
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    }
-                }).done(function(t){
-                    t == 'ok' ? document.getElementById(id_cmt).remove() : alertify.alert("Đã có lỗi xảy ra khi xoá bình luận!");
-                })
+                if (id_cmt != undefined) {
+                    $('#delete-item-model').modal('hide');
+                    $.ajax({
+                        method: 'post',
+                        url: '/delete_comment/' + id_cmt,
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken
+                        }
+                    }).done(function(t){
+                        t == 'ok' ? document.getElementById(id_cmt).remove() : alertify.alert("Đã có lỗi xảy ra khi xoá bình luận!");
+                    })
+                }
             })
         });
     </script>

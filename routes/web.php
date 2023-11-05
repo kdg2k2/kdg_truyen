@@ -79,6 +79,8 @@ Route::post('/post_like/{id_user}/{id_truyen}', 'HomeController@post_like');
 Route::post('/post_dislike/{id_user}/{id_truyen}', 'HomeController@post_dislike');
 Route::post('/post_comment/{id_user}/{id_truyen}/{txt}', 'HomeController@post_comment');
 Route::post('/delete_comment/{id}', 'HomeController@delete_comment');
+Route::post('/delete_lichsu/{id}', 'HomeController@delete_lichsu');
+Route::get('/theodoi/{id}', 'HomeController@get_theodoi');
 
 //detail - reading
 Route::get('/{slug}', 'HomeController@showTruyen');
