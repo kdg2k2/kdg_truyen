@@ -1,15 +1,4 @@
-{{-- <link rel="dns-prefetch" href="//www.googletagmanager.com">
-<link rel="dns-prefetch" href="//fonts.googleapis.com">
-<link rel="dns-prefetch" href="//www.tiktok.com">
-<link rel="dns-prefetch" href="//cdn4.lhmanga.com">
-<link rel="dns-prefetch" href="//docs.google.com">
-<link rel="dns-prefetch" href="//lh3.googleusercontent.com">
-<link rel="dns-prefetch" href="//1.bp.blogspot.com">
-<link rel="dns-prefetch" href="//3.bp.blogspot.com">
-<link rel="dns-prefetch" href="//cdn1.lhmanga.com">
-<link rel="dns-prefetch" href="//media.hamtruyen.vn">
-<link rel="dns-prefetch" href="//discord.gg">
-<link rel="dns-prefetch" href="//www.facebook.com"> --}}
+
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">

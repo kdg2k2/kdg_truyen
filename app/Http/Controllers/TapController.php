@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Tap;
+use App\Theodoi;
 use App\Truyen;
 use Illuminate\Http\Request;
 
@@ -78,6 +79,11 @@ class TapController extends Controller
             $tap->path = null;
         }
         $tap->save();
+
+        // $theodoi = Theodoi::where('id_truyen', $request->id_truyen)->get();
+        // if (count($theodoi) > 0) {
+        //     dd($theodoi);
+        // }
 
         return redirect('/admin/tap-manager')->with('success', 'Thêm mới thành công');
     }
