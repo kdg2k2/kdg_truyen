@@ -29,7 +29,7 @@
                                                     <div class="series-cover">
                                                         <div class="a6-ratio">
                                                             <div class="content img-in-ratio"
-                                                                style="background-image: url('{{ $truyen->path }}')">
+                                                                style="background-image: url('{{ asset($truyen->path) }}')">
                                                             </div>
                                                         </div>
                                                     </div>

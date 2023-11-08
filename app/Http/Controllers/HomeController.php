@@ -9,6 +9,7 @@ use App\Like;
 use App\Report;
 use App\Tap;
 use App\Theodoi;
+use App\Thongbao;
 use App\Truyen;
 use App\Truyen_tacgia;
 use App\Truyen_theloai;
@@ -20,6 +21,16 @@ use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
+    public function set_status($id){
+        $new_id=null;
+        if (preg_match("/thongbao(\d+)/", $id, $matches)) {
+            $new_id = $matches[1];
+        }
+        $tb=Thongbao::findOrFail($new_id);
+        $tb->status = 1;
+        $tb->save();
+        return response()->json('ok');
+    }
     public function get_theodoi($id){
         $t = Theodoi::where('id_user', $id)->orderByDesc('id')->get();
         return view('pages.theodoi.theodoi', [

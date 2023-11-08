@@ -64,34 +64,48 @@
                     </div>
                 </div>
                 @if (Session::has('loginId'))
-                <li data-v-387fbf3e="" class="nav-item dropdown"><a data-v-387fbf3e="" data-toggle="dropdown" href="#"
-                        aria-expanded="false" class="nav-link position-relative"><i data-v-387fbf3e=""
-                            class="fad fa-globe-asia"></i>
+                @php
+                    $tb = App\Thongbao::where('id_user', Session::get('loginId'))->orderByDesc('id')->get();
+                    $count_tb = count(App\Thongbao::where('id_user', Session::get('loginId'))->where('status', '=', 0)->get());
+                @endphp
+                <li class="nav-item dropdown"><a data-toggle="dropdown" href="#"
+                        aria-expanded="false" class="nav-link position-relative">
+                        <i data-v-387fbf3e="" class="fad fa-globe-asia"></i>
+                        @if(isset($count_tb) && $count_tb > 0)
+                            <span class="notification-count">{{ $count_tb }}</span>
+                        @endif
                         <!---->
                     </a>
-                    <div data-v-387fbf3e="" class="dropdown-menu manga-mega-menu dropdown-menu-right notification-menu">
-                        <span data-v-387fbf3e="" class="dropdown-header d-flex flex-row justify-content-between"><span
-                                data-v-387fbf3e="">Thông báo chưa đọc</span> <span data-v-387fbf3e=""
-                                class="mark_read_all">
-                                <!---->
+                    <div class="dropdown-menu manga-mega-menu dropdown-menu-right notification-menu">
+                        <span class="dropdown-header d-flex flex-row justify-content-between">
+                            <span>Thông báo</span> 
+                            {{-- <span class="mark_read_all">
                                 Đánh dấu đã đọc tất cả
-                            </span></span>
+                            </span> --}}
+                        </span>
                         <div data-v-387fbf3e="" class="dropdown-divider"></div>
-                        <ul data-v-387fbf3e="" class="notification-list">
-                            <li data-v-387fbf3e="" class="notification-item d-flex flex-row">
-                                <div data-v-387fbf3e="" class="notification-img flex-grow-0"
-                                    style="background: url(&quot;http://cdn4.lhmanga.com/Store/Manga/VÕ_LUYỆN_ĐỈNH_PHONG_5cd5a1f8c1496.jpg&quot;) center center no-repeat;">
-                                </div>
-                                <div data-v-387fbf3e="" class="notification-right d-flex flex-grow-1 flex-column ml-1">
-                                    <p data-v-387fbf3e="" class="title">Truyện Võ Luyện Đỉnh Phong vừa có chương mới
-                                        "Chapter 3601"</p> <time data-v-387fbf3e="" datetime="2023-11-03 20:12:23"
-                                        class="timeago" title="2023-11-03 20:12:23">1 ngày</time>
-                                </div>
-                            </li>
-                            <!---->
-                        </ul>
-                        <div data-v-387fbf3e="" class="dropdown-divider"></div> <a data-v-387fbf3e=""
-                            href="/me/notification" class="dropdown-item dropdown-footer">Xem tất cả</a>
+                            @if (count($tb) > 0)
+                                <ul data-v-387fbf3e="" class="notification-list">
+                                    @foreach ($tb as $item)
+                                        <a href="/{{ $item->tap->truyen->slug }}/{{ $item->id_tap }}" id="thongbao{{ $item->id }}" onclick="updateThongBao(this)">
+                                            <li data-v-387fbf3e="" class="notification-item d-flex flex-row">
+                                                <div data-v-387fbf3e="" class="notification-img flex-grow-0"
+                                                    style="background: url({{ asset($item->tap->truyen->path) }}) center center no-repeat;">
+                                                </div>
+                                                <div data-v-387fbf3e="" class="notification-right d-flex flex-grow-1 flex-column ml-1">
+                                                    <p data-v-387fbf3e="" class="title">{{ $item->noidung }}</p> <time data-v-387fbf3e="" datetime="{{ $item->created_at }}"
+                                                        class="timeago" title="{{ $item->created_at }}">{{ $item->created_at }}</time>
+                                                </div>
+                                            </li>
+                                        </a>
+                                    @endforeach
+                                </ul>
+                            @else
+                            <div class="notification-item d-flex flex-row">
+                                <span class="mx-auto">Chưa có thông báo</span>
+                            </div>
+                            @endif
+                        {{-- <div class="dropdown-divider"></div> <a href="/me/notification" class="dropdown-item dropdown-footer">Xem tất cả</a> --}}
                     </div>
                 </li>
                 <li class="nav-item dropdown"><a data-toggle="dropdown" href="#" aria-expanded="false"

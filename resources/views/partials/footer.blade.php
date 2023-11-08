@@ -20,3 +20,17 @@
 <script src="{{ asset('/Main_template/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js') }}"
  data-cf-settings="8f607098fd4ff38b6cf39054-|49" defer></script>
  <script src="https://code.jquery.com/jquery-3.6.0.min.js" ></script>
+
+ <script>
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+    function updateThongBao(e){
+        var id_tb = e.getAttribute('id');
+        $.ajax({
+            method: 'post',
+            url: '/set_status/' + id_tb,
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            }
+        })
+    }
+ </script>

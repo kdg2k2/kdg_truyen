@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Tap;
 use App\Theodoi;
+use App\Thongbao;
 use App\Truyen;
 use Illuminate\Http\Request;
 
@@ -63,7 +64,7 @@ class TapController extends Controller
         $tap = new Tap();
         $tap->tentap = $request->tentap;
         $tap->id_truyen = $request->id_truyen;
-        // $tap->path = $request->path;
+        
         $imagePaths = [];
         if (($request->file('path')) != null) {
             $path = $request->file('path');
@@ -80,10 +81,14 @@ class TapController extends Controller
         }
         $tap->save();
 
-        // $theodoi = Theodoi::where('id_truyen', $request->id_truyen)->get();
-        // if (count($theodoi) > 0) {
-        //     dd($theodoi);
-        // }
+        $theodoi = Theodoi::where('id_truyen', $request->id_truyen)->pluck('id_user')->toArray();
+        foreach ($theodoi as $item) {
+            $tb = new Thongbao();
+            $tb->id_user = $item;
+            $tb->id_tap = Tap::max('id');
+            $tb->noidung = Truyen::findOrFail($request->id_truyen)->tentruyen . ' vừa ra chương mới '. '"'.$request->tentap.'"';
+            $tb->save();
+        }
 
         return redirect('/admin/tap-manager')->with('success', 'Thêm mới thành công');
     }
@@ -169,6 +174,14 @@ class TapController extends Controller
     public function destroy($id)
     {
         $tap = Tap::findOrFail($id);
+        if ($tap->path != null) {
+            $json_decode_path = json_decode($tap->path);
+            foreach ($json_decode_path as $image) {
+                if (file_exists(public_path($image))) {
+                    unlink(public_path($image));
+                }
+            }
+        }
         $tap->delete();
         return back()->with('success', 'Xóa thành công');
     }

@@ -1,3 +1,14 @@
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
     background-color: #3db5da !important;
 }
+
+.notification-count {
+    background-color: #ff0000;
+    color: #ffffff;
+    border-radius: 50%;
+    font-size: 11px;
+    position: absolute;
+    left: 25px;
+    padding: 0 5px;
+}
+

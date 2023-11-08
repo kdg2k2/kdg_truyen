@@ -81,6 +81,7 @@ Route::post('/post_comment/{id_user}/{id_truyen}/{txt}', 'HomeController@post_co
 Route::post('/delete_comment/{id}', 'HomeController@delete_comment');
 Route::post('/delete_lichsu/{id}', 'HomeController@delete_lichsu');
 Route::get('/theodoi/{id}', 'HomeController@get_theodoi');
+Route::post('/set_status/{id}', 'HomeController@set_status');
 
 //detail - reading
 Route::get('/{slug}', 'HomeController@showTruyen');

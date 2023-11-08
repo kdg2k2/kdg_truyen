@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Tacgia;
+use App\Tap;
 use App\Theloai;
 use App\Truyen;
 use App\Truyen_tacgia;
@@ -203,6 +204,21 @@ class TruyenController extends Controller
                 unlink(public_path($truyen->path));
             }
         }
+
+        $arr_tap = Tap::where('id_truyen', $truyen->id)->pluck('id')->toArray();
+        foreach($arr_tap as $i){
+            $tap = Tap::findOrFail($i);
+            if ($tap->path != null) {
+                $json_decode_path = json_decode($tap->path);
+                foreach ($json_decode_path as $image) {
+                    if (file_exists(public_path($image))) {
+                        unlink(public_path($image));
+                    }
+                }
+            }
+            $tap->delete();
+        }
+
         $truyen->delete();
         return back()->with('success', 'Xoá thành công');
     }

@@ -82,7 +82,7 @@
                                                         <div class="form-group row">
                                                             <label class="col-sm-2 col-form-label">Truyện</label>
                                                             <div class="col-sm-10">
-                                                                <select name="id_truyen" id="id_truyen"
+                                                                <select name="id_truyen" id="id_truyen" required
                                                                     class="form-control form-control-inverse">
                                                                     <option value="" selected>[Chọn Truyện]</option>
                                                                     @foreach ($truyen as $item)
@@ -112,7 +112,7 @@
                                                                 Ảnh</label>
                                                             <div class="col-sm-10">
                                                                 <input type="file" class="form-control input-tap"
-                                                                    name="path[]" accept="image/*" multiple>
+                                                                    name="path[]" accept="image/*" multiple required>
                                                             </div>
                                                             <div class="tap-container mt-1"></div>
                                                         </div>
