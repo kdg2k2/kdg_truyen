@@ -12,3 +12,16 @@
     padding: 0 5px;
 }
 
+.bg_thongbao{
+    background-color: #d5d2cf!important;
+}
+
+#mark_read_all:hover{
+    color: #339900;
+    cursor: pointer;
+}
+
+ul.notification-list {
+    max-height: 300px;
+    overflow-y: auto;
+}

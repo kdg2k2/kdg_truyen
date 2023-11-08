@@ -34,15 +34,13 @@
                     </div>
                 </li>
                 <li class="nav-item d-inline d-lg-none">
-                    <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false"><i
-                            class="far fa-stream"></i></a>
+                    {{-- <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false"><i
+                            class="far fa-history"></i></a>
                     <div class="dropdown-menu w-100">
-                        {{-- <a class="dropdown-item" href="/bxh"><i class="far fa-crown"></i><span
-                                class="ml-1">BXH</span></a> --}}
-                        <a class="dropdown-item" href="/history"><i class="fas fa-history"></i><span class="ml-1">Lịch
-                                sử đọc
-                                truyện</span></a>
-                    </div>
+                        <a class="dropdown-item" href="/bxh"><i class="far fa-crown"></i><span
+                                class="ml-1">BXH</span></a>
+                            </div> --}}
+                    <a class="nav-link" href="/history"><i class="fas fa-history"></i></a>
                 </li>
                 {{-- <li class="nav-item mr-2 d-none d-lg-inline"><a class="nav-link" href="/bxh"><i
                             class="far fa-crown"></i><span class="ml-1">BXH</span></a></li> --}}
@@ -66,29 +64,31 @@
                 @if (Session::has('loginId'))
                 @php
                     $tb = App\Thongbao::where('id_user', Session::get('loginId'))->orderByDesc('id')->get();
-                    $count_tb = count(App\Thongbao::where('id_user', Session::get('loginId'))->where('status', '=', 0)->get());
+                    $arr_tb = App\Thongbao::where('id_user', Session::get('loginId'))->where('status', '=', 0)->pluck('id')->toArray();
                 @endphp
                 <li class="nav-item dropdown"><a data-toggle="dropdown" href="#"
                         aria-expanded="false" class="nav-link position-relative">
                         <i data-v-387fbf3e="" class="fad fa-globe-asia"></i>
-                        @if(isset($count_tb) && $count_tb > 0)
-                            <span class="notification-count">{{ $count_tb }}</span>
+                        @if(isset($arr_tb) && count($arr_tb) > 0)
+                            <span class="notification-count" id="notification-count">{{ count($arr_tb) }}</span>
                         @endif
                         <!---->
                     </a>
                     <div class="dropdown-menu manga-mega-menu dropdown-menu-right notification-menu">
                         <span class="dropdown-header d-flex flex-row justify-content-between">
                             <span>Thông báo</span> 
-                            {{-- <span class="mark_read_all">
-                                Đánh dấu đã đọc tất cả
-                            </span> --}}
+                            @if (isset($arr_tb))
+                                <span id="mark_read_all" onclick="readAll({{ json_encode($arr_tb) }})">
+                                    Đánh dấu đã đọc tất cả
+                                </span>
+                            @endif
                         </span>
                         <div data-v-387fbf3e="" class="dropdown-divider"></div>
                             @if (count($tb) > 0)
                                 <ul data-v-387fbf3e="" class="notification-list">
                                     @foreach ($tb as $item)
                                         <a href="/{{ $item->tap->truyen->slug }}/{{ $item->id_tap }}" id="thongbao{{ $item->id }}" onclick="updateThongBao(this)">
-                                            <li data-v-387fbf3e="" class="notification-item d-flex flex-row">
+                                            <li data-v-387fbf3e="" class="notification-item d-flex flex-row @if($item->status == 0) bg_thongbao @endif">
                                                 <div data-v-387fbf3e="" class="notification-img flex-grow-0"
                                                     style="background: url({{ asset($item->tap->truyen->path) }}) center center no-repeat;">
                                                 </div>

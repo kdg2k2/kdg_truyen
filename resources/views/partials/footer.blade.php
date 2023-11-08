@@ -23,14 +23,38 @@
 
  <script>
     var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
     function updateThongBao(e){
         var id_tb = e.getAttribute('id');
+        var number = parseInt(id_tb.substring('thongbao'.length));
         $.ajax({
             method: 'post',
-            url: '/set_status/' + id_tb,
+            url: '/set_status/' + number,
             headers: {
                 'X-CSRF-TOKEN': csrfToken
             }
         })
+    }
+
+    function readAll(arr_tb){
+        if (arr_tb.length > 0) {
+            arr_tb.forEach(element => {
+                $.ajax({
+                    method: 'post',
+                    url: '/set_status/' + element,
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    }
+                }).done(function(t){
+                    console.log(t);
+                    if(t == 'ok'){
+                        $('#thongbao'+element).removeClass('bg_thongbao');
+                    }else{
+                        console.log('Lỗi update trạng thái thông báo id = '+ element);
+                    }
+                })
+            });
+            $('#notification-count').remove();
+        }
     }
  </script>

@@ -22,11 +22,7 @@ use Illuminate\Support\Facades\Session;
 class HomeController extends Controller
 {
     public function set_status($id){
-        $new_id=null;
-        if (preg_match("/thongbao(\d+)/", $id, $matches)) {
-            $new_id = $matches[1];
-        }
-        $tb=Thongbao::findOrFail($new_id);
+        $tb=Thongbao::findOrFail($id);
         $tb->status = 1;
         $tb->save();
         return response()->json('ok');
