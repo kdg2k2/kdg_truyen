@@ -122,7 +122,7 @@
                         @if (App\User::findOrFail(Session::get('loginId'))->role == 'admin')
                         <a href="/logged" class="dropdown-item"><i class="far fa-user"></i> Trang quản trị </a>
                         @endif
-                        <a href="/me" class="dropdown-item"><i class="far fa-id-card"></i> Trang cá nhân </a>
+                        <a href="/me" class="dropdown-item"><i class="far fa-id-card"></i> Tài khoản </a>
                         <div class="dropdown-divider"></div><a href="/theodoi/{{ Session::get('loginId') }}" class="dropdown-item"><i
                                 class="far fa-books"></i> Tủ sách </a>
                         <div class="dropdown-divider"></div><a href="/logout"

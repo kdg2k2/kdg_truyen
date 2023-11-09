@@ -223,11 +223,6 @@ class UserController extends Controller
         $max_like = Truyen::find($max_like_id);
         $max_dislike = Truyen::find($max_dislike_id);
 
-        // dd($max_td,
-        // $max_bl,
-        // $max_like,
-        // $max_dislike);
-
         return view('pages.admin.home.index', [
             'max_td' => $max_td,
             'max_bl' => $max_bl,

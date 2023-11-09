@@ -74,14 +74,16 @@ Route::get('/danh-sach', 'HomeController@get_danhsach');
 Route::get('/the-loai/{id}', 'HomeController@get_theloai');
 
 //action
-Route::post('/post_theodoi/{id_user}/{id_truyen}', 'HomeController@post_theodoi');
-Route::post('/post_like/{id_user}/{id_truyen}', 'HomeController@post_like');
-Route::post('/post_dislike/{id_user}/{id_truyen}', 'HomeController@post_dislike');
-Route::post('/post_comment/{id_user}/{id_truyen}/{txt}', 'HomeController@post_comment');
-Route::post('/delete_comment/{id}', 'HomeController@delete_comment');
-Route::post('/delete_lichsu/{id}', 'HomeController@delete_lichsu');
-Route::get('/theodoi/{id}', 'HomeController@get_theodoi');
-Route::post('/set_status/{id}', 'HomeController@set_status');
+Route::post('/post_theodoi/{id_user}/{id_truyen}', 'HomeController@post_theodoi')->middleware('isLogged');
+Route::post('/post_like/{id_user}/{id_truyen}', 'HomeController@post_like')->middleware('isLogged');
+Route::post('/post_dislike/{id_user}/{id_truyen}', 'HomeController@post_dislike')->middleware('isLogged');
+Route::post('/post_comment/{id_user}/{id_truyen}/{txt}', 'HomeController@post_comment')->middleware('isLogged');
+Route::post('/delete_comment/{id}', 'HomeController@delete_comment')->middleware('isLogged');
+Route::post('/delete_lichsu/{id}', 'HomeController@delete_lichsu')->middleware('isLogged');
+Route::get('/theodoi/{id}', 'HomeController@get_theodoi')->middleware('isLogged');
+Route::post('/set_status/{id}', 'HomeController@set_status')->middleware('isLogged');
+Route::get('/me', 'HomeController@get_me')->middleware('isLogged');
+Route::post('/me', 'HomeController@post_me')->middleware('isLogged');
 
 //detail - reading
 Route::get('/{slug}', 'HomeController@showTruyen');

@@ -17,35 +17,59 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
-    public function set_status($id){
-        $tb=Thongbao::findOrFail($id);
+    public function post_me(Request $request)
+    {
+        $m = User::findOrFail(Session::get('loginId'));
+        $m->username = $request->username;
+        $m->email = $request->email;
+        if ($request->password) {
+            $m->password = Hash::make($request->password);
+        }
+        $m->save();
+        return back()->with('success', 'Cập nhật thành công');
+    }
+    
+    public function get_me()
+    {
+        $m = User::findOrFail(Session::get('loginId'));
+        return view('pages.me.me', ['user' => $m]);
+    }
+
+    public function set_status($id)
+    {
+        $tb = Thongbao::findOrFail($id);
         $tb->status = 1;
         $tb->save();
         return response()->json('ok');
     }
-    public function get_theodoi($id){
+    public function get_theodoi($id)
+    {
         $t = Theodoi::where('id_user', $id)->orderByDesc('id')->get();
         return view('pages.theodoi.theodoi', [
             'theodoi' => $t,
-            'loginId'=> Session::get('loginId'),
+            'loginId' => Session::get('loginId'),
         ]);
     }
 
-    public function delete_lichsu($id){
+    public function delete_lichsu($id)
+    {
         Lichsu::findOrFail($id)->delete();
         return response()->json('ok');
     }
 
-    public function delete_comment($id){
+    public function delete_comment($id)
+    {
         Binhluan::findOrFail($id)->delete();
         return response()->json('ok');
     }
 
-    public function post_comment($id_user, $id_truyen, $txt){
+    public function post_comment($id_user, $id_truyen, $txt)
+    {
         $b = new Binhluan();
         $b->id_user = $id_user;
         $b->id_truyen = $id_truyen;
@@ -58,13 +82,14 @@ class HomeController extends Controller
         return response()->json(['status' => $status, 'binhluan' => $b]);
     }
 
-    public function post_dislike($id_user, $id_truyen){
+    public function post_dislike($id_user, $id_truyen)
+    {
         $c = Dislike::where('id_user', $id_user)->where('id_truyen', $id_truyen)->first();
-        if($c){
+        if ($c) {
             $c->delete();
             $count = count(Dislike::where('id_truyen', $id_truyen)->get());
             $status = 'delete';
-        }else{
+        } else {
             $dislike = new Dislike();
             $dislike->id_user = $id_user;
             $dislike->id_truyen = $id_truyen;
@@ -74,14 +99,15 @@ class HomeController extends Controller
         }
         return response()->json(['status' => $status, 'count' => $count]);
     }
-    
-    public function post_like($id_user, $id_truyen){
+
+    public function post_like($id_user, $id_truyen)
+    {
         $c = Like::where('id_user', $id_user)->where('id_truyen', $id_truyen)->first();
-        if($c){
+        if ($c) {
             $c->delete();
             $count = count(Like::where('id_truyen', $id_truyen)->get());
             $status = 'delete';
-        }else{
+        } else {
             $like = new Like();
             $like->id_user = $id_user;
             $like->id_truyen = $id_truyen;
@@ -92,13 +118,14 @@ class HomeController extends Controller
         return response()->json(['status' => $status, 'count' => $count]);
     }
 
-    public function post_theodoi($id_user, $id_truyen){
+    public function post_theodoi($id_user, $id_truyen)
+    {
         $c = Theodoi::where('id_user', $id_user)->where('id_truyen', $id_truyen)->first();
-        if($c){
+        if ($c) {
             $c->delete();
             $count = count(Theodoi::where('id_truyen', $id_truyen)->get());
             $status = 'delete';
-        }else{
+        } else {
             $t = new Theodoi();
             $t->id_user = $id_user;
             $t->id_truyen = $id_truyen;
@@ -109,7 +136,8 @@ class HomeController extends Controller
         return response()->json(['status' => $status, 'count' => $count]);
     }
 
-    public function error_report(Request $request){
+    public function error_report(Request $request)
+    {
         $data = new Report();
         $data->url = $request->chapter_err;
         $data->des = $request->description;
@@ -194,7 +222,7 @@ class HomeController extends Controller
                     $lichsu->id_tap = $id;
                     $lichsu->id_truyen = $truyen->id;
                     $lichsu->save();
-                }else{
+                } else {
                     $lichsu = Lichsu::findOrFail($check->id);
                     $lichsu->id_tap = $id;
                     $lichsu->save();
