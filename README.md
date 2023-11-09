@@ -1,6 +1,8 @@
 # kdg_truyen
 
 # Chức năng
+    - Đăng nhập, đăng kí, đăng xuất
+    - Quên mật khẩu
     - Quản lý truyện
     - Quản lý người dùng
     - Phân quyền

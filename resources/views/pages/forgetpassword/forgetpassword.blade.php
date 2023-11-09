@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Đăng Nhập </title>
+	<title>Đăng Kí </title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -39,7 +39,7 @@
     }
 
     body {
-		font-family: 'Roboto', sans-serif !important;
+		font-family: 'Roboto', sans-serif;
 	}
 
 </style>
@@ -50,10 +50,10 @@
 		<div class="container-login100">
             <div class="wrap-login100">
                 <a href="/" class="text-info back-btn">< Về Trang Chủ</a>
-				<form class="login100-form validate-form" method="post" action="/logging">
+				<form class="login100-form validate-form" method="post" action="/forget-password/post">
                     @csrf
 					<span class="login100-form-title p-b-26" style="font-family: Roboto">
-						Đăng Nhập
+						Quên mật khẩu
 					</span>
 					<span class="login100-form-title p-b-48">
 						<i class="zmdi zmdi-font"></i>
@@ -72,39 +72,25 @@
                     @endif
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
-						<input class="input100" type="email" name="email" required>
-						<span class="focus-input100" data-placeholder="Email"></span>
+						<input class="input100" type="email" name="email" required value="{{ old('email') }}">
+						<span class="focus-input100" data-placeholder="Nhập email đã đăng kí"></span>
 					</div>
-
-					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<span class="btn-show-pass">
-							<i class="zmdi zmdi-eye"></i>
-						</span>
-						<input class="input100" type="password" name="password" required>
-						<span class="focus-input100" data-placeholder="Password"></span>
-					</div>
+					<span class="text-danger">@error('email')
+						{{ $message }}
+						@enderror</span>
 
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
 							<button class="login100-form-btn">
-								Đăng Nhập
+								Gửi mail
 							</button>
 						</div>
 					</div>
 
-					<div class="text-center p-t-100">
-						<span class="txt1">
-							Chưa có tài khoản?
-						</span>
-
-						<a class="txt2 text-info" href="/register">
-							Đăng kí
-						</a>
-					</div>
-					<div class="text-center pt-2">
-						<a class="txt2 text-info" href="/forget-password">
-							Quên mật khẩu?
+					<div class="text-center p-t-115">
+						<a class="txt2 text-info" href="/login">
+							Đăng Nhập
 						</a>
 					</div>
 				</form>

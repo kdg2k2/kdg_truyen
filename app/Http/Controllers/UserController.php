@@ -78,6 +78,10 @@ class UserController extends Controller
                     if (session()->has('redirect_url')) {
                         $redirectUrl = session('redirect_url');
                         session()->forget('redirect_url');
+                        $path = parse_url($redirectUrl, PHP_URL_PATH);
+                        if($path == '/register' || $path == '/forget-password'){
+                            return redirect('/');
+                        }
                         return redirect($redirectUrl);
                     }
                     return redirect('/');
@@ -97,23 +101,17 @@ class UserController extends Controller
 
     public function forgetPost(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email|exists:users'
-        ], [
-            'email.required' => 'Nhập địa chỉ email bạn đã đăng kí để lấy lại mật khẩu',
-            'email.email' => 'Vui lòng nhập 1 địa chỉ email hợp lệ (@gmail.com ..v.v)',
-            'email.exists' => 'Địa chỉ email không tồn tại trong hệ thống',
-        ]);
-
         $user = User::where('email', $request->email)->first();
         if ($user) {
             $token = strtoupper(Str::random(20));
             $user->update(['token' => $token, 'token_created_at' => now()]);
-            Mail::send('pages.email.forget_password', ['user' => $user], function ($email) use ($user) {
-                $email->subject('Giống Lâm Nghiệp - Lấy lại mật khẩu');
+            Mail::send('pages.mail.forget_password', ['user' => $user], function ($email) use ($user) {
+                $email->subject('KdgTruyen - Lấy lại mật khẩu');
                 $email->to($user->email, $user->username);
             });
             return back()->with('success', 'Đường dẫn xác thực chỉ hiệu lực trong 3 phút. Kiểm tra email của bạn để lấy lại mật khẩu!');
+        }else{
+            return back()->with('fail', 'Email này chưa được đăng kí trong hệ thống');
         }
     }
 
@@ -128,14 +126,6 @@ class UserController extends Controller
 
     public function postGetPass($id, $token, Request $request)
     {
-        $request->validate([
-            'password' => 'required',
-            're-password' => 'required',
-        ], [
-            'password.required' => 'Nhập mật khẩu',
-            're-password.required' => 'Nhập lại mật khẩu',
-        ]);
-
         $pass = $request->input('password');
         $re_pass = $request->input('re-password');
         if ($pass != $re_pass) {
