@@ -16,6 +16,7 @@ class User extends Authenticatable
         'username', 
         'email', 
         'password', 
+        'path', 
         'token', 
         'token_created_at', 
         'role'

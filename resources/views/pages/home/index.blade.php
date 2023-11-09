@@ -250,9 +250,14 @@
                                             <div class="comment-item-at-index">
                                                 <div class="comment-info">
                                                     <div class="comment-top">
-                                                        <div class="comment-user_ava"><img
-                                                                src="{{ asset('/Main_template/storage/images/raw/no-avatar.png') }}"></div><a
-                                                            href="#!" rel="nofollow"
+                                                        <div class="comment-user_ava">
+                                                            @if ($item->user->path)
+                                                            <img src="{{ asset($item->user->path) }}">
+                                                            @else
+                                                            <img src="{{ asset('/Main_template/storage/images/raw/no-avatar.png') }}">
+                                                            @endif
+                                                        </div>
+                                                            <a href="#!" rel="nofollow"
                                                             class="comment-user_name strong">{{ $item->user->username }}</a><small
                                                             class="comment-location"><time class="timeago"
                                                                 title="{{ $item->created_at }}"

@@ -350,8 +350,13 @@
                                     @foreach ($comments as $item)
                                     <div class="ln-comment-group" id="{{ $item->id }}">
                                         <div class="ln-comment-item clear">
-                                            <div class="ln-comment-user_ava"><img
-                                                    src="{{ asset('/img/no-avatar.png') }}"></div>
+                                            <div class="ln-comment-user_ava">
+                                                @if ($item->user->path)
+                                                <img src="{{ asset($item->user->path) }}">
+                                                @else
+                                                <img src="{{ asset('/img/no-avatar.png') }}">
+                                                @endif
+                                            </div>
                                             <div class="ln-comment-info">
                                                 <div class="ln-comment-wrapper">
                                                     <div class="ln-comment-user_name"><a href="#" class="strong">{{

@@ -30,6 +30,17 @@ class HomeController extends Controller
         if ($request->password) {
             $m->password = Hash::make($request->password);
         }
+        if (($request->file('path')) != null) {
+            if ($request->hidden_image != null) {
+                if (file_exists(public_path($request->hidden_image))) {
+                    unlink(public_path($request->hidden_image));
+                }
+            }
+            $image = $request->file('path');
+            $filename = time() . '_' . $image->getClientOriginalName();
+            $image->move('user_avatar', $filename);
+            $m->path = 'user_avatar/' . $filename;
+        }
         $m->save();
         return back()->with('success', 'Cập nhật thành công');
     }

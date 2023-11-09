@@ -113,9 +113,15 @@
                         <div class="d-flex">
                             <div class="d-none d-lg-inline" style="margin-top: 2px;">{{
                                 App\User::findOrFail(Session::get('loginId'))->username }}</div>
-                            <div class="image"><img alt="User Image" height="35" width="35"
-                                    src="{{ asset('/img/user.png') }}" class="rounded-circle"
-                                    style="margin-top: -2px; margin-left: 10px;"></div>
+                            <div class="image">
+                                @php
+                                    $path = App\User::findOrFail(Session::get('loginId'))->path;
+                                @endphp
+                                @if (isset($path))
+                                <img alt="User Image" height="35" width="35" src="{{ asset($path) }}" class="rounded-circle" style="margin-top: -2px; margin-left: 10px;"></div>
+                                @else
+                                    <img alt="User Image" height="35" width="35" src="{{ asset('/img/user.png') }}" class="rounded-circle" style="margin-top: -2px; margin-left: 10px;"></div>
+                                @endif
                         </div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg manga-mega-menu dropdown-menu-right">
