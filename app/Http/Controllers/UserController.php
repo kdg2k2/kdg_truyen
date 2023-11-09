@@ -2,8 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Binhluan;
+use App\Dislike;
+use App\Like;
+use App\Theloai;
+use App\Theodoi;
+use App\Truyen;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
@@ -158,7 +165,77 @@ class UserController extends Controller
 
     public function logged()
     {
-        return view('pages.admin.home.index');
+        $theloai = Theloai::select('theloai.tentheloai', DB::raw('COUNT(truyen_theloai.id_truyen) as so_luong'))
+            ->leftJoin('truyen_theloai', 'theloai.id', '=', 'truyen_theloai.id_theloai')
+            ->groupBy('theloai.tentheloai')
+            ->get();
+        $theloaiData = [];
+        foreach ($theloai as $data) {
+            $theloaiData['labels'][] = $data->tentheloai;
+            $theloaiData['data'][] = $data->so_luong;
+        }
+            
+        $max_view = Truyen::orderByDesc('view')->first();
+
+        $id_max_td = Theodoi::select('id_truyen', DB::raw('COUNT(*) as total_td'))
+            ->groupBy('id_truyen')
+            ->orderByDesc('total_td')
+            ->first();
+
+        $id_max_bl = Binhluan::select('id_truyen', DB::raw('COUNT(*) as total_bl'))
+            ->groupBy('id_truyen')
+            ->orderByDesc('total_bl')
+            ->first();
+
+        $id_max_like = Like::select('id_truyen', DB::raw('COUNT(*) as total_like'))
+            ->groupBy('id_truyen')
+            ->orderByDesc('total_like')
+            ->first();
+
+        $id_max_dislike = Dislike::select('id_truyen', DB::raw('COUNT(*) as total_dislike'))
+            ->groupBy('id_truyen')
+            ->orderByDesc('total_dislike')
+            ->first();
+
+        $max_td_id = null;
+        $max_bl_id = null;
+        $max_like_id = null;
+        $max_dislike_id = null;
+
+        if ($id_max_td) {
+            $max_td_id = $id_max_td->id_truyen;
+        }
+
+        if ($id_max_bl) {
+            $max_bl_id = $id_max_bl->id_truyen;
+        }
+
+        if ($id_max_like) {
+            $max_like_id = $id_max_like->id_truyen;
+        }
+
+        if ($id_max_dislike) {
+            $max_dislike_id = $id_max_dislike->id_truyen;
+        }
+
+        $max_td = Truyen::find($max_td_id);
+        $max_bl = Truyen::find($max_bl_id);
+        $max_like = Truyen::find($max_like_id);
+        $max_dislike = Truyen::find($max_dislike_id);
+
+        // dd($max_td,
+        // $max_bl,
+        // $max_like,
+        // $max_dislike);
+
+        return view('pages.admin.home.index', [
+            'max_td' => $max_td,
+            'max_bl' => $max_bl,
+            'max_like' => $max_like,
+            'max_dislike' => $max_dislike,
+            'max_view' => $max_view,
+            'theloaiData' => $theloaiData,
+        ]);
     }
 
     public function logout()

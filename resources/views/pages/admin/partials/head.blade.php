@@ -9,7 +9,7 @@
     content="flat ui, admin Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
 <meta name="author" content="colorlib">
 
-<link rel="icon" href="" type="image/x-icon">
+<link rel="icon" href="{{ asset('/Main_template/favicon.ico') }}" type="image/x-icon">
 
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Quicksand:500,700" rel="stylesheet">

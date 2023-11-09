@@ -12,12 +12,7 @@ class Theloai extends Model
         'mota',
     ];
     public $timestamps = false;
-
-    // public function truyen()
-    // {
-    //     return $this->belongsToMany(Truyen::class, 'truyen_theloai', 'id_theloai', 'id_truyen');
-    // }
-
+    
     public function truyen_theloai(){
         return $this->belongsTo(Truyen_theloai::class, 'id_theloai');
     }

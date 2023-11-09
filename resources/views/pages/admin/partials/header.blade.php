@@ -2,7 +2,8 @@
     <div class="navbar-wrapper">
         <div class="navbar-logo">
             <a href="/">
-                <img class="img-fluid" src="{{ asset('/adminTemplate/images/logo.png') }}" alt="Theme-Logo">
+                <img src="{{ asset('/Main_template/favicon.ico') }}" width="30" height="30" class="d-inline-block align-top" alt>
+                <p class="ml-1 d-none d-md-inline" style="font-size: 20px">KdgTruyen</p>
             </a>
             <a class="mobile-menu" id="mobile-collapse" href="#!">
                 <i class="feather icon-menu icon-toggle-right"></i>

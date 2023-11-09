@@ -240,93 +240,35 @@
                             <div class="card-header">
                                 <h3 class="card-title"><i class="fad fa-comments-alt"></i> Bình luận mới nhất </h3>
                             </div>
-                            {{-- <div class="card-body bg-dark">
-                                <div class="comment-item-at-index">
-                                    <div class="comment-info">
-                                        <div class="comment-top">
-                                            <div class="comment-user_ava"><img
-                                                    src="{{ asset('/Main_template/storage/images/raw/no-avatar.png') }}"></div><a
-                                                href="/thanh-vien/11343" rel="nofollow"
-                                                class="comment-user_name strong">john25</a><small
-                                                class="comment-location"><time class="timeago"
-                                                    title="2023-09-04 23:44:05"
-                                                    datetime="2023-09-04 23:44:05">2023-09-04 23:44:05</time></small>
-                                        </div>
-                                        <div class="comment-content"> Có vẻ thú vị ta </div><span
-                                            class="series-name text-truncate"><a
-                                                href="/Main_template/truyen-tranh/co-nang-dep-trai-va-cau-be-toc-vang">Cô
-                                                Nàng Đẹp Trai Và Cậu Bé Tóc Vàng</a></span>
-                                    </div>
-                                </div>
-                                <div class="comment-item-at-index">
-                                    <div class="comment-info">
-                                        <div class="comment-top">
-                                            <div class="comment-user_ava"><img
-                                                    src="{{ asset('/Main_template/storage/images/raw/no-avatar.png') }}"></div><a
-                                                href="/thanh-vien/29981" rel="nofollow"
-                                                class="comment-user_name strong">Keith</a><small
-                                                class="comment-location"><time class="timeago"
-                                                    title="2023-09-04 23:36:38"
-                                                    datetime="2023-09-04 23:36:38">2023-09-04 23:36:38</time></small>
-                                        </div>
-                                        <div class="comment-content"> Ơ, end rồi á? Đám cưới đâuu? </div><span
-                                            class="series-name text-truncate"><a
-                                                href="/Main_template/truyen-tranh/cigarette-cherry">Cigarette &amp;
-                                                Cherry</a></span>
-                                    </div>
-                                </div>
-                                <div class="comment-item-at-index">
-                                    <div class="comment-info">
-                                        <div class="comment-top">
-                                            <div class="comment-user_ava"><img
-                                                    src="/Main_template/storage/images/raw/63650820-23f2-43e8-bdf8-e506a0740359.jpg">
-                                            </div><a href="/thanh-vien/18190" rel="nofollow"
-                                                class="comment-user_name strong">Đinh Trí Dũng</a>
-                                            <small class="comment-location"><time class="timeago"
-                                                    title="2023-09-04 23:14:12"
-                                                    datetime="2023-09-04 23:14:12">2023-09-04 23:14:12</time></small>
-                                        </div>
-                                        <div class="comment-content"> Đa hệ long </div><span
-                                            class="series-name text-truncate"><a
-                                                href="/Main_template/truyen-tranh/tsuki-ga-michibiku-isekai-douchuu">Tsuki
-                                                ga Michibiku Isekai Douchuu</a></span>
-                                    </div>
-                                </div>
-                                <div class="comment-item-at-index">
-                                    <div class="comment-info">
-                                        <div class="comment-top">
-                                            <div class="comment-user_ava"><img
-                                                    src="{{ asset('/Main_template/storage/images/raw/no-avatar.png') }}"></div><a
-                                                href="/thanh-vien/24194" rel="nofollow"
-                                                class="comment-user_name strong">Alan390</a><small
-                                                class="comment-location"><time class="timeago"
-                                                    title="2023-09-04 23:01:53"
-                                                    datetime="2023-09-04 23:01:53">2023-09-04 23:01:53</time></small>
-                                        </div>
-                                        <div class="comment-content"> c25 vơn lại thêm 1 con mắm nữ thần hentai...
-                                        </div><span class="series-name text-truncate"><a
-                                                href="/Main_template/truyen-tranh/thuan-thu-su-o-di-gioi">Thuần Thú Sư Ở
-                                                Dị Giới</a></span>
-                                    </div>
-                                </div>
-                                <div class="comment-item-at-index">
-                                    <div class="comment-info">
-                                        <div class="comment-top">
-                                            <div class="comment-user_ava"><img
-                                                    src="/Main_template/storage/images/raw/61f29f34-318e-474e-8423-db66e110382d.jpg">
-                                            </div><a href="/thanh-vien/31357" rel="nofollow"
-                                                class="comment-user_name strong">Kasumi-chan</a>
-                                            <small class="comment-location"><time class="timeago"
-                                                    title="2023-09-04 22:56:27"
-                                                    datetime="2023-09-04 22:56:27">2023-09-04 22:56:27</time></small>
-                                        </div>
-                                        <div class="comment-content"> Ra mắt nhà chồng 🐧🐧🐧🐧 </div><span
-                                            class="series-name text-truncate"><a
-                                                href="/Main_template/truyen-tranh/hiep-sy-cong-chua-la-nang-dau-toc-man-di">Hiệp
-                                                sỹ công chúa là nàng dâu tộc Man Di</a></span>
-                                    </div>
-                                </div>
-                            </div> --}}
+                            <div class="card-body bg-dark">
+                                @php
+                                    $all_bl = App\Binhluan::orderByDesc('id')->get();
+                                @endphp
+                                @if (isset($all_bl) && count($all_bl) > 0)
+                                    @foreach ($all_bl as $item)
+                                        @if ($loop->index < 6)
+                                            <div class="comment-item-at-index">
+                                                <div class="comment-info">
+                                                    <div class="comment-top">
+                                                        <div class="comment-user_ava"><img
+                                                                src="{{ asset('/Main_template/storage/images/raw/no-avatar.png') }}"></div><a
+                                                            href="#!" rel="nofollow"
+                                                            class="comment-user_name strong">{{ $item->user->username }}</a><small
+                                                            class="comment-location"><time class="timeago"
+                                                                title="{{ $item->created_at }}"
+                                                                datetime="{{ $item->created_at }}">{{ $item->created_at }}</time></small>
+                                                    </div>
+                                                    <div class="comment-content">{{ $item->noidung }}</div><span
+                                                        class="series-name text-truncate"><a
+                                                            href="/{{ $item->truyen->slug }}">{{$item->truyen->tentruyen}}</a></span>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    <div class="text-center">Chưa có bình luận</div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>

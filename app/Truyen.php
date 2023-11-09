@@ -28,6 +28,14 @@ class Truyen extends Model
         return $this->hasMany(Theodoi::class, 'id_truyen');
     }
 
+    public function like(){
+        return $this->hasMany(Like::class, 'id_truyen');
+    }
+
+    public function dislike(){
+        return $this->hasMany(Dislike::class, 'id_truyen');
+    }
+
     public function truyen_theloai(){
         return $this->hasMany(Truyen_theloai::class, 'id_truyen');
     }

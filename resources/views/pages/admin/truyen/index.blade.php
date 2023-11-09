@@ -91,14 +91,28 @@
                                                             <td>{{ $item->tentruyen }}</td>
                                                             <td>{{ $item->tenkhac }}</td>
                                                             <td>
-                                                                @foreach ($item->truyen_tacgia as $i)
-                                                                {{ $i->tacgia->tentacgia }} -
-                                                                @endforeach
+                                                                @php
+                                                                    $c='';
+                                                                    foreach ($item->truyen_tacgia as $i) {
+                                                                        $c.=$i->tacgia->tentacgia.', ';
+                                                                    }
+                                                                    if (strlen($c) > 0) {
+                                                                        $c = substr($c, 0, -2);
+                                                                        echo $c;
+                                                                    }
+                                                                @endphp     
                                                             </td>
                                                             <td>
-                                                                @foreach ($item->truyen_theloai as $i)
-                                                                {{ $i->theloai->tentheloai }} -
-                                                                @endforeach
+                                                                @php
+                                                                    $d='';
+                                                                    foreach ($item->truyen_theloai as $i) {
+                                                                        $d.=$i->theloai->tentheloai.', ';
+                                                                    }
+                                                                    if (strlen($d) > 0) {
+                                                                        $d = substr($d, 0, -2);
+                                                                        echo $d;
+                                                                    }
+                                                                @endphp  
                                                             </td>
                                                             <td>{{ $item->view }}</td>
                                                             <td>@if ($item->status == 1)
