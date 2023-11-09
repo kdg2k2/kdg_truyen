@@ -13,6 +13,7 @@
     - Chia sẻ
     - Bình luận
     - Báo lỗi
+    - Tìm kiếm
 
 # Cài đặt
 1. cài đặt xampp (https://www.mediafire.com/file/uv6xjogttswth11/xampp-windows-x64-7.4.29-1-VC15-installer.exe/file)
