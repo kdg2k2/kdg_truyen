@@ -107,50 +107,50 @@
                         @php
                         $comments = App\Binhluan::where('id_truyen', $truyen->id)->orderByDesc('id')->get();
                         @endphp
-                        @if (count($comments) > 0)
                         <div class="ln-comment-group" id="cmt_container">
-                            @foreach ($comments as $item)
-                            <div class="ln-comment-group" id="{{ $item->id }}">
-                                <div class="ln-comment-item clear">
-                                    <div class="ln-comment-user_ava">
-                                        @if ($item->user->path)
-                                        <img src="{{ asset($item->user->path) }}">
-                                        @else
-                                        <img src="{{ asset('/img/no-avatar.png') }}">
-                                        @endif
-                                    </div>
-                                    <div class="ln-comment-info">
-                                        <div class="ln-comment-wrapper">
-                                            <div class="ln-comment-user_name"><a href="#" class="strong">{{
-                                                    $item->user->username }}</a>
+                            @if (count($comments) > 0)
+                                @foreach ($comments as $item)
+                                    <div class="ln-comment-group" id="{{ $item->id }}">
+                                        <div class="ln-comment-item clear">
+                                            <div class="ln-comment-user_ava">
+                                                @if ($item->user->path)
+                                                <img src="{{ asset($item->user->path) }}">
+                                                @else
+                                                <img src="{{ asset('/img/no-avatar.png') }}">
+                                                @endif
                                             </div>
-                                            <div class="ln-comment-content long-text" style="max-height: 100%;">
-                                                <p>{{ $item->noidung }}</p>
+                                            <div class="ln-comment-info">
+                                                <div class="ln-comment-wrapper">
+                                                    <div class="ln-comment-user_name"><a href="#" class="strong">{{
+                                                            $item->user->username }}</a>
+                                                    </div>
+                                                    <div class="ln-comment-content long-text" style="max-height: 100%;">
+                                                        <p>{{ $item->noidung }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="visible-toolkit">
+                                                    <span class="ln-comment-time">
+                                                        <time title="{{ $item->created_at }}"
+                                                            datetime="{{ $item->created_at }}" class="timeago">{{
+                                                            $item->created_at }}</time>
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="visible-toolkit">
-                                            <span class="ln-comment-time">
-                                                <time title="{{ $item->created_at }}"
-                                                    datetime="{{ $item->created_at }}" class="timeago">{{
-                                                    $item->created_at }}</time>
-                                            </span>
+                                            @if (Session::has('loginId'))
+                                                @if ($item->id_user == Session::get('loginId') ||
+                                                App\User::findOrFail(Session::get('loginId'))->role == 'admin')
+                                                <div class="ln-comment-menu none-m">
+                                                    <div class="ln-comment-toolkit-item"><i class="fad fa-trash"
+                                                            data-toggle="modal" data-id="{{ $item->id }}"
+                                                            data-target="#delete-item-model"></i></div>
+                                                </div>
+                                                @endif
+                                            @endif
                                         </div>
                                     </div>
-                                    @if (Session::has('loginId'))
-                                        @if ($item->id_user == Session::get('loginId') ||
-                                        App\User::findOrFail(Session::get('loginId'))->role == 'admin')
-                                        <div class="ln-comment-menu none-m">
-                                            <div class="ln-comment-toolkit-item"><i class="fad fa-trash"
-                                                    data-toggle="modal" data-id="{{ $item->id }}"
-                                                    data-target="#delete-item-model"></i></div>
-                                        </div>
-                                        @endif
-                                    @endif
-                                </div>
-                            </div>
-                            @endforeach
+                                @endforeach
+                            @endif
                         </div>
-                        @endif
                     </div>
                 </div>
             </div>
@@ -180,6 +180,7 @@
 
     @include('partials/footer')
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function(){
             function selectChange(selectElement) {
@@ -187,8 +188,12 @@
                 var selectedValue = selectElement.value;
                 window.location.href = '/' + slug + '/' + selectedValue;
             }
+
+            var org_url = window.location.origin;
         
             var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            var loginId = $('meta[name="loginId"]').attr('content');
+            var id_truyen = "{{ $truyen->id }}";
             $('#cmt_btn').click(function(){
                 var txt = $('#cmt_txt').val();
                 if (loginId != "") {
@@ -200,12 +205,15 @@
                                 'X-CSRF-TOKEN': csrfToken
                             }
                         }).done(function (t) {
+                            $('#cmt_txt').val('');
                             var e = $("#cmt_container");
                             var formattedTime = moment(t.binhluan.created_at).fromNow();
                             var z = `
                             <div class="ln-comment-group" id="${t.binhluan.id}">
                                 <div class="ln-comment-item clear">
-                                    <div class="ln-comment-user_ava"><img src="{{ asset('/img/no-avatar.png') }}"></div>
+                                    <div class="ln-comment-user_ava">
+                                        <img src="${t.binhluan.path != null ? org_url+'/'+t.binhluan.path : org_url+'/img/no-avatar.png'}">
+                                    </div>
                                     <div class="ln-comment-info">
                                         <div class="ln-comment-wrapper">
                                             <div class="ln-comment-user_name"><a href="#"

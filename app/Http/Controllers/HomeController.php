@@ -89,6 +89,7 @@ class HomeController extends Controller
         $b->username = User::findOrFail($id_user)->username;
         $b->created_at = Date('Y-m-d H:i:s');
         $b->id = Binhluan::max('id');
+        $b->path = $b->user->path;
         $status = 'insert';
         return response()->json(['status' => $status, 'binhluan' => $b]);
     }
