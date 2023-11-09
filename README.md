@@ -1,4 +1,4 @@
-# kdg_truyen
+# Web đọc truyện kdg_truyen
 
 # Chức năng
     - Đăng nhập, đăng kí, đăng xuất
