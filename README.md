@@ -37,8 +37,5 @@
     php artisan view:clear
 
 
-    php artisan migration
-
-
 # Sử dụng
 Khởi chạy server với: php artisan serve
