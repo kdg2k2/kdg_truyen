@@ -22,7 +22,7 @@ class isAdmin
         } else {
             $user = User::findOrFail(Session::get('loginId'));
             if ($user->role != 'admin') {
-                abort('403', 'Bạn không có quyền truy cập!');
+                return redirect('/');
             }
         }
         return $next($request);

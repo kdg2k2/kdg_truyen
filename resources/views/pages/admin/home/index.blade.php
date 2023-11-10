@@ -21,7 +21,7 @@
                             <div class="row align-items-end">
                                 <div class="col-lg-8">
                                     <div class="page-header-title">
-                                        <i class="feather icon-home bg-c-blue"></i>
+                                        <i class="fa fa-bar-chart bg-c-blue"></i>
                                         <div class="d-inline">
                                             <h5>Dashboard</h5>
                                         </div>
