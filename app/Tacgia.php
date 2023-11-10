@@ -11,11 +11,7 @@ class Tacgia extends Model
         'tentacgia',
     ];
     public $timestamps = false;
-
-    // public function Truyen(){
-    //     return $this->belongsToMany(Truyen::class, 'truyen_tacgia', 'id_tacgia', 'id_truyen');
-    // }
-
+    
     public function truyen_tacgia(){
         return $this->belongsTo(Truyen_tacgia::class, 'id_tacgia');
     }
