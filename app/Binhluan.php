@@ -11,7 +11,6 @@ class Binhluan extends Model
     protected $fillable = [
         'id_truyen', 
         'id_user', 
-        // 'parent_id', 
         'noidung', 
     ];
 
@@ -22,8 +21,4 @@ class Binhluan extends Model
     public function truyen(){
         return $this->belongsTo(Truyen::class, 'id_truyen');
     }
-
-    // public function replies(){
-    //     return $this->hasMany(Binhluan::class, 'parent_id');
-    // }
 }
