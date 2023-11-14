@@ -8,6 +8,7 @@
     - Quản lý truyện
     - Quản lý người dùng
     - Phân quyền
+    - Phân trang
     - Lịch sử đọc
     - Theo dõi
     - Thông báo (thông báo về truyện đang theo dõi)
