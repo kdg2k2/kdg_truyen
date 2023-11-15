@@ -8,6 +8,7 @@ use App\Like;
 use App\Theloai;
 use App\Theodoi;
 use App\Truyen;
+use App\Truyen_theloai;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -155,14 +156,14 @@ class UserController extends Controller
 
     public function logged()
     {
-        $theloai = Theloai::select('theloai.tentheloai', DB::raw('COUNT(truyen_theloai.id_truyen) as so_luong'))
-            ->leftJoin('truyen_theloai', 'theloai.id', '=', 'truyen_theloai.id_theloai')
-            ->groupBy('theloai.tentheloai')
-            ->get();
+        $arr_theloai = Theloai::pluck('id')->toArray();
         $theloaiData = [];
-        foreach ($theloai as $data) {
-            $theloaiData['labels'][] = $data->tentheloai;
-            $theloaiData['data'][] = $data->so_luong;
+        foreach ($arr_theloai as $data) {
+            $t = Truyen_theloai::where('id_theloai', $data)->count();
+            if($t > 0){
+                $theloaiData['labels'][] = Theloai::findOrFail($data)->tentheloai;
+                $theloaiData['data'][] = $t;
+            }
         }
             
         $max_view = Truyen::orderByDesc('view')->first();
