@@ -261,26 +261,25 @@
                             <div class="card-body bg-dark">
                                 <ul class="others-list">
                                     @foreach ($truyen_same_tacgia as $item)
-                                    @if ($loop->index < 4) @php $t=App\Truyen::find($item); @endphp @if ($t && $t->id !=
-                                        $truyen->id)
-                                        <li>
-                                            <div class="others-img no-padding">
-                                                <div class="a6-ratio">
-                                                    <div class="content img-in-ratio"
-                                                        style="background-image: url('{{ $t->path }}')">
+                                        @if ($loop->index < 4) 
+                                            @php $t=App\Truyen::findOrFail($item); @endphp 
+                                            @if ($t && $item != $truyen->id)
+                                                <li>
+                                                    <div class="others-img no-padding">
+                                                        <div class="a6-ratio">
+                                                            <div class="content img-in-ratio"
+                                                                style="background-image: url('{{ $t->path }}')">
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <div class="others-info">
-                                                <h5 class="others-name"><a href="/{{ $t->slug }}">{{ $t->tentruyen
-                                                        }}</a></h5><small class="series-summary"
-                                                    style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">{{
-                                                    $t->mota }}</small>
-                                            </div>
-                                        </li>
+                                                    <div class="others-info">
+                                                        <h5 class="others-name"><a href="/{{ $t->slug }}">{{ $t->tentruyen }}</a></h5>
+                                                        <small class="series-summary" style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">{{ $t->mota }}</small>
+                                                    </div>
+                                                </li>
+                                            @endif
                                         @endif
-                                        @endif
-                                        @endforeach
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>

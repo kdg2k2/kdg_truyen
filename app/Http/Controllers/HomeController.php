@@ -209,7 +209,7 @@ class HomeController extends Controller
         $truyen = Truyen::where('slug', $slug)->first();
         if ($truyen) {
             $loginId = Session::get('loginId');
-            $truyen_same_tacgia = Truyen_tacgia::where('id_truyen', $truyen->id)->pluck('id_truyen')->toArray();
+            $truyen_same_tacgia = Truyen_tacgia::where('id_tacgia', Truyen_tacgia::where('id_truyen', $truyen->id)->first()->id_tacgia)->pluck('id_truyen')->toArray();
 
             return view('pages.truyen.show', [
                 'loginId' => $loginId,
