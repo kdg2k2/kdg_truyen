@@ -173,7 +173,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'D:\\Wordpacetwo\\kdg_truyen\\storage\\framework/cache/data',
+        'path' => 'E:\\WorksSpace\\Laravel\\kdg_truyen\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -312,12 +312,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\Wordpacetwo\\kdg_truyen\\storage\\app',
+        'root' => 'E:\\WorksSpace\\Laravel\\kdg_truyen\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'D:\\Wordpacetwo\\kdg_truyen\\storage\\app/public',
+        'root' => 'E:\\WorksSpace\\Laravel\\kdg_truyen\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -363,13 +363,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'D:\\Wordpacetwo\\kdg_truyen\\storage\\logs/laravel.log',
+        'path' => 'E:\\WorksSpace\\Laravel\\kdg_truyen\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'D:\\Wordpacetwo\\kdg_truyen\\storage\\logs/laravel.log',
+        'path' => 'E:\\WorksSpace\\Laravel\\kdg_truyen\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -433,7 +433,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'D:\\Wordpacetwo\\kdg_truyen\\resources\\views/vendor/mail',
+        0 => 'E:\\WorksSpace\\Laravel\\kdg_truyen\\resources\\views/vendor/mail',
       ),
     ),
     'log_channel' => NULL,
@@ -515,7 +515,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'D:\\Wordpacetwo\\kdg_truyen\\storage\\framework/sessions',
+    'files' => 'E:\\WorksSpace\\Laravel\\kdg_truyen\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -535,9 +535,9 @@
   array (
     'paths' => 
     array (
-      0 => 'D:\\Wordpacetwo\\kdg_truyen\\resources\\views',
+      0 => 'E:\\WorksSpace\\Laravel\\kdg_truyen\\resources\\views',
     ),
-    'compiled' => 'D:\\Wordpacetwo\\kdg_truyen\\storage\\framework\\views',
+    'compiled' => 'E:\\WorksSpace\\Laravel\\kdg_truyen\\storage\\framework\\views',
   ),
   'debug-server' => 
   array (
