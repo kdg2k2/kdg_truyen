@@ -69,7 +69,7 @@
                                                     <tbody>
                                                         @foreach ($report as $item)
                                                         <tr>
-                                                            <td><a class="{{ $item->status == 0 ? 'text-danger' : '' }}" href="{{ $item->url }}">{{ $item->url }}</a></td>
+                                                            <td><a target="_blank" class="{{ $item->status == 0 ? 'text-danger' : '' }}" href="{{ $item->url }}">{{ $item->url }}</a></td>
                                                             <td  class="{{ $item->status == 0 ? 'text-danger' : '' }}">{{ $item->des }}</td>
                                                             <td>
                                                                 <a href="#!" data-toggle="modal"

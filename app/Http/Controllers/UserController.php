@@ -80,7 +80,7 @@ class UserController extends Controller
                         $redirectUrl = session('redirect_url');
                         session()->forget('redirect_url');
                         $path = parse_url($redirectUrl, PHP_URL_PATH);
-                        if($path == '/register' || $path == '/forget-password'){
+                        if($path == '/register' || $path == '/forget-password' || strpos($path, "/forget-mail") !== false){
                             return redirect('/');
                         }
                         return redirect($redirectUrl);

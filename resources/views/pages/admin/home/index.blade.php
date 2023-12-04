@@ -41,6 +41,21 @@
                                                     <div class="card-body">
                                                         <div class="row align-items-center">
                                                             <div class="col">
+                                                                <h6 class="m-b-25">Tổng số truyện tranh</h6>
+                                                                <h3 class="f-w-700 text-c-yellow">{{
+                                                                    App\Truyen::count() }}</h3>
+                                                                    <a href="/admin/truyen-manager">Danh sách</a>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <i class="fas fa fa-archive bg-c-yellow"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card comp-card">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col">
                                                                 <h6 class="m-b-25">Lượt xem nhiều nhất</h6>
                                                                 <h3 class="f-w-700 text-c-blue">{{ $max_view->view }}
                                                                 </h3>
@@ -63,21 +78,6 @@
                                                             </div>
                                                             <div class="col-auto">
                                                                 <i class="fas fa fa-heart-o bg-c-red"></i>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="card comp-card">
-                                                    <div class="card-body">
-                                                        <div class="row align-items-center">
-                                                            <div class="col">
-                                                                <h6 class="m-b-25">Nhiều bình luận nhất</h6>
-                                                                <h3 class="f-w-700 text-c-yellow">{{
-                                                                    count($max_bl->binhluan) }}</h3>
-                                                                    <a target="_blank" href="/{{ $max_bl->slug }}" class="m-b-0">{{ $max_bl->tentruyen }}</a>
-                                                            </div>
-                                                            <div class="col-auto">
-                                                                <i class="fas fa fa-commenting-o bg-c-yellow"></i>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -111,6 +111,21 @@
                                                             </div>
                                                             <div class="col-auto">
                                                                 <i class="fas fa fa-thumbs-o-down bg-c-orenge"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card comp-card">
+                                                    <div class="card-body">
+                                                        <div class="row align-items-center">
+                                                            <div class="col">
+                                                                <h6 class="m-b-25">Nhiều bình luận nhất</h6>
+                                                                <h3 class="f-w-700 text-c-yellow">{{
+                                                                    count($max_bl->binhluan) }}</h3>
+                                                                    <a target="_blank" href="/{{ $max_bl->slug }}" class="m-b-0">{{ $max_bl->tentruyen }}</a>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <i class="fas fa fa-commenting-o bg-c-yellow"></i>
                                                             </div>
                                                         </div>
                                                     </div>

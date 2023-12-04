@@ -356,7 +356,7 @@ class HomeController extends Controller
         $truyenCollection = collect($arr_truyen);
 
         // Số trang hiển thị trên mỗi trang
-        $perPage = 1;
+        $perPage = 2;
         // Trang hiện tại (lấy từ query parameter hoặc giá trị mặc định)
         $page = request()->get('page', 1);
         // Tạo một LengthAwarePaginator từ Collection
@@ -384,22 +384,22 @@ class HomeController extends Controller
                     ->select('truyen.*', DB::raw('(SELECT MAX(updated_at) FROM tap WHERE tap.id_truyen = truyen.id) as latest_tap_updated_at'))
                     ->orderByDesc('latest_tap_updated_at')
                     ->distinct()
-                    ->paginate(1);
+                    ->paginate(2);
             } else if ($sort == 'za') {
-                $truyen = Truyen::orderByDesc('tentruyen')->paginate(1);
+                $truyen = Truyen::orderByDesc('tentruyen')->paginate(2);
             } else if ($sort == 'az') {
-                $truyen = Truyen::orderBy('tentruyen')->paginate(1);
+                $truyen = Truyen::orderBy('tentruyen')->paginate(2);
             } else if ($sort == 'new') {
-                $truyen = Truyen::orderByDesc('created_at')->paginate(1);
+                $truyen = Truyen::orderByDesc('created_at')->paginate(2);
             } else if ($sort == 'top') {
-                $truyen = Truyen::orderByDesc('view')->paginate(1);
+                $truyen = Truyen::orderByDesc('view')->paginate(2);
             }
         } else if ($request->hoanthanh) {
-            $truyen = Truyen::where('status', 1)->paginate(1);
+            $truyen = Truyen::where('status', 1)->paginate(2);
         } else if ($request->dangtienhanh) {
-            $truyen = Truyen::where('status', 0)->paginate(1);
+            $truyen = Truyen::where('status', 0)->paginate(2);
         } else {
-            $truyen = Truyen::paginate(1);
+            $truyen = Truyen::paginate(2);
         }
 
         return view('pages.danhsach.index', [

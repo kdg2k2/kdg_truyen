@@ -81,15 +81,21 @@
                                                         @foreach ($truyen as $item)
                                                         <tr>
                                                             <td>@if ($item->path)
-                                                                <img style="max-height: 120px; width: 200px"
+                                                                <img style="max-height: 120px; width: 90px"
                                                                     src="{{ asset($item->path) }}">
                                                                 @else
-                                                                <img style="max-height: 120px; width: 200px"
+                                                                <img style="max-height: 120px; width: 90px"
                                                                     src="{{ asset('img/null_image.png') }}">
                                                                 @endif
                                                             </td>
                                                             <td>{{ $item->tentruyen }}</td>
-                                                            <td>{{ $item->tenkhac }}</td>
+                                                            <td>
+                                                                @if (mb_strlen($item->tenkhac) > 80)
+                                                                    {{ mb_substr($item->tenkhac, 0, 80) }}...
+                                                                @else
+                                                                    {{ $item->tenkhac }}
+                                                                @endif
+                                                            </td>
                                                             <td>
                                                                 @php
                                                                     $c='';

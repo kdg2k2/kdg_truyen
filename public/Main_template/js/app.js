@@ -34193,13 +34193,14 @@
     $("#web-search, #mb-search-wrapper input").on("keyup", (function() {
         $(".search-result").fadeIn(200);
         var e = $(this).val().trim();
+        var baseUrl = window.location.origin;
         d && clearTimeout(d), d = setTimeout((function() {
             0 == e.length ? $("#search-list").html('<p class="search-message">Hãy nhập từ khóa</p>') : e.length < 2 ? $("#search-list").html('<p class="search-message">Từ khóa phải từ 2 ký tự</p>') : e.length > 1 && function(e) {
                 $("#search-list").html('<p class="search-message"><i class="fas fa-fan fa-spin mr-1"></i>Loading...</p>'), axios.get("/search?q=" + e).then((function(e) {
                     var t = "",
                         n = e.data;
                     n.length ? n.forEach((function(e) {
-                        t += "<li onclick=\"window.location='" + e.slug + '\'">    <div class="others-img no-padding">        <div class="a6-ratio">            <div class="content img-in-ratio" style="background-image: url(' + e.path + ')"></div>        </div>    </div>    <div class="others-info">        <h5 class="others-name">' + e.tentruyen + '</h5>        <small class="series-summary">' + e.mota.substring(0, 50) + "...</small>    </div></li>", $("#search-list").html(t), $(".search-result").show()
+                        t += "<li onclick=\"window.location='" + baseUrl+'/' + e.slug + '\'">    <div class="others-img no-padding">        <div class="a6-ratio">            <div class="content img-in-ratio" style="background-image: url(' + baseUrl+'/' + e.path + ')"></div>        </div>    </div>    <div class="others-info">        <h5 class="others-name">' + e.tentruyen + '</h5>        <small class="series-summary">' + e.mota.substring(0, 50) + "...</small>    </div></li>", $("#search-list").html(t), $(".search-result").show()
                     })) : $("#search-list").html('<p class="search-message">Không có kết quả</p>')
                 }))
             }(e), d = null
